@@ -7,6 +7,7 @@ export function DemoLogin() {
   const [role, setRole] = useState<"customer" | "admin">("customer");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const livePortalUrl = process.env.NEXT_PUBLIC_LIVE_PORTAL_URL;
 
   function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,7 +28,7 @@ export function DemoLogin() {
         <div className="login-options"><label><input type="checkbox" /> Keep me signed in</label><a href="mailto:support@gamedayhuddle.com?subject=Password%20reset">Forgot password?</a></div>
         <button className="button button-wide" type="submit">Preview {role} portal <span>→</span></button>
       </form>
-      <a className="secure-signin" href={`/signin-with-chatgpt?return_to=${encodeURIComponent(role === "admin" ? "/admin" : "/account")}`}>Sign in to a live account</a>
+      {livePortalUrl && <a className="secure-signin" href={`${livePortalUrl.replace(/\/$/, "")}/signin-with-chatgpt?return_to=${encodeURIComponent(role === "admin" ? "/admin" : "/account")}`}>Sign in to a live account</a>}
       <div className="login-preview-note"><i /> <span><b>Product preview</b>The preview button opens seeded data. Live sign-in uses the secure hosted identity flow and never sends this sample password.</span></div>
     </div>
   );

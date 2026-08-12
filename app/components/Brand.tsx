@@ -5,7 +5,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <Link className="brand" href="/" aria-label="GameDay Huddle home">
       <span className="brand-crop" aria-hidden="true">
-        <Image src="/app-icon.png" alt="" width={64} height={64} priority />
+        <Image src="/app-icon.png" alt="" width={64} height={64} priority unoptimized />
       </span>
       <span className="brand-name">
         GameDay <strong>Huddle</strong>
