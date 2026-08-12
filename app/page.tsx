@@ -3,6 +3,7 @@ import { CheckoutButton } from "./components/CheckoutButton";
 import { LeadForm } from "./components/LeadForm";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
+import { ProductScreens } from "./components/ProductScreens";
 
 export const metadata: Metadata = {
   title: "GameDay Huddle | Football Playbook, Game Day & Team Analytics",
@@ -44,46 +45,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="GameDay Huddle game day dashboard preview">
-            <div className="signal-tag"><i /> GAME LIVE</div>
-            <div className="device-frame">
-              <div className="device-topbar">
-                <div className="mini-brand">GD<span>H</span></div>
-                <div className="game-title"><b>Riverside vs Northgate</b><small>Week 6 · Home</small></div>
-                <div className="score"><b>14</b><span>–</span><b>10</b></div>
-              </div>
-              <div className="game-grid">
-                <div className="situation-card">
-                  <span>2ND & 4</span>
-                  <strong>OWN 42</strong>
-                  <small>Q3 · 08:16</small>
-                </div>
-                <div className="field-card">
-                  <div className="yard-lines" />
-                  <div className="play-line route-one" />
-                  <div className="play-line route-two" />
-                  <div className="play-line route-three" />
-                  <div className="line-scrimmage" />
-                  <div className="player p1">X</div><div className="player p2">H</div><div className="player p3">Y</div>
-                  <div className="player p4">Z</div><div className="player p5 quarterback">Q</div>
-                  <div className="field-caption"><small>FORMATION</small><b>Trips Right</b></div>
-                </div>
-                <div className="decision-card">
-                  <div className="decision-label"><span>CALL NEXT</span><span className="sample-pill">ESTABLISHED</span></div>
-                  <strong>Power 26</strong>
-                  <p>Winning the right side on 2nd & medium.</p>
-                  <div className="decision-stats"><span><b>6.8</b> YPP</span><span><b>71%</b> success</span><span><b>7</b> calls</span></div>
-                  <div className="mock-button" aria-hidden="true">Call play <span>→</span></div>
-                </div>
-                <div className="mix-card">
-                  <span>PLAY MIX</span>
-                  <div><i style={{ width: "62%" }} /><b>62% Run</b></div>
-                  <div><i style={{ width: "38%" }} /><b>38% Pass</b></div>
-                </div>
-              </div>
-            </div>
-            <div className="float-stat"><small>THIS DRIVE</small><b>8 plays · 54 yards</b><span>4 first downs</span></div>
-          </div>
+          <ProductScreens />
         </section>
 
         <section className="proof-strip" aria-label="Made for football programs">

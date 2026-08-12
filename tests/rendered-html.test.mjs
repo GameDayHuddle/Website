@@ -87,6 +87,19 @@ test("static hosting renders working fallbacks instead of dead controls", async 
   assert.match(account, /mailto:support@gamedayhuddle\.com\?subject=Request%20secure%20billing%20portal/);
 });
 
+test("homepage includes the supplied app's Game Day and offensive analytics views", async () => {
+  const response = await render("/");
+  const html = await response.text();
+  const productScreens = await readFile(new URL("../app/components/ProductScreens.tsx", import.meta.url), "utf8");
+
+  assert.match(html, /Game Day home/);
+  assert.match(html, /Offensive analytics/);
+  assert.match(html, /Riverside vs Northgate/);
+  assert.match(productScreens, /Where our carries are going/);
+  assert.match(productScreens, /Power Right/);
+  assert.match(productScreens, /Yards \/ play/);
+});
+
 test("ships production assets and removes the starter preview", async () => {
   const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL("../public/downloads/GameDay-Huddle-0.1.0-beta.apk", import.meta.url))]);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
