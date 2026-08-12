@@ -37,6 +37,56 @@ test("renders customer, admin, and download product surfaces", async () => {
   }
 });
 
+test("all exported navigation targets and page anchors resolve", async () => {
+  const routeRequests = new Map([
+    ["/", "/"],
+    ["/about", "/about"],
+    ["/pricing", "/pricing"],
+    ["/download", "/download"],
+    ["/login", "/login"],
+    ["/privacy", "/privacy"],
+    ["/terms", "/terms"],
+    ["/account", "/account?preview=1"],
+    ["/admin", "/admin?preview=1"],
+  ]);
+  const htmlByRoute = new Map();
+
+  for (const [route, requestPath] of routeRequests) {
+    const response = await render(requestPath);
+    assert.equal(response.status, 200, `${route} should render`);
+    htmlByRoute.set(route, await response.text());
+  }
+
+  for (const [route, html] of htmlByRoute) {
+    const hrefs = [...html.matchAll(/\shref="([^"]+)"/g)].map((match) => match[1].replaceAll("&amp;", "&"));
+    for (const href of hrefs) {
+      if (!href.startsWith("/") && !href.startsWith("#")) continue;
+      if (href.startsWith("/_next/")) continue;
+
+      const [rawPath, hash] = href.split("#");
+      const targetPath = rawPath || route;
+      if (/\.[a-z0-9]+$/i.test(targetPath)) {
+        await access(new URL(`../public${targetPath}`, import.meta.url));
+        continue;
+      }
+      assert.ok(routeRequests.has(targetPath), `${route} links to an unexported route: ${href}`);
+      if (hash) assert.match(htmlByRoute.get(targetPath), new RegExp(`\\sid="${hash}"`), `${href} should have a matching target`);
+    }
+  }
+});
+
+test("static hosting renders working fallbacks instead of dead controls", async () => {
+  const [home, account] = await Promise.all([
+    render("/").then((response) => response.text()),
+    render("/account?preview=1").then((response) => response.text()),
+  ]);
+
+  assert.match(home, /<a[^>]+href="\/download"[^>]*>Start free trial<\/a>/);
+  assert.doesNotMatch(home, /<button[^>]*>Call play/);
+  assert.doesNotMatch(account, /<button[^>]*>(Manage|Invite|View all|Download PDF)<\/button>/);
+  assert.match(account, /mailto:support@gamedayhuddle\.com\?subject=Request%20secure%20billing%20portal/);
+});
+
 test("ships production assets and removes the starter preview", async () => {
   const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL("../public/downloads/GameDay-Huddle-0.1.0-beta.apk", import.meta.url))]);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { Brand } from "./Brand";
 
@@ -31,16 +30,16 @@ export function MarketingHeader() {
         </button>
         <nav className={open ? "nav-links is-open" : "nav-links"} aria-label="Primary navigation">
           {links.map(([label, href]) => (
-            <Link key={label} href={href} onClick={() => setOpen(false)}>
+            <a key={label} href={href} onClick={() => setOpen(false)}>
               {label}
-            </Link>
+            </a>
           ))}
-          <Link className="nav-login" href="/login" onClick={() => setOpen(false)}>
+          <a className="nav-login" href="/login" onClick={() => setOpen(false)}>
             Sign in
-          </Link>
-          <Link className="button button-small" href="/#pricing" onClick={() => setOpen(false)}>
+          </a>
+          <a className="button button-small" href="/#pricing" onClick={() => setOpen(false)}>
             Start free
-          </Link>
+          </a>
         </nav>
       </div>
     </header>

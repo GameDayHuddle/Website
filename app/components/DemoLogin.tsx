@@ -1,17 +1,15 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export function DemoLogin() {
   const [role, setRole] = useState<"customer" | "admin">("customer");
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const livePortalUrl = process.env.NEXT_PUBLIC_LIVE_PORTAL_URL;
 
   function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push(role === "admin" ? "/admin?preview=1" : "/account?preview=1");
+    window.location.assign(role === "admin" ? "/admin?preview=1" : "/account?preview=1");
   }
 
   return (

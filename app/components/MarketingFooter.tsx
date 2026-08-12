@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Brand } from "./Brand";
 
 export function MarketingFooter() {
@@ -11,21 +10,21 @@ export function MarketingFooter() {
         </div>
         <div>
           <h3>Product</h3>
-          <Link href="/#workflow">Features</Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/download">Android download</Link>
-          <Link href="/login">Portal sign in</Link>
+          <a href="/#workflow">Features</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/download">Android download</a>
+          <a href="/login">Portal sign in</a>
         </div>
         <div>
           <h3>Company</h3>
-          <Link href="/about">About</Link>
-          <Link href="/#organizations">Organizations</Link>
-          <Link href="/#contact">Contact</Link>
+          <a href="/about">About</a>
+          <a href="/#organizations">Organizations</a>
+          <a href="/#contact">Contact</a>
         </div>
         <div>
           <h3>Legal</h3>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
           <a href="mailto:support@gamedayhuddle.com">Support</a>
         </div>
       </div>

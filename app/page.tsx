@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CheckoutButton } from "./components/CheckoutButton";
 import { LeadForm } from "./components/LeadForm";
 import { MarketingFooter } from "./components/MarketingFooter";
@@ -35,8 +34,8 @@ export default function Home() {
               GameDay Huddle turns your football plan into a live decision tool—so your staff can call, record, and learn from every snap without losing the game to a spreadsheet.
             </p>
             <div className="hero-actions">
-              <Link className="button" href="#pricing">Start 7 days free <span>→</span></Link>
-              <Link className="button button-ghost" href="#workflow">See the game flow</Link>
+              <a className="button" href="#pricing">Start 7 days free <span>→</span></a>
+              <a className="button button-ghost" href="#workflow">See the game flow</a>
             </div>
             <div className="hero-notes" aria-label="Product highlights">
               <span>Android 8+</span>
@@ -74,7 +73,7 @@ export default function Home() {
                   <strong>Power 26</strong>
                   <p>Winning the right side on 2nd & medium.</p>
                   <div className="decision-stats"><span><b>6.8</b> YPP</span><span><b>71%</b> success</span><span><b>7</b> calls</span></div>
-                  <button type="button">Call play <span>→</span></button>
+                  <div className="mock-button" aria-hidden="true">Call play <span>→</span></div>
                 </div>
                 <div className="mix-card">
                   <span>PLAY MIX</span>
@@ -162,7 +161,7 @@ export default function Home() {
               <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>A flexible program plan built around your team count.</p></div>
               <div className="org-price-word">Let’s build it <span>together.</span></div>
               <ul><li>Everything in Coach</li><li>Central team and subscription management</li><li>Organization player identity</li><li>Rollout and coach onboarding</li><li>Priority account support</li></ul>
-              <Link className="button button-wide button-light" href="#organizations">Talk to our team</Link>
+              <a className="button button-wide button-light" href="#organizations">Talk to our team</a>
               <small>Annual and season-based agreements available.</small>
             </article>
           </div>
@@ -171,14 +170,14 @@ export default function Home() {
         <section className="about-callout section-shell">
           <div className="about-mark"><span>SS</span><i /></div>
           <div><p className="section-kicker">Why GameDay Huddle exists</p><h2>Built around the decision, not the database.</h2></div>
-          <div><p>The app started with a simple belief: analytics only help a coach when collecting them doesn’t get in the way of coaching. Every workflow—from spotting the ball to handing results to a Play Keeper—follows that rule.</p><Link href="/about">Read our approach <span>→</span></Link></div>
+          <div><p>The app started with a simple belief: analytics only help a coach when collecting them doesn’t get in the way of coaching. Every workflow—from spotting the ball to handing results to a Play Keeper—follows that rule.</p><a href="/about">Read our approach <span>→</span></a></div>
         </section>
 
         <section className="final-cta" id="contact">
           <div className="section-shell final-cta-inner">
             <p className="section-kicker">Your next game plan starts here</p>
             <h2>Bring more signal<br />to the sideline.</h2>
-            <div><Link className="button" href="/download">Get the Android beta <span>→</span></Link><Link className="text-link" href="/login">Already have an account? Sign in</Link></div>
+            <div><a className="button" href="/download">Get the Android beta <span>→</span></a><a className="text-link" href="/login">Already have an account? Sign in</a></div>
           </div>
         </section>
       </main>

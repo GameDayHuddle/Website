@@ -1,9 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
-    <Link className="brand" href="/" aria-label="GameDay Huddle home">
+    <a className="brand" href="/" aria-label="GameDay Huddle home">
       <span className="brand-crop" aria-hidden="true">
         <Image src="/app-icon.png" alt="" width={64} height={64} priority unoptimized />
       </span>
@@ -11,6 +10,6 @@ export function Brand({ compact = false }: { compact?: boolean }) {
         GameDay <strong>Huddle</strong>
         {!compact && <small>Football intelligence</small>}
       </span>
-    </Link>
+    </a>
   );
 }
