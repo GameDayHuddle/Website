@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1786495508835,
+      "tag": "0000_white_roxanne_simpson",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1786495528580,
+      "tag": "0001_previous_stellaris",
+      "breakpoints": true
+    }
+  ]
+}

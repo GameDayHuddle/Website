@@ -1,0 +1,16 @@
+import Link from "next/link";
+import Image from "next/image";
+
+export function Brand({ compact = false }: { compact?: boolean }) {
+  return (
+    <Link className="brand" href="/" aria-label="GameDay Huddle home">
+      <span className="brand-crop" aria-hidden="true">
+        <Image src="/app-icon.png" alt="" width={64} height={64} priority />
+      </span>
+      <span className="brand-name">
+        GameDay <strong>Huddle</strong>
+        {!compact && <small>Football intelligence</small>}
+      </span>
+    </Link>
+  );
+}
