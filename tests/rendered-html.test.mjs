@@ -22,7 +22,9 @@ test("server-renders the GameDay Huddle marketing page", async () => {
   assert.match(html, /Build the playbook/);
   assert.match(html, /The sideline operating system/);
   assert.match(html, /For clubs, leagues &amp; school systems/i);
+  assert.match(html, /Your signal can drop/);
   assert.match(html, /application\/ld\+json/);
+  assert.doesNotMatch(html, /stadium/i);
   assert.doesNotMatch(html, /Less tapping\. More coaching\./i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/);
 });

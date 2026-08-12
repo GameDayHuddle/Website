@@ -108,7 +108,7 @@ export default function Home() {
         <section className="offline-section section-shell">
           <div className="offline-copy">
             <p className="section-kicker">Built for the worst signal of the week</p>
-            <h2>The stadium can lose service.<br />Your game cannot.</h2>
+            <h2>Your signal can drop.<br />Your game cannot.</h2>
             <p>GameDay Huddle keeps the playbook and game log on the tablet. Calls and results continue locally, and connected staff devices recover without making your sideline wait.</p>
             <ul>
               <li><span>✓</span> Complete playbook stays available offline</li>
