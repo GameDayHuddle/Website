@@ -11,33 +11,6 @@ export const metadata: Metadata = {
     "Build your football playbook, call plays faster, coordinate staff, and turn every snap into usable team analytics with GameDay Huddle for Android.",
 };
 
-const features = [
-  {
-    number: "01",
-    title: "A playbook built for calling",
-    copy: "Draw formations, organize runs and passes, tag situations, and bring the same playbook straight to the sideline.",
-    className: "feature-playbook",
-  },
-  {
-    number: "02",
-    title: "One-tap game flow",
-    copy: "Call a play by formation, record the result at the spot, and keep down, distance, drive, score, penalties, and special teams together.",
-    className: "feature-gameday",
-  },
-  {
-    number: "03",
-    title: "A second set of hands",
-    copy: "Invite a Play Keeper to record results while the head coach stays focused on the next decision. Devices keep working even when the network doesn’t.",
-    className: "feature-staff",
-  },
-  {
-    number: "04",
-    title: "Answers before the next snap",
-    copy: "See success rate, yards per play, run placement, call-type mix, explosives, third downs, and what is actually earning another call.",
-    className: "feature-analytics",
-  },
-];
-
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -129,30 +102,6 @@ export default function Home() {
             <article><span>PLAN</span><b>01</b><h3>Build what you coach</h3><p>Create formations, draw routes, set designed gaps, organize call sheets, and build the roster around your system.</p></article>
             <article><span>CALL</span><b>02</b><h3>Move at game speed</h3><p>Go from situation to formation to play in taps—not menus. Record the ending spot and let the app do the math.</p></article>
             <article><span>LEARN</span><b>03</b><h3>Know what travels</h3><p>Every correction recalculates the numbers. See the plays, gaps, situations, and tendencies that deserve the next rep.</p></article>
-          </div>
-        </section>
-
-        <section className="product-section" id="product">
-          <div className="section-shell">
-            <div className="section-heading-row">
-              <div><p className="section-kicker">Inside GameDay Huddle</p><h2>Less tapping. More coaching.</h2></div>
-              <p>Every screen earns its place on a sideline: readable outdoors, quick with gloves or a shaking hand, and honest when the connection drops.</p>
-            </div>
-            <div className="feature-grid">
-              {features.map((feature) => (
-                <article className={`feature-card ${feature.className}`} key={feature.number}>
-                  <div className="feature-card-top"><span>{feature.number}</span><i /></div>
-                  <div className="feature-art" aria-hidden="true">
-                    {feature.number === "01" && <><div className="formation-label">ACE</div><div className="route-preview"><i /><i /><i /><i /><i /></div><div className="play-tags"><span>RUN</span><span>SHORT YARDAGE</span></div></>}
-                    {feature.number === "02" && <><div className="snap-title"><span>2ND & 4</span><b>POWER 26</b></div><div className="spot-control"><button>−</button><div><i /></div><button>+</button></div><div className="save-play">SAVE RESULT <span>→</span></div></>}
-                    {feature.number === "03" && <><div className="join-code"><small>STAFF JOIN CODE</small><b>7K4 · 9T2</b></div><div className="connection-row"><span><i /> Head coach</span><span><i /> Play Keeper</span></div></>}
-                    {feature.number === "04" && <><div className="metric-row"><span><b>6.1</b><small>YDS / PLAY</small></span><span><b>64%</b><small>SUCCESS</small></span></div><div className="bar-chart"><i /><i /><i /><i /><i /></div></>}
-                  </div>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.copy}</p>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 
