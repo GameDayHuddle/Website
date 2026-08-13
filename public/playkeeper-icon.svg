@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="21 21 66 66" width="128" height="128" role="img" aria-label="GameDay Huddle Play Keeper app icon">
+  <!-- Rebuilt from the app's launcher vector: the family football with the keeper's green check. -->
+  <rect x="21" y="21" width="66" height="66" fill="#12284B"/>
+  <path d="M27.9,58 C28.4,42.8 39.8,31.9 54,31.9 C65.4,31.9 73.5,35.5 78.7,42.8 C73.5,38.5 64.5,34.5 54,34.5 C41.2,34.5 32.5,43.3 32.2,58 Z" fill="#FFFFFF"/>
+  <path d="M48.8,32 L48.8,38.7 M53,32 L53,38.7 M57.3,32 L57.3,38.7 M61.6,32 L61.6,38.7" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M38,60 L51,73 L74,50" fill="none" stroke="#3AA935" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

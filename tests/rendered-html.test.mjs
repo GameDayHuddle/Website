@@ -30,7 +30,7 @@ test("server-renders the GameDay Huddle marketing page", async () => {
 });
 
 test("renders customer, admin, and download product surfaces", async () => {
-  for (const [path, phrase] of [["/login", "Welcome back"], ["/account?preview=1", "Payment method"], ["/admin?preview=1", "Sales pipeline"], ["/download", "Download Android beta"]]) {
+  for (const [path, phrase] of [["/login", "Welcome back"], ["/account?preview=1", "Payment method"], ["/admin?preview=1", "Sales pipeline"], ["/download", "Download GameDay Huddle beta"], ["/download", "Download Play Keeper beta"]]) {
     const response = await render(path);
     assert.equal(response.status, 200);
     assert.match(await response.text(), new RegExp(phrase, "i"));
@@ -101,7 +101,8 @@ test("homepage includes the supplied app's Game Day and offensive analytics view
 });
 
 test("ships production assets and removes the starter preview", async () => {
-  const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL("../public/downloads/GameDay-Huddle-0.1.0-beta.apk", import.meta.url))]);
+  const manifest = JSON.parse(await readFile(new URL("../app/download/manifest.json", import.meta.url), "utf8"));
+  const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL(`../public/downloads/${manifest.huddle.file}`, import.meta.url)), access(new URL(`../public/downloads/${manifest.playKeeper.file}`, import.meta.url))]);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
 });

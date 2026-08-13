@@ -243,3 +243,15 @@ img { max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms!important; transition-duration: .01ms!important; } }
+
+/* Play Keeper download section: the hero mirrored, phone on the left. */
+.keeper-hero { padding: 0 0 130px; grid-template-columns: 390px 1fr; }
+.keeper-hero > div:first-child { grid-column: 2; grid-row: 1; }
+.keeper-hero .download-phone { grid-column: 1; grid-row: 1; }
+.keeper-hero .keeper-title { font-family: var(--display); font-size: clamp(48px, 5vw, 72px); line-height: .9; text-transform: uppercase; letter-spacing: -.045em; margin: 28px 0 28px; font-weight: 900; max-width: 640px; }
+.keeper-hero .keeper-title em { display: inline-block; color: var(--volt); font-style: normal; }
+@media (max-width: 820px) {
+  .download-hero.keeper-hero { grid-template-columns: 1fr; padding-bottom: 100px; }
+  .keeper-hero > div:first-child { grid-column: auto; grid-row: auto; }
+  .keeper-hero .download-phone { grid-column: auto; grid-row: 1; }
+}
