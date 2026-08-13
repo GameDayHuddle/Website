@@ -12,6 +12,7 @@ const pages = [
   ["/pricing", "pricing/index.html"],
   ["/download", "download/index.html"],
   ["/login", "login/index.html"],
+  ["/signup", "signup/index.html"],
   ["/privacy", "privacy/index.html"],
   ["/terms", "terms/index.html"],
   ["/account?preview=1", "account/index.html"],

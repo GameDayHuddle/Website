@@ -30,7 +30,7 @@ test("server-renders the GameDay Huddle marketing page", async () => {
 });
 
 test("renders customer, admin, and download product surfaces", async () => {
-  for (const [path, phrase] of [["/login", "Welcome back"], ["/account?preview=1", "Payment method"], ["/admin?preview=1", "Sales pipeline"], ["/download", "Download GameDay Huddle beta"], ["/download", "Download Play Keeper beta"]]) {
+  for (const [path, phrase] of [["/login", "Welcome back"], ["/account?preview=1", "Payment method"], ["/admin?preview=1", "Sales pipeline"], ["/download", "Download GameDay Huddle beta"], ["/download", "Download Play Keeper beta"], ["/signup", "Choose Coach Only"], ["/signup", "Choose Organization"]]) {
     const response = await render(path);
     assert.equal(response.status, 200);
     assert.match(await response.text(), new RegExp(phrase, "i"));
@@ -44,6 +44,7 @@ test("all exported navigation targets and page anchors resolve", async () => {
     ["/pricing", "/pricing"],
     ["/download", "/download"],
     ["/login", "/login"],
+    ["/signup", "/signup"],
     ["/privacy", "/privacy"],
     ["/terms", "/terms"],
     ["/account", "/account?preview=1"],

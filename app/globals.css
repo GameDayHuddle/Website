@@ -244,6 +244,22 @@ img { max-width: 100%; }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms!important; transition-duration: .01ms!important; } }
 
+/* Signup: choose the shape of the account. Buttons stay disabled until creation is real. */
+.signup-section { padding: 0 0 140px; }
+.signup-banner { max-width: 720px; margin: 0 0 42px; padding: 16px 20px; border-left: 3px solid var(--amber); background: #16181d; color: #969ea7; font-size: 13px; line-height: 1.6; }
+.signup-banner b { display: block; color: var(--amber); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 6px; }
+.signup-options { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.signup-card { padding: 42px; border-radius: 24px; background: #15171c; border: 1px solid #353941; display: flex; flex-direction: column; }
+.signup-card h2 { font-family: var(--display); font-size: 40px; text-transform: uppercase; margin: 18px 0 10px; }
+.signup-card > p { margin: 0; color: #a8afb8; font-size: 15px; line-height: 1.65; }
+.signup-card ul { list-style: none; padding: 0; margin: 28px 0 36px; display: grid; gap: 15px; font-size: 14px; }
+.signup-card li::before { content: "\2713"; color: var(--volt); font-weight: 900; margin-right: 12px; }
+.signup-card .button { margin-top: auto; }
+.signup-card .button:disabled { background: transparent; border-color: #4a4f59; color: #767d87; cursor: not-allowed; transform: none; }
+.signup-footnote { margin-top: 34px; color: #838a94; font-size: 13px; line-height: 1.6; }
+.signup-footnote a { color: var(--volt); font-weight: 800; }
+@media (max-width: 820px) { .signup-options { grid-template-columns: 1fr; } .signup-card { padding: 28px; } }
+
 /* Play Keeper download section: the hero mirrored, phone on the left. */
 .keeper-hero { padding: 0 0 130px; grid-template-columns: 390px 1fr; }
 .keeper-hero > div:first-child { grid-column: 2; grid-row: 1; }
