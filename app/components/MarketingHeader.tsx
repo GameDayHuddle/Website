@@ -34,9 +34,6 @@ export function MarketingHeader() {
               {label}
             </a>
           ))}
-          <a className="nav-login" href="/login" onClick={() => setOpen(false)}>
-            Sign in
-          </a>
           <a className="button button-small" href="/signup" onClick={() => setOpen(false)}>
             Sign up
           </a>

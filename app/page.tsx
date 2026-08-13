@@ -139,7 +139,7 @@ export default function Home() {
           <div className="section-shell final-cta-inner">
             <p className="section-kicker">Your next game plan starts here</p>
             <h2>Bring more signal<br />to the sideline.</h2>
-            <div><a className="button" href="/download">Get the Android beta <span>→</span></a><a className="text-link" href="/login">Already have an account? Sign in</a></div>
+            <div><a className="button" href="/download">Get the Android app <span>→</span></a><a className="text-link" href="/signup">Create your account</a></div>
           </div>
         </section>
       </main>

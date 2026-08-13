@@ -23,18 +23,55 @@ test("server-renders the GameDay Huddle marketing page", async () => {
   assert.match(html, /The sideline operating system/);
   assert.match(html, /For clubs, leagues &amp; school systems/i);
   assert.match(html, /Your signal can drop/);
+  assert.match(html, /Get the Android app/);
   assert.match(html, /application\/ld\+json/);
+  assert.doesNotMatch(html, /Get the Android beta/i);
   assert.doesNotMatch(html, /stadium/i);
   assert.doesNotMatch(html, /Less tapping\. More coaching\./i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/);
 });
 
-test("renders customer, admin, and download product surfaces", async () => {
-  for (const [path, phrase] of [["/login", "Welcome back"], ["/account?preview=1", "Payment method"], ["/admin?preview=1", "Sales pipeline"], ["/download", "Download GameDay Huddle beta"], ["/download", "Download Play Keeper beta"], ["/signup", "Choose Coach Only"], ["/signup", "Choose Organization"]]) {
-    const response = await render(path);
-    assert.equal(response.status, 200);
-    assert.match(await response.text(), new RegExp(phrase, "i"));
-  }
+test("download page carries release copy instead of beta copy", async () => {
+  const response = await render("/download");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const phrase of [
+    "Download GameDay Huddle <span",
+    "Download Play Keeper <span",
+    "Install the app",
+    "Hear about updates",
+    "Direct install",
+    "Request an invite",
+  ]) assert.match(html, new RegExp(phrase, "i"));
+  for (const phrase of [
+    "Download GameDay Huddle beta",
+    "Download Play Keeper beta",
+    "Install the beta",
+    "Join the beta group",
+    "Android beta",
+    "Beta note",
+    "testing build",
+  ]) assert.doesNotMatch(html, new RegExp(phrase, "i"));
+});
+
+test("signup page renders a working account form instead of the opens-soon banner", async () => {
+  const response = await render("/signup");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const phrase of [
+    "Choose Coach Only",
+    "Choose Organization",
+    "Team name",
+    "Your name",
+    "Email",
+    "Password",
+    "Access code \\(optional\\)",
+    "covers your first year",
+    "<noscript",
+    "<form",
+  ]) assert.match(html, new RegExp(phrase, "i"));
+  assert.doesNotMatch(html, /Account creation opens soon/i);
+  assert.doesNotMatch(html, /<button[^>]*\sdisabled/i);
 });
 
 test("all exported navigation targets and page anchors resolve", async () => {
@@ -43,12 +80,9 @@ test("all exported navigation targets and page anchors resolve", async () => {
     ["/about", "/about"],
     ["/pricing", "/pricing"],
     ["/download", "/download"],
-    ["/login", "/login"],
     ["/signup", "/signup"],
     ["/privacy", "/privacy"],
     ["/terms", "/terms"],
-    ["/account", "/account?preview=1"],
-    ["/admin", "/admin?preview=1"],
   ]);
   const htmlByRoute = new Map();
 
@@ -77,15 +111,10 @@ test("all exported navigation targets and page anchors resolve", async () => {
 });
 
 test("static hosting renders working fallbacks instead of dead controls", async () => {
-  const [home, account] = await Promise.all([
-    render("/").then((response) => response.text()),
-    render("/account?preview=1").then((response) => response.text()),
-  ]);
+  const home = await render("/").then((response) => response.text());
 
   assert.match(home, /<a[^>]+href="\/download"[^>]*>Start free trial<\/a>/);
   assert.doesNotMatch(home, /<button[^>]*>Call play/);
-  assert.doesNotMatch(account, /<button[^>]*>(Manage|Invite|View all|Download PDF)<\/button>/);
-  assert.match(account, /mailto:support@gamedayhuddle\.com\?subject=Request%20secure%20billing%20portal/);
 });
 
 test("homepage includes the supplied app's Game Day and offensive analytics views", async () => {

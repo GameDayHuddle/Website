@@ -13,7 +13,7 @@ export function MarketingFooter() {
           <a href="/#workflow">Features</a>
           <a href="/pricing">Pricing</a>
           <a href="/download">Android download</a>
-          <a href="/login">Portal sign in</a>
+          <a href="/signup">Sign up</a>
         </div>
         <div>
           <h3>Company</h3>
