@@ -1,4 +1,4 @@
 {
-  "huddle": { "version": "0.1.0", "file": "GameDay-Huddle-0.1.0-beta.apk", "sizeMb": "17.1" },
-  "playKeeper": { "version": "0.1.0", "file": "GameDay-Huddle-Play-Keeper-0.1.0-beta.apk", "sizeMb": "11.7" }
+  "huddle": { "version": "1.0.0", "file": "GameDay-Huddle-1.0.0.apk", "sizeMb": "17.1" },
+  "playKeeper": { "version": "1.0.0", "file": "GameDay-Huddle-Play-Keeper-1.0.0.apk", "sizeMb": "11.7" }
 }
