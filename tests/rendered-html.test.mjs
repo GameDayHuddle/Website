@@ -130,6 +130,21 @@ test("homepage includes the supplied app's Game Day and offensive analytics view
   assert.match(productScreens, /Yards \/ play/);
 });
 
+test("homepage ships the coach product tour and accessible media assets", async () => {
+  const response = await render("/");
+  const html = await response.text();
+
+  assert.match(html, /id="product-tour"/);
+  assert.match(html, /gameday-huddle-product-overview\.mp4/);
+  assert.match(html, /gameday-huddle-product-overview-poster\.jpg/);
+  assert.match(html, /gameday-huddle-product-overview-en\.vtt/);
+  await Promise.all([
+    access(new URL("../public/media/gameday-huddle-product-overview.mp4", import.meta.url)),
+    access(new URL("../public/media/gameday-huddle-product-overview-poster.jpg", import.meta.url)),
+    access(new URL("../public/media/gameday-huddle-product-overview-en.vtt", import.meta.url)),
+  ]);
+});
+
 test("ships production assets and removes the starter preview", async () => {
   const manifest = JSON.parse(await readFile(new URL("../app/download/manifest.json", import.meta.url), "utf8"));
   const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL(`../public/downloads/${manifest.huddle.file}`, import.meta.url)), access(new URL(`../public/downloads/${manifest.playKeeper.file}`, import.meta.url))]);

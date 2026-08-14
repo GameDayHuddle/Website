@@ -36,7 +36,7 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <a className="button" href="#pricing">Start 7 days free <span>→</span></a>
-              <a className="button button-ghost" href="#workflow">See the game flow</a>
+              <a className="button button-ghost" href="#product-tour">See the game flow</a>
             </div>
             <div className="hero-notes" aria-label="Product highlights">
               <span>Android 8+</span>
@@ -52,6 +52,33 @@ export default function Home() {
           <div className="section-shell proof-inner">
             <p>Made for the way football is actually coached</p>
             <div><span>YOUTH</span><span>MIDDLE SCHOOL</span><span>HIGH SCHOOL</span><span>CLUBS & LEAGUES</span></div>
+          </div>
+        </section>
+
+        <section className="product-tour section-shell" id="product-tour" aria-labelledby="product-tour-title">
+          <div className="product-tour-copy">
+            <p className="section-kicker">45-second product tour</p>
+            <h2 id="product-tour-title">See the whole week in one huddle.</h2>
+            <p id="product-tour-summary">
+              Watch how coaches move from building a playbook to calling the game, keeping staff connected, and learning from every snap. The tour uses real GameDay Huddle screens and works with the sound off.
+            </p>
+            <div className="product-tour-points" aria-label="Product tour topics">
+              <span>Plan</span><span>Call</span><span>Coordinate</span><span>Learn</span>
+            </div>
+          </div>
+          <div className="product-tour-media">
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster="/media/gameday-huddle-product-overview-poster.jpg"
+              aria-describedby="product-tour-summary"
+            >
+              <source src="/media/gameday-huddle-product-overview.mp4" type="video/mp4" />
+              <track kind="captions" src="/media/gameday-huddle-product-overview-en.vtt" srcLang="en" label="English" />
+              Your browser does not support embedded video. <a href="/media/gameday-huddle-product-overview.mp4">Download the GameDay Huddle product tour</a>.
+            </video>
+            <div className="product-tour-meta"><span>45 SEC</span><span>REAL APP SCREENS</span><span>WORKS MUTED</span></div>
           </div>
         </section>
 
