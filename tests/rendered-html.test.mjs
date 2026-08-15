@@ -37,7 +37,7 @@ test("download page carries release copy instead of beta copy", async () => {
   const html = await response.text();
   for (const phrase of [
     "Download GameDay Huddle <span",
-    "Join as the Play Keeper",
+    "What(?:'|&#x27;|&#39;)s new in",
     "Install the app",
     "Hear about updates",
     "Direct install",
