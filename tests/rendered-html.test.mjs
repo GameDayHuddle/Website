@@ -37,7 +37,7 @@ test("download page carries release copy instead of beta copy", async () => {
   const html = await response.text();
   for (const phrase of [
     "Download GameDay Huddle <span",
-    "Download Play Keeper <span",
+    "Join as the Play Keeper",
     "Install the app",
     "Hear about updates",
     "Direct install",
@@ -45,7 +45,8 @@ test("download page carries release copy instead of beta copy", async () => {
   ]) assert.match(html, new RegExp(phrase, "i"));
   for (const phrase of [
     "Download GameDay Huddle beta",
-    "Download Play Keeper beta",
+    // The Play Keeper is a seat inside the app now, not a second installer.
+    "Download Play Keeper",
     "Install the beta",
     "Join the beta group",
     "Android beta",
@@ -147,7 +148,7 @@ test("homepage ships the coach product tour and accessible media assets", async 
 
 test("ships production assets and removes the starter preview", async () => {
   const manifest = JSON.parse(await readFile(new URL("../app/download/manifest.json", import.meta.url), "utf8"));
-  const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL(`../public/downloads/${manifest.huddle.file}`, import.meta.url)), access(new URL(`../public/downloads/${manifest.playKeeper.file}`, import.meta.url))]);
+  const [packageJson] = await Promise.all([readFile(new URL("../package.json", import.meta.url), "utf8"), access(new URL("../public/og.png", import.meta.url)), access(new URL(`../public/downloads/${manifest.huddle.file}`, import.meta.url))]);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
 });
