@@ -1,10 +1,10 @@
 {
   "huddle": {
     "version": "1.0.0",
-    "versionCode": 98,
-    "file": "GameDay-Huddle-1.0.0-b98.apk",
+    "versionCode": 125,
+    "file": "GameDay-Huddle-1.0.0-b125.apk",
     "sizeMb": "17.3",
-    "sha256": "cb0206050ebd36990d2c7d7a2e5a955f84f1b7fbeb8ad0bba0d4e50a84d12a8f",
-    "notes": "GameDay Huddle 1.0.0 is the first public release. Build your playbook and call it on game day; a Play Keeper on a second tablet records every snap with no account needed, and your live stats and analytics update as the game happens. Everything works with no internet on the sideline — and from this version on, the app tells you right on its home screen when a newer version is here."
+    "sha256": "508760ceed4a003c7ee9f80fcc7a6b2b680bce944ffc82b06e8ee966ae612d91",
+    "notes": "GameDay Huddle 1.0.0 is the complete game-day package. Set up your team and first season in one screen, build the playbook, and call it on game day while every number derives from the plays as they happen — turnovers run back for six, kicks returned to the house, and corrections for the score, the possession, and the chains, each behind one honest confirmation. A Play Keeper on a second tablet records every snap with no account needed, stats break every gain into bands, past seasons stay readable under the name they were played under, and everything works with no internet on the sideline. The app tells you right on its home screen when a newer version is here."
   }
 }
