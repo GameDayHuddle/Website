@@ -25,6 +25,15 @@ test("server-renders the GameDay Huddle marketing page", async () => {
   assert.match(html, /Your signal can drop/);
   assert.match(html, /Get the Android app/);
   assert.match(html, /application\/ld\+json/);
+  // The playable demo server-renders its opening state: an empty log, the ball on the
+  // 25, and a playbook to call from.
+  assert.match(html, /id="demo"/);
+  assert.match(html, /Record a drive/);
+  assert.match(html, /THE EVENT LOG/);
+  assert.match(html, /1st &amp; 10/);
+  assert.match(html, /Own 25/);
+  assert.match(html, /Power Right/);
+  assert.match(html, /Nothing recorded yet/);
   assert.doesNotMatch(html, /Get the Android beta/i);
   assert.doesNotMatch(html, /stadium/i);
   assert.doesNotMatch(html, /Less tapping\. More coaching\./i);
@@ -75,9 +84,29 @@ test("signup page renders a working account form instead of the opens-soon banne
   assert.doesNotMatch(html, /<button[^>]*\sdisabled/i);
 });
 
+test("the Live Demo page renders the playable recorder", async () => {
+  const response = await render("/demo");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const phrase of [
+    "Live Demo",
+    "Call a play",
+    "THE EVENT LOG",
+    "1st &amp; 10",
+    "Own 25",
+    "Power Right",
+    "Nothing recorded yet",
+    "What this demo is not",
+  ]) assert.match(html, new RegExp(phrase, "i"));
+  // The tab is in the primary navigation on every page, not just this one.
+  const home = await render("/").then((page) => page.text());
+  assert.match(home, /href="\/demo"[^>]*>Live Demo</);
+});
+
 test("all exported navigation targets and page anchors resolve", async () => {
   const routeRequests = new Map([
     ["/", "/"],
+    ["/demo", "/demo"],
     ["/about", "/about"],
     ["/pricing", "/pricing"],
     ["/download", "/download"],

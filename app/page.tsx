@@ -3,6 +3,7 @@ import { CheckoutButton } from "./components/CheckoutButton";
 import { LeadForm } from "./components/LeadForm";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
+import { PlayDemo } from "./components/PlayDemo";
 import { ProductScreens } from "./components/ProductScreens";
 
 export const metadata: Metadata = {
@@ -90,6 +91,36 @@ export default function Home() {
             <article><span>PLAN</span><b>01</b><h3>Build what you coach</h3><p>Create formations, draw routes, set designed gaps, organize call sheets, and build the roster around your system.</p></article>
             <article><span>CALL</span><b>02</b><h3>Move at game speed</h3><p>Go from situation to formation to play in taps—not menus. Record the ending spot and let the app do the math.</p></article>
             <article><span>LEARN</span><b>03</b><h3>Know what travels</h3><p>Every correction recalculates the numbers. See the plays, gaps, situations, and tendencies that deserve the next rep.</p></article>
+          </div>
+        </section>
+
+        <section className="demo-section section-shell" id="demo">
+          <div className="demo-lede">
+            <div>
+              <p className="section-kicker">Try it right here</p>
+              <h2>Record a drive.<br /><em>Watch the numbers move.</em></h2>
+            </div>
+            <div>
+              <p>
+                This is the game-day screen, playable in your browser. Call a play, say where the ball
+                ended, and the app derives the rest—gain, down, distance, and every number on the panel.
+                Nothing is counted up as it arrives. Delete an entry and the whole game re-derives around
+                the hole it leaves.
+              </p>
+            </div>
+          </div>
+
+          <PlayDemo />
+
+          <div className="demo-caveats">
+            <b>What this demo is not</b>
+            <p>
+              It records our own offense against a sample opponent, on a sample playbook. The real app
+              also records the defensive series, special teams, penalties and the try after a touchdown,
+              and it corrects the chains, the score and possession behind confirm-first doors. It runs
+              a game with no signal, on a tablet, with a second tablet recording beside it. And it never
+              records player statistics—team-level only, on purpose.
+            </p>
           </div>
         </section>
 

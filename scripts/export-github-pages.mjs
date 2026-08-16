@@ -9,6 +9,7 @@ const origin = "https://www.gamedayhuddle.com";
 const pages = [
   ["/", "index.html"],
   ["/about", "about/index.html"],
+  ["/demo", "demo/index.html"],
   ["/pricing", "pricing/index.html"],
   ["/download", "download/index.html"],
   ["/signup", "signup/index.html"],

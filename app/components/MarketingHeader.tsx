@@ -5,6 +5,7 @@ import { Brand } from "./Brand";
 
 const links = [
   ["Product", "/#workflow"],
+  ["Live Demo", "/demo"],
   ["For organizations", "/#organizations"],
   ["Pricing", "/pricing"],
   ["About", "/about"],
