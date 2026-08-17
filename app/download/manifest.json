@@ -1,10 +1,10 @@
 {
   "huddle": {
     "version": "1.0.0",
-    "versionCode": 125,
-    "file": "GameDay-Huddle-1.0.0-b125.apk",
-    "sizeMb": "17.3",
-    "sha256": "508760ceed4a003c7ee9f80fcc7a6b2b680bce944ffc82b06e8ee966ae612d91",
-    "notes": "GameDay Huddle 1.0.0 is the complete game-day package. Set up your team and first season in one screen, build the playbook, and call it on game day while every number derives from the plays as they happen — turnovers run back for six, kicks returned to the house, and corrections for the score, the possession, and the chains, each behind one honest confirmation. A Play Keeper on a second tablet records every snap with no account needed, stats break every gain into bands, past seasons stay readable under the name they were played under, and everything works with no internet on the sideline. The app tells you right on its home screen when a newer version is here."
+    "versionCode": 137,
+    "file": "GameDay-Huddle-1.0.0-b137.apk",
+    "sizeMb": "3.9",
+    "sha256": "e575a971da1b5fecaed5d0c80bb6b88668ea18bf4c4c9664a2a7d1de9d9846c3",
+    "notes": "GameDay Huddle 1.0.0, tuned up from the first full end-to-end rehearsal. Defense can finally record an opponent field goal: Field Goal Block sits beside Punt return, a made kick puts their three on the board, and a miss asks where our ball starts — no guessing at a spot the referee owns. With a Play Keeper connected, punt returns and field-goal blocks are now recorded on the keeper tablet like every other snap, with the coach's tablet keeping its fail-safe. The extra point is one screen whichever side scored. Manual down-and-distance corrections keep the numbers you set while you move the ball, trimming only at the goal line. Calling a play for the side that isn't on the field is stopped both ways round, with the playbook still open for browsing. And the bar simply says Halftime at the break, on one line, on both tablets."
   }
 }
