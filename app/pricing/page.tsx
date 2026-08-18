@@ -42,8 +42,8 @@ export default function PricingPage() {
                 <li>Organization player identity</li>
                 <li>Rollout and coach onboarding</li>
               </ul>
-              <CheckoutButton plan="organization">Get Organization</CheckoutButton>
-              <small>One price for the whole program, all year.</small>
+              <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>
+              <small>Organization plans are set up directly with us.</small>
             </article>
           </div>
         </section>

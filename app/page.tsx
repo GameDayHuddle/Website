@@ -161,8 +161,8 @@ export default function Home() {
               <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Every team in your club, league, or school system.</p></div>
               <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
               <ul><li>Everything in Coach</li><li>Unlimited teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
-              <CheckoutButton plan="organization">Get Organization</CheckoutButton>
-              <small>One price for the whole program, all year.</small>
+              <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>
+              <small>Organization plans are set up directly with us.</small>
             </article>
           </div>
         </section>

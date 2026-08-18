@@ -24,9 +24,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
+      # NEXT_PUBLIC_* values are inlined at build time. Without the contact
+      # endpoint the form silently degrades to a mailto draft the visitor has
+      # to send themselves, so it must be set here, not only in .env.example.
       - run: npm run export:pages
         env:
           NEXT_PUBLIC_SITE_URL: https://www.gamedayhuddle.com
+          NEXT_PUBLIC_CONTACT_ENDPOINT: https://marketing.gamedayhuddle.com/api/contact
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

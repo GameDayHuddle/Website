@@ -13,6 +13,7 @@ const pages = [
   ["/pricing", "pricing/index.html"],
   ["/download", "download/index.html"],
   ["/signup", "signup/index.html"],
+  ["/contact", "contact/index.html"],
   ["/privacy", "privacy/index.html"],
   ["/terms", "terms/index.html"],
 ];

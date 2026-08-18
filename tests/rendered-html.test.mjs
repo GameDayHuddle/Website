@@ -70,7 +70,8 @@ test("signup page renders a working account form instead of the opens-soon banne
   const html = await response.text();
   for (const phrase of [
     "Choose Coach Only",
-    "Choose Organization",
+    // Organization plans are arranged with us, so that card links out to /contact.
+    "Contact us to set it up",
     "Team name",
     "Your name",
     "Email",
@@ -82,6 +83,38 @@ test("signup page renders a working account form instead of the opens-soon banne
   ]) assert.match(html, new RegExp(phrase, "i"));
   assert.doesNotMatch(html, /Account creation opens soon/i);
   assert.doesNotMatch(html, /<button[^>]*\sdisabled/i);
+  // The signup form only ever creates a coach account now.
+  assert.doesNotMatch(html, /Program name/i);
+});
+
+test("contact page carries the sales door and a working direct address", async () => {
+  const response = await render("/contact");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const phrase of [
+    "Organization plans start",
+    "Running a program",
+    "Coaching one team",
+    "Number of teams",
+    "<textarea",
+    "Send message",
+    'href="mailto:Doug@GameDayHuddle\\.com"',
+  ]) assert.match(html, new RegExp(phrase, "i"));
+  // Nothing on the page may promise a response time or a person we do not have.
+  assert.doesNotMatch(html, /within 24 hours|sales team|account manager/i);
+});
+
+test("the Organization plan routes to sales while Coach stays self-serve", async () => {
+  const [home, pricing, signup] = await Promise.all(
+    ["/", "/pricing", "/signup"].map((path) => render(path).then((response) => response.text())),
+  );
+
+  for (const html of [home, pricing]) {
+    assert.match(html, /<a[^>]+href="\/contact\?topic=organization"[^>]*>Contact us<\/a>/);
+    assert.match(html, /Organization plans are set up directly with us\./);
+    assert.doesNotMatch(html, /Get Organization/);
+  }
+  assert.match(signup, /<a[^>]+href="\/contact\?topic=organization"/);
 });
 
 test("the Live Demo page renders the playable recorder", async () => {
@@ -111,6 +144,7 @@ test("all exported navigation targets and page anchors resolve", async () => {
     ["/pricing", "/pricing"],
     ["/download", "/download"],
     ["/signup", "/signup"],
+    ["/contact", "/contact"],
     ["/privacy", "/privacy"],
     ["/terms", "/terms"],
   ]);
@@ -129,7 +163,8 @@ test("all exported navigation targets and page anchors resolve", async () => {
       if (href.startsWith("/_next/")) continue;
 
       const [rawPath, hash] = href.split("#");
-      const targetPath = rawPath || route;
+      // Links may carry a query string (/contact?topic=organization); the route is the path.
+      const targetPath = rawPath.split("?")[0] || route;
       if (/\.[a-z0-9]+$/i.test(targetPath)) {
         await access(new URL(`../public${targetPath}`, import.meta.url));
         continue;
@@ -143,10 +178,9 @@ test("all exported navigation targets and page anchors resolve", async () => {
 test("static hosting renders working fallbacks instead of dead controls", async () => {
   const home = await render("/").then((response) => response.text());
 
-  // Without a checkout API configured, both plan buttons fall back to sign-up
+  // Without a checkout API configured, the Coach button falls back to sign-up
   // rather than rendering a dead control (or implying the plan is free).
   assert.match(home, /<a[^>]+href="\/signup"[^>]*>Get Coach<\/a>/);
-  assert.match(home, /<a[^>]+href="\/signup"[^>]*>Get Organization<\/a>/);
   assert.doesNotMatch(home, /<button[^>]*>Call play/);
 });
 
