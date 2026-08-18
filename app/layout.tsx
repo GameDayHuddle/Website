@@ -17,15 +17,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: base,
     title: { default: "GameDay Huddle", template: "%s | GameDay Huddle" },
-    description: "Football playbook, game-day play calling, staff collaboration, and team analytics for Android.",
+    description: "Youth football playbook, game-day play calling, staff collaboration, and team analytics for Android.",
     applicationName: "GameDay Huddle",
-    keywords: ["football coaching app", "football playbook app", "football analytics", "game day play calling", "football team management"],
+    keywords: ["youth football coaching app", "youth football playbook app", "youth football analytics", "game day play calling", "youth football team management"],
     icons: { icon: "/app-icon.png", apple: "/app-icon.png" },
     openGraph: {
       type: "website",
       siteName: "GameDay Huddle",
       title: "GameDay Huddle — Build the playbook. Call it on game day.",
-      description: "The sideline operating system for football coaches and programs.",
+      description: "The sideline operating system for youth football coaches.",
       images: [{ url: new URL("/og.png", base).toString(), width: 1731, height: 909, alt: "GameDay Huddle — Build the playbook. Call it on game day." }],
     },
     twitter: { card: "summary_large_image", title: "GameDay Huddle", description: "Build the playbook. Call it on game day.", images: [new URL("/og.png", base).toString()] },

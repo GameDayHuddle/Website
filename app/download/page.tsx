@@ -5,7 +5,7 @@ import { MarketingFooter } from "../components/MarketingFooter";
 import { MarketingHeader } from "../components/MarketingHeader";
 import manifest from "./manifest.json";
 
-export const metadata: Metadata = { title: "Download GameDay Huddle for Android", description: "Download the GameDay Huddle Android app for football playbooks, game-day play calling, live stat keeping, and analytics." };
+export const metadata: Metadata = { title: "Download GameDay Huddle for Android", description: "Download the GameDay Huddle Android app for youth football playbooks, game-day play calling, live stat keeping, and analytics." };
 
 const { huddle } = manifest;
 // Present only once a release has published notes into the manifest; older manifests

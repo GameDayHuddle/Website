@@ -6,9 +6,9 @@ import { PlayDemo } from "./components/PlayDemo";
 import { ProductScreens } from "./components/ProductScreens";
 
 export const metadata: Metadata = {
-  title: "GameDay Huddle | Football Playbook, Game Day & Team Analytics",
+  title: "GameDay Huddle | Youth Football Playbook, Game Day & Team Analytics",
   description:
-    "Build your football playbook, call plays faster, coordinate staff, and turn every snap into usable team analytics with GameDay Huddle for Android.",
+    "Built for youth football. Create your playbook, call plays faster, coordinate staff, and turn every snap into usable team analytics with GameDay Huddle for Android.",
 };
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
     applicationCategory: "SportsApplication",
     operatingSystem: "Android",
     description:
-      "Football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
+      "Youth football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
     offers: [
       { "@type": "Offer", name: "Coach", price: "99", priceCurrency: "USD", description: "One team, 5 months" },
       { "@type": "Offer", name: "Organization", price: "399", priceCurrency: "USD", description: "Unlimited teams, 12 months" },
@@ -32,10 +32,10 @@ export default function Home() {
       <main>
         <section className="hero section-shell">
           <div className="hero-copy">
-            <p className="eyebrow"><span /> The sideline operating system</p>
+            <p className="eyebrow"><span /> The sideline operating system for youth football</p>
             <h1>Build the playbook.<br /><em>Call it on game day.</em></h1>
             <p className="hero-deck">
-              GameDay Huddle turns your football plan into a live decision tool—so your staff can call, record, and learn from every snap without losing the game to a spreadsheet.
+              GameDay Huddle is built for youth football and nothing else—so a volunteer staff can call, record, and learn from every snap without losing the game to a spreadsheet.
             </p>
             <div className="hero-actions">
               <a className="button" href="#pricing">See pricing <span>→</span></a>
@@ -51,10 +51,10 @@ export default function Home() {
           <ProductScreens />
         </section>
 
-        <section className="proof-strip" aria-label="Made for football programs">
+        <section className="proof-strip" aria-label="Made for youth football">
           <div className="section-shell proof-inner">
-            <p>Made for the way football is actually coached</p>
-            <div><span>YOUTH</span><span>MIDDLE SCHOOL</span><span>HIGH SCHOOL</span><span>CLUBS & LEAGUES</span></div>
+            <p>Made for the way youth football is actually coached</p>
+            <div><span>YOUTH TEAMS</span><span>YOUTH LEAGUES</span><span>CLUBS</span><span>VOLUNTEER STAFFS</span></div>
           </div>
         </section>
 
@@ -158,7 +158,7 @@ export default function Home() {
               <small>Covers a full season on one team.</small>
             </article>
             <article className="price-card org-price">
-              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Every team in your club, league, or school system.</p></div>
+              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Every team in your youth club or league.</p></div>
               <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
               <ul><li>Everything in Coach</li><li>Unlimited teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
               <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>

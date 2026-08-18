@@ -3,7 +3,7 @@ import { CheckoutButton } from "../components/CheckoutButton";
 import { MarketingFooter } from "../components/MarketingFooter";
 import { MarketingHeader } from "../components/MarketingHeader";
 
-export const metadata: Metadata = { title: "Pricing | GameDay Huddle", description: "GameDay Huddle plans: $99 for one team for 5 months, $399 for unlimited teams for 12 months." };
+export const metadata: Metadata = { title: "Pricing | GameDay Huddle", description: "GameDay Huddle plans for youth football: $99 for one team for 5 months, $399 for unlimited teams for 12 months." };
 
 export default function PricingPage() {
   return (
@@ -13,7 +13,7 @@ export default function PricingPage() {
         <section className="subpage-hero pricing-page-hero section-shell">
           <p className="section-kicker">Pricing</p>
           <h1>One team or an entire program. <em>Start where you are.</em></h1>
-          <p>Two plans, two prices, no per-player fees. Pick the one that matches how many teams you run.</p>
+          <p>Two plans, two prices, no per-player fees &mdash; priced for youth football budgets. Pick the one that matches how many teams you run.</p>
         </section>
 
         <section className="pricing-section section-shell pricing-page-cards">
@@ -33,7 +33,7 @@ export default function PricingPage() {
             </article>
 
             <article className="price-card org-price">
-              <div className="price-top"><span>FOR CLUBS, LEAGUES &amp; SCHOOLS</span><b>Organization</b><p>Every team in your program, under one plan.</p></div>
+              <div className="price-top"><span>FOR YOUTH CLUBS &amp; LEAGUES</span><b>Organization</b><p>Every team in your program, under one plan.</p></div>
               <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
               <ul>
                 <li>Everything in Coach</li>
@@ -58,7 +58,7 @@ export default function PricingPage() {
             </details>
             <details>
               <summary>How many teams does the Organization plan include?</summary>
-              <p>Unlimited teams for twelve months at $399. One price covers the whole club, league, or school system, however many teams you add.</p>
+              <p>Unlimited teams for twelve months at $399. One price covers the whole youth club or league, however many teams you add.</p>
             </details>
             <details>
               <summary>What happens to my playbook when the term ends?</summary>
