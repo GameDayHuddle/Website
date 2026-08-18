@@ -1,10 +1,10 @@
 {
   "huddle": {
     "version": "1.0.0",
-    "versionCode": 137,
-    "file": "GameDay-Huddle-1.0.0-b137.apk",
+    "versionCode": 139,
+    "file": "GameDay-Huddle-1.0.0-b139.apk",
     "sizeMb": "3.9",
-    "sha256": "e575a971da1b5fecaed5d0c80bb6b88668ea18bf4c4c9664a2a7d1de9d9846c3",
-    "notes": "GameDay Huddle 1.0.0, tuned up from the first full end-to-end rehearsal. Defense can finally record an opponent field goal: Field Goal Block sits beside Punt return, a made kick puts their three on the board, and a miss asks where our ball starts — no guessing at a spot the referee owns. With a Play Keeper connected, punt returns and field-goal blocks are now recorded on the keeper tablet like every other snap, with the coach's tablet keeping its fail-safe. The extra point is one screen whichever side scored. Manual down-and-distance corrections keep the numbers you set while you move the ball, trimming only at the goal line. Calling a play for the side that isn't on the field is stopped both ways round, with the playbook still open for browsing. And the bar simply says Halftime at the break, on one line, on both tablets."
+    "sha256": "c7de6ebc57a85333b6f36f1af5fa6eebf44e5b898b346808d4b52d094169e906",
+    "notes": "GameDay Huddle 1.0.0, tuned up from the first full end-to-end rehearsal — twice. Defense can finally record an opponent field goal: Field Goal Block sits beside Punt return, a made kick puts their three on the board, a miss asks where our ball starts, and a blocked kick carried home is six for the team that blocked it — try and kickoff included. With a Play Keeper connected, punt returns and field-goal blocks are recorded on the keeper tablet like every other snap, with the coach's tablet keeping its fail-safe. The extra point opens as one screen whichever side scored. Manual down-and-distance corrections keep the numbers you set while you move the ball, trimming only at the goal line. Calling a play for the side that isn't on the field is stopped both ways round, with the playbook still open for browsing. And the game bar keeps itself to one line on any tablet — at the break it simply says Halftime."
   }
 }
