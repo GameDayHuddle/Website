@@ -18,7 +18,6 @@ export function MarketingFooter() {
         <div>
           <h3>Company</h3>
           <a href="/about">About</a>
-          <a href="/#organizations">Organizations</a>
           <a href="/#contact">Contact</a>
         </div>
         <div>

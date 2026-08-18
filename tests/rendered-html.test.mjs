@@ -21,7 +21,7 @@ test("server-renders the GameDay Huddle marketing page", async () => {
   assert.match(html, /GameDay Huddle/);
   assert.match(html, /Build the playbook/);
   assert.match(html, /The sideline operating system/);
-  assert.match(html, /For clubs, leagues &amp; school systems/i);
+  assert.match(html, /FOR MULTI-TEAM PROGRAMS/i);
   assert.match(html, /Your signal can drop/);
   assert.match(html, /Get the Android app/);
   assert.match(html, /application\/ld\+json/);
@@ -143,7 +143,10 @@ test("all exported navigation targets and page anchors resolve", async () => {
 test("static hosting renders working fallbacks instead of dead controls", async () => {
   const home = await render("/").then((response) => response.text());
 
-  assert.match(home, /<a[^>]+href="\/download"[^>]*>Start free trial<\/a>/);
+  // Without a checkout API configured, both plan buttons fall back to sign-up
+  // rather than rendering a dead control (or implying the plan is free).
+  assert.match(home, /<a[^>]+href="\/signup"[^>]*>Get Coach<\/a>/);
+  assert.match(home, /<a[^>]+href="\/signup"[^>]*>Get Organization<\/a>/);
   assert.doesNotMatch(home, /<button[^>]*>Call play/);
 });
 

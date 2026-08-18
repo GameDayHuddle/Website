@@ -10,7 +10,7 @@ export default function SignupPage() {
     <section className="subpage-hero section-shell"><p className="section-kicker">Create your account</p><h1>Two ways to run <em>your program.</em></h1><p>Pick the shape of your account. A single coach runs everything from one sign-in; an organization holds the subscription and invites its coaches onto it.</p></section>
     <section className="signup-section section-shell">
       <SignupFlow />
-      <p className="signup-footnote">Running a multi-team program and want to plan the rollout first? <a href="/#organizations">Tell us about your program</a>, or <a href="/download">download the app</a> to see it before you commit.</p>
+      <p className="signup-footnote">Running a multi-team program? The Organization plan covers unlimited teams for a year &mdash; <a href="/pricing">see pricing</a>, or <a href="/download">download the app</a> to see it before you commit.</p>
     </section>
   </main><MarketingFooter /></div>;
 }

@@ -1,12 +1,16 @@
 import { env } from "cloudflare:workers";
 import { getChatGPTUser } from "../../../chatgpt-auth";
 
-type RuntimeEnv = { STRIPE_SECRET_KEY?: string; STRIPE_PRICE_COACH_MONTHLY?: string; STRIPE_PRICE_COACH_ANNUAL?: string };
+// Two plans, two fixed terms: Coach is $99 for 5 months on one team,
+// Organization is $399 for 12 months across unlimited teams. There is no
+// trial - the term starts when the coach pays. The Stripe price objects
+// behind these ids must carry the matching term when billing is configured.
+type RuntimeEnv = { STRIPE_SECRET_KEY?: string; STRIPE_PRICE_COACH?: string; STRIPE_PRICE_ORGANIZATION?: string };
 
 export async function POST(request: Request) {
   const runtime = env as unknown as RuntimeEnv;
   const payload = (await request.json().catch(() => ({}))) as { plan?: string };
-  const priceId = payload.plan === "coach_annual" ? runtime.STRIPE_PRICE_COACH_ANNUAL : payload.plan === "coach_monthly" ? runtime.STRIPE_PRICE_COACH_MONTHLY : undefined;
+  const priceId = payload.plan === "organization" ? runtime.STRIPE_PRICE_ORGANIZATION : payload.plan === "coach" ? runtime.STRIPE_PRICE_COACH : undefined;
 
   if (!runtime.STRIPE_SECRET_KEY || !priceId) {
     return Response.json({ error: "Secure checkout will open once launch pricing is configured." }, { status: 503 });
@@ -15,12 +19,14 @@ export async function POST(request: Request) {
   const user = await getChatGPTUser();
   const origin = new URL(request.url).origin;
   const body = new URLSearchParams({
-    mode: "subscription",
+    // Fixed terms, not recurring: the pages promise 5 months / 12 months and
+    // never mention renewal, so checkout must not create a subscription that
+    // silently renews. Both Stripe prices must be one-time prices.
+    mode: "payment",
     "line_items[0][price]": priceId,
     "line_items[0][quantity]": "1",
     success_url: `${origin}/account?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/pricing?checkout=cancelled`,
-    "subscription_data[trial_period_days]": "7",
     allow_promotion_codes: "true",
   });
   if (user?.email) body.set("customer_email", user.email);

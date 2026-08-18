@@ -5,6 +5,6 @@
     "file": "GameDay-Huddle-1.0.0-b139.apk",
     "sizeMb": "3.9",
     "sha256": "c7de6ebc57a85333b6f36f1af5fa6eebf44e5b898b346808d4b52d094169e906",
-    "notes": "GameDay Huddle 1.0.0, tuned up from the first full end-to-end rehearsal — twice. Defense can finally record an opponent field goal: Field Goal Block sits beside Punt return, a made kick puts their three on the board, a miss asks where our ball starts, and a blocked kick carried home is six for the team that blocked it — try and kickoff included. With a Play Keeper connected, punt returns and field-goal blocks are recorded on the keeper tablet like every other snap, with the coach's tablet keeping its fail-safe. The extra point opens as one screen whichever side scored. Manual down-and-distance corrections keep the numbers you set while you move the ball, trimming only at the goal line. Calling a play for the side that isn't on the field is stopped both ways round, with the playbook still open for browsing. And the game bar keeps itself to one line on any tablet — at the break it simply says Halftime."
+    "notes": "GameDay Huddle 1.0.0 — the first release. Build your playbook, call the game, record every snap, and read the numbers the game gives you back. Works offline at the field."
   }
 }

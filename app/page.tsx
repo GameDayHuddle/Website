@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { CheckoutButton } from "./components/CheckoutButton";
-import { LeadForm } from "./components/LeadForm";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
 import { PlayDemo } from "./components/PlayDemo";
@@ -21,7 +20,10 @@ export default function Home() {
     operatingSystem: "Android",
     description:
       "Football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "7-day trial" },
+    offers: [
+      { "@type": "Offer", name: "Coach", price: "99", priceCurrency: "USD", description: "One team, 5 months" },
+      { "@type": "Offer", name: "Organization", price: "399", priceCurrency: "USD", description: "Unlimited teams, 12 months" },
+    ],
   };
 
   return (
@@ -36,13 +38,13 @@ export default function Home() {
               GameDay Huddle turns your football plan into a live decision tool—so your staff can call, record, and learn from every snap without losing the game to a spreadsheet.
             </p>
             <div className="hero-actions">
-              <a className="button" href="#pricing">Start 7 days free <span>→</span></a>
+              <a className="button" href="#pricing">See pricing <span>→</span></a>
               <a className="button button-ghost" href="#product-tour">See the game flow</a>
             </div>
             <div className="hero-notes" aria-label="Product highlights">
               <span>Android 8+</span>
               <span>Offline-first</span>
-              <span>No card for trial</span>
+              <span>One flat price</span>
             </div>
           </div>
 
@@ -142,47 +144,25 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="org-section" id="organizations">
-          <div className="section-shell org-grid">
-            <div>
-              <p className="section-kicker">For clubs, leagues & school systems</p>
-              <h2>One standard.<br />Every team.</h2>
-              <p className="org-lead">Give every coach the same game-day foundation without flattening how each team coaches.</p>
-              <div className="org-benefits">
-                <div><b>Team autonomy</b><span>Each staff owns its playbook, roster, and game data.</span></div>
-                <div><b>Organization visibility</b><span>Central billing, team status, onboarding, and support.</span></div>
-                <div><b>Player continuity</b><span>Organization-level player IDs can connect seasons and teams.</span></div>
-                <div><b>Human rollout</b><span>Built-in staff onboarding and priority account support.</span></div>
-              </div>
-            </div>
-            <div className="org-form-card">
-              <span className="form-chip">ORGANIZATION ACCESS</span>
-              <h3>Bring GameDay Huddle to your program.</h3>
-              <p>Tell us how many teams you support. We’ll map the right rollout and pricing with you.</p>
-              <LeadForm organization />
-            </div>
-          </div>
-        </section>
-
         <section className="pricing-section section-shell" id="pricing">
           <div className="pricing-heading">
             <p className="section-kicker">Simple paths for every program</p>
-            <h2>Start with one team.<br />Scale when you are ready.</h2>
+            <h2>One team or<br />the whole organization.</h2>
           </div>
           <div className="pricing-grid">
             <article className="price-card coach-price">
               <div className="price-top"><span>FOR INDIVIDUAL TEAMS</span><b>Coach</b><p>One head coach and the staff they invite.</p></div>
-              <div className="price-value"><strong>7 days</strong><span>full access<br />no card required</span></div>
+              <div className="price-value"><strong>$99</strong><span>one team<br />5 months</span></div>
               <ul><li>Playbook and call sheets</li><li>Game-day calling and recording</li><li>Play Keeper staff connection</li><li>Roster, depth chart, and schedule</li><li>Game and season analytics</li></ul>
-              <CheckoutButton plan="coach_monthly">Start free trial</CheckoutButton>
-              <small>Launch pricing is finalized before your first charge.</small>
+              <CheckoutButton plan="coach">Get Coach</CheckoutButton>
+              <small>Covers a full season on one team.</small>
             </article>
             <article className="price-card org-price">
-              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>A flexible program plan built around your team count.</p></div>
-              <div className="org-price-word">Let’s build it <span>together.</span></div>
-              <ul><li>Everything in Coach</li><li>Central team and subscription management</li><li>Organization player identity</li><li>Rollout and coach onboarding</li><li>Priority account support</li></ul>
-              <a className="button button-wide button-light" href="#organizations">Talk to our team</a>
-              <small>Annual and season-based agreements available.</small>
+              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Every team in your club, league, or school system.</p></div>
+              <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
+              <ul><li>Everything in Coach</li><li>Unlimited teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
+              <CheckoutButton plan="organization">Get Organization</CheckoutButton>
+              <small>One price for the whole program, all year.</small>
             </article>
           </div>
         </section>

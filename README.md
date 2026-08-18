@@ -4,9 +4,9 @@ The customer website and account portal for GameDay Huddle, an Android football 
 
 ## Included
 
-- Product-led marketing site with SEO metadata, sitemap, robots rules, social card, pricing, about, organization sales, and Android download pages.
+- Product-led marketing site with SEO metadata, sitemap, robots rules, social card, pricing, about, and Android download pages.
 - Downloadable Android beta APKs for both apps: GameDay Huddle (coaches) and GameDay Huddle Play Keeper (the Play Analyst). The Android repository's CI replaces the files in `public/downloads/` and rewrites `app/download/manifest.json` on every push to its main branch, so the download page always serves the latest signed builds without hand steps.
-- Organization and beta inquiry forms backed by Cloudflare D1 for CRM lead capture.
+- Release-updates inquiry form backed by Cloudflare D1 for CRM lead capture.
 - Customer account portal with plan, payment summary, team access, invoices, and Stripe customer-portal handoff for payment updates and cancellation.
 - Admin workspace for subscription monitoring, prospect tracking, password-reset support, account notes, and cancellation review.
 - Stripe Checkout, customer portal, signed webhook handling, and subscription record synchronization.

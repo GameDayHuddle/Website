@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export function CheckoutButton({ plan, children }: { plan: "coach_monthly" | "coach_annual"; children: React.ReactNode }) {
+export function CheckoutButton({ plan, children }: { plan: "coach" | "organization"; children: React.ReactNode }) {
   const [message, setMessage] = useState("");
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
 
@@ -22,10 +22,12 @@ export function CheckoutButton({ plan, children }: { plan: "coach_monthly" | "co
     }
   }
 
+  // Static hosting has no checkout API. Send buyers to sign-up rather than
+  // straight to the free APK, which would read as "this plan costs nothing".
   if (!apiBaseUrl) {
     return (
       <div className="checkout-action">
-        <a className="button button-wide" href="/download">{children}</a>
+        <a className="button button-wide" href="/signup">{children}</a>
       </div>
     );
   }
