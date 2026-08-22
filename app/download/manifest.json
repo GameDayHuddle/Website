@@ -1,10 +1,10 @@
 {
   "huddle": {
-    "version": "1.0.0",
-    "versionCode": 139,
-    "file": "GameDay-Huddle-1.0.0-b139.apk",
+    "version": "1.1.0",
+    "versionCode": 171,
+    "file": "GameDay-Huddle-1.1.0-b171.apk",
     "sizeMb": "3.9",
-    "sha256": "c7de6ebc57a85333b6f36f1af5fa6eebf44e5b898b346808d4b52d094169e906",
-    "notes": "GameDay Huddle 1.0.0 — the first release. Build your playbook, call the game, record every snap, and read the numbers the game gives you back. Works offline at the field."
+    "sha256": "88716bde1852386f5c29609b91f9cc31f696c2b7acf2807dc2470dbf90aae3a2",
+    "notes": "GameDay Huddle 1.1.0 — adds the Jamboree game type. Start a jamboree from the New game sheet: play it as segments with a planned snap count instead of quarters and downs, with every touchdown worth seven flat. Both go in the stats; neither counts toward the season record."
   }
 }
