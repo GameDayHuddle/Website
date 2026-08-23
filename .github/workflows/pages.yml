@@ -24,13 +24,20 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
-      # NEXT_PUBLIC_* values are inlined at build time. Without the contact
-      # endpoint the form silently degrades to a mailto draft the visitor has
-      # to send themselves, so it must be set here, not only in .env.example.
+      # NEXT_PUBLIC_* values are inlined at build time.
+      #
+      # The contact endpoint is deliberately empty. It used to point at
+      # https://marketing.gamedayhuddle.com/api/contact, and that host was
+      # deleted on 20 Aug 2026: every submission — organization sales enquiries
+      # included — spent a failed request on a dead name before falling back.
+      # Empty, the form goes straight to the fallback: the same message,
+      # prepared in the visitor's own mail client, which they send themselves.
+      # Refill this only when a relay is actually deployed and answering, and
+      # remember it must be CORS-simple (see the note in ContactForm.tsx).
       - run: npm run export:pages
         env:
           NEXT_PUBLIC_SITE_URL: https://www.gamedayhuddle.com
-          NEXT_PUBLIC_CONTACT_ENDPOINT: https://marketing.gamedayhuddle.com/api/contact
+          NEXT_PUBLIC_CONTACT_ENDPOINT: ""
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

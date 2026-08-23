@@ -80,11 +80,77 @@ test("signup page renders a working account form instead of the opens-soon banne
     "covers your first year",
     "<noscript",
     "<form",
+    // An invited coach has a door of their own: the code replaces the team name.
+    "I(?:'|&#x27;|&#39;)m starting a new team",
+    "I was given a coach code",
   ]) assert.match(html, new RegExp(phrase, "i"));
   assert.doesNotMatch(html, /Account creation opens soon/i);
   assert.doesNotMatch(html, /<button[^>]*\sdisabled/i);
   // The signup form only ever creates a coach account now.
   assert.doesNotMatch(html, /Program name/i);
+});
+
+test("a returning coach is sent to a door that exists, not to a field the app hasn't got", async () => {
+  const html = await render("/signup").then((response) => response.text());
+  assert.match(html, /\sid="returning"/);
+  assert.match(html, /A new season(?:'|&#x27;|&#39;)s code comes through us/i);
+  assert.match(html, /<a[^>]+href="\/contact"/);
+  // Redemption happens only inside sign-up, so a coach who already has an
+  // account has nowhere to type a fresh code: not in the app, whose season-over
+  // screen offers a sign-out and nothing else, and not on a route the server
+  // does not serve. Naming either would send him round a closed loop.
+  assert.doesNotMatch(html, /enter the new code (?:there|in the app)/i);
+  assert.doesNotMatch(html, /href="\/account"/);
+
+  const page = await readFile(new URL("../app/signup/page.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(page, /\/api\/invites\/redeem/, "no such route is registered; naming it as fact misleads");
+});
+
+test("an invited coach founds no team, so no team name goes with the code", async () => {
+  const flow = await readFile(new URL("../app/components/SignupFlow.tsx", import.meta.url), "utf8");
+  assert.match(flow, /payload\.inviteCode = code;/);
+  // The join branch must never put a team name in the payload; the server
+  // ignores one, and asking for it would promise a team the account has not got.
+  // Slice from the branch itself: an earlier if/else would otherwise cut this to
+  // an empty string, and an empty string passes every check made of it.
+  const start = flow.indexOf('if (door === "join")');
+  const join = flow.slice(start, flow.indexOf("} else {", start));
+  assert.match(join, /payload\.inviteCode/, "the join branch should be what got sliced");
+  assert.doesNotMatch(join, /payload\.name/);
+});
+
+test("an invited coach can find his door, and reaching it costs him no keystrokes", async () => {
+  const html = await render("/signup").then((response) => response.text());
+  // Both landing cards otherwise describe founding a team or buying for a
+  // program; a coach holding a code matches neither and has nowhere to start.
+  assert.match(html, /Handed a code by your head coach/i);
+
+  const flow = await readFile(new URL("../app/components/SignupFlow.tsx", import.meta.url), "utf8");
+  // The code field only renders behind the join door, and its hint has to say
+  // which code this is: the Play Keeper is handed an eight-digit game code that
+  // belongs in the app, and the server calls this one an invite code.
+  assert.match(flow, /coach-code-hint[\s\S]{0,400}?eight digits/i);
+  assert.match(flow, /coach-code-hint[\s\S]{0,400}?invite code/i);
+  // A maxLength lets the browser cut a pasted code to fit before the digits can
+  // be read out of it, and the coach is refused over a code that was right.
+  assert.doesNotMatch(flow, /maxLength=\{CODE_LENGTH/);
+  // Arrow keys move and select inside a radio group, so selecting a door must
+  // not move focus out of it (WCAG 3.2.2); the deliberate click still may.
+  const pick = flow.slice(flow.indexOf("function pick("), flow.indexOf("function typeCode("));
+  assert.doesNotMatch(pick, /focusFirstField/);
+  assert.match(flow, /function choose\(next: Door\) \{[\s\S]{0,200}?focusFirstField\(next\);/);
+});
+
+test("the contact form is built with no relay to fail against", async () => {
+  const workflow = await readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8");
+  // marketing.gamedayhuddle.com was deleted on 20 Aug 2026. A URL here spends a
+  // failed request on a dead host before every single fallback.
+  assert.doesNotMatch(workflow, /NEXT_PUBLIC_CONTACT_ENDPOINT:\s*\S*https?:/);
+  assert.match(workflow, /NEXT_PUBLIC_CONTACT_ENDPOINT:\s*""/);
+
+  // With no endpoint the form goes straight to the prepared email: no request.
+  const form = await readFile(new URL("../app/components/ContactForm.tsx", import.meta.url), "utf8");
+  assert.match(form, /if \(!endpoint\) \{[\s\S]{0,200}?setStatus\("draft"\);[\s\S]{0,40}?return;/);
 });
 
 test("contact page carries the sales door and a working direct address", async () => {
