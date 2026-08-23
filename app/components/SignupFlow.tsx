@@ -2,7 +2,19 @@
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
-const SIGNUP_URL = "https://func-huddle-prod-idqzc6gkjd2cc.azurewebsites.net/api/signup";
+// Production unless a build says otherwise, because the deployed site is the
+// only thing that must never guess. The override exists so this form can be run
+// against the dev sandbox — a sign-up creates a real account in a real
+// directory, and trying the join-a-team door against production would leave one
+// behind every time somebody checked the wording.
+// Its own setting rather than the shared NEXT_PUBLIC_API_BASE_URL, which also
+// decides whether the pricing page shows live checkout buttons or the static
+// fallbacks GitHub Pages needs. Pointing sign-up at dev should not turn on a
+// checkout that answers 503.
+const SIGNUP_URL = `${
+  process.env.NEXT_PUBLIC_SIGNUP_API_BASE?.replace(/\/$/, "") ||
+  "https://func-huddle-prod-idqzc6gkjd2cc.azurewebsites.net/api"
+}/signup`;
 const CODE_LENGTH = 12;
 
 // Which door the coach came through. Founding a team and joining one are the
