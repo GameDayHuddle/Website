@@ -141,6 +141,54 @@ test("an invited coach can find his door, and reaching it costs him no keystroke
   assert.match(flow, /function choose\(next: Door\) \{[\s\S]{0,200}?focusFirstField\(next\);/);
 });
 
+test("the sign-up page promises the app we have, and opens its form without being asked", async () => {
+  const html = await render("/signup").then((response) => response.text());
+
+  // The form is the page: it renders open beside the reasons to fill it, and the
+  // three plan cards below aim it rather than gate it. A card that had to be
+  // clicked first cost a coach who arrived ready to type a whole step.
+  assert.match(html, /<form/);
+  assert.doesNotMatch(html, /class="signup-form-card"[^>]*hidden/i);
+  for (const heading of ["Create your account", "Once you sign up", "Choose what works for you"]) {
+    assert.match(html, new RegExp(heading, "i"));
+  }
+
+  // Nothing is running in a real season yet, so the page that asks a coach to
+  // trust us with his program may not open by counting the coaches who already
+  // did. There is no count here, and there is not to be one until there is one.
+  assert.doesNotMatch(html, /thousands of coaches|trusted by|loved by|join \d[\d,]* coach/i);
+
+  // Every line beside the form is something the app does. It has no messaging,
+  // and it has never run anywhere but Android, so neither may be sold here.
+  for (const truth of [
+    "Build your playbook",
+    "Manage your team",
+    "Track games and stats",
+    "Bring your staff in",
+    "Coach without a signal",
+  ]) assert.match(html, new RegExp(truth, "i"));
+  assert.doesNotMatch(html, /send messages|staff and parents|on any device/i);
+
+  // /login belongs to the account portal, which is not among the exported pages,
+  // so naming it would send a returning coach to a 404 on the live site. The
+  // sign-in door that exists is the app.
+  assert.doesNotMatch(html, /href="\/login"/);
+  assert.match(html, /Already have an account\?[\s\S]{0,80}sign in/i);
+});
+
+test("the repeated password is a check here and a field nowhere else", async () => {
+  const html = await render("/signup").then((response) => response.text());
+  assert.match(html, /Confirm password/i);
+
+  const flow = await readFile(new URL("../app/components/SignupFlow.tsx", import.meta.url), "utf8");
+  // A password cannot be read back, so the second field catches the typo before
+  // the account is created around it. It is compared and then dropped: the
+  // request that leaves the browser has never carried it, and the server has
+  // never been told to expect it.
+  assert.match(flow, /password !== String\(form\.get\("repeatPassword"\)/);
+  assert.doesNotMatch(flow, /payload\.repeatPassword|repeatPassword:/);
+});
+
 test("the contact form is built with no relay to fail against", async () => {
   const workflow = await readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8");
   // marketing.gamedayhuddle.com was deleted on 20 Aug 2026. A URL here spends a
