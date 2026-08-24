@@ -16,6 +16,7 @@ import {
   toGoal,
   yardLineLabel,
 } from "../app/components/demoFootball.ts";
+import { CATALOGUE, OFFENSE, SAMPLE_GAME } from "../app/components/demoPlaybook.ts";
 
 /**
  * The demo re-implements football rules that live in Kotlin in the app. These tests pin the
@@ -470,4 +471,88 @@ test("suggest-a-play refuses to rank single attempts against each other", () => 
   assert.match(twice.lead, /Ranked by yards a play/);
   assert.equal(twice.suggestions[0].playId, "blast-24");
   assert.equal(twice.suggestions[0].calls, 2);
+});
+
+/**
+ * The demo opens partway through a scrimmage rather than blank, so these pin the thing a
+ * visitor actually lands on: the analytics have to say something, and they have to say it
+ * with enough evidence behind them to be worth showing.
+ */
+test("the sample game leaves the visitor somewhere worth arriving", () => {
+  const { live } = derive(SAMPLE_GAME);
+  // Our ball, a live down, and nothing owed that would block the first tap.
+  assert.equal(live.possession, "OURS");
+  assert.equal(live.tryOwed, null);
+  assert.equal(live.statusLine, "4th & 4 · Own 45");
+  assert.equal(live.quarterLabel, "Q2");
+  assert.equal(live.us, 7);
+  assert.equal(live.them, 0);
+});
+
+test("the sample game fills every Quick Stats section, both sides of the ball", () => {
+  const { quickStats } = derive(SAMPLE_GAME);
+  assert.ok(quickStats.offensivePlays.plays > 10);
+  assert.ok(quickStats.defensivePlays.plays > 5);
+  assert.ok(quickStats.firstDowns > 0);
+  // The rows most likely to sit at zero on a thin sample, which is why they are seeded.
+  assert.ok(quickStats.explosivePlays > 0);
+  assert.ok(quickStats.explosiveAllowed > 0);
+  assert.ok(quickStats.negativePlays > 0);
+  assert.ok(quickStats.stops > 0);
+  assert.ok(quickStats.ourRun.left.plays > 0);
+  assert.ok(quickStats.ourRun.middle.plays > 0);
+  assert.ok(quickStats.ourRun.right.plays > 0);
+  assert.ok(quickStats.theirRun.left.plays > 0);
+  assert.ok(quickStats.theirRun.middle.plays > 0);
+  assert.ok(quickStats.theirRun.right.plays > 0);
+});
+
+test("the sample game's headline claim is Established, not a lucky one-off", () => {
+  const { offense, defense } = derive(SAMPLE_GAME);
+  const bestPlay = offense.insights.find((insight) => insight.title === "Best play");
+  assert.equal(bestPlay.subject, "Blast 24");
+  assert.equal(bestPlay.tier, "Established");
+  assert.match(bestPlay.detail, /^5 attempts · \d+% success$/);
+  // Both analytics screens have all their cards.
+  assert.deepEqual(
+    offense.insights.map((insight) => insight.title),
+    ["Best play", "Best formation", "Best attack area"],
+  );
+  assert.deepEqual(
+    defense.insights.map((insight) => insight.title),
+    ["They run at", "Hurting us most", "Best front"],
+  );
+  // Seven of the eight holes have a carry; the empty one proves the "no carries" state.
+  assert.equal(offense.holes.filter((hole) => hole.carries > 0).length, 7);
+});
+
+test("sample-size beats rate: a lucky one-off never takes the headline", () => {
+  // One carry for twenty yards against five for six a carry. The app ranks tier first.
+  const lucky = [
+    ...Array.from({ length: 5 }, () => snap({ yards: 6 })),
+    snap({ id: "toss-27", label: "Toss 27", gap: "LEFT_D", yards: 20 }),
+  ];
+  const best = derive(lucky).offense.insights.find((insight) => insight.title === "Best play");
+  assert.equal(best.subject, "Blast 24");
+  assert.equal(best.tier, "Established");
+});
+
+test("every play the sample game calls exists in the sample playbook", () => {
+  const known = new Set(CATALOGUE.map((play) => play.playId));
+  const called = SAMPLE_GAME.filter((event) => event.t === "SNAP" && event.side === "OFFENSE");
+  assert.ok(called.length > 0);
+  for (const snapEvent of called) assert.ok(known.has(snapEvent.playId), snapEvent.playId);
+  // And Suggest a play can rank over it without inventing anything.
+  const suggested = suggestPlays(derive(SAMPLE_GAME), CATALOGUE);
+  assert.ok(suggested.suggestions.length > 0);
+  for (const play of suggested.suggestions) assert.ok(known.has(play.playId), play.playId);
+});
+
+test("a run in the sample playbook always names the hole it is designed for", () => {
+  for (const formation of OFFENSE) {
+    for (const play of formation.plays) {
+      if (play.category === "RUN") assert.ok(play.gap, `${play.label} has no designed hole`);
+      else assert.equal(play.gap, null, `${play.label} is a pass and should have no hole`);
+    }
+  }
 });

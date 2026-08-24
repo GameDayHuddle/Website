@@ -562,8 +562,11 @@ export function derive(events: GameEvent[]): Derived {
   const ourSides = new Map<Location, { carries: number; yards: number; successes: number }>();
   const theirSides = new Map<Location, { carries: number; yards: number; successes: number }>();
   const theirPassSides = new Map<Location, { throws: number; yards: number }>();
+  /** Their longest carry to each third, which the "Hurting us most" card names. */
+  const theirLongestBySide = new Map<Location, number>();
   const theirFormationCalls = new Map<string, number>();
-  const theirByPlay = new Map<string, { label: string; attempts: number; yards: number }>();
+  /** Yards allowed under each of our fronts, for the "Best front" card. */
+  const frontYardsAllowed = new Map<string, number>();
 
   for (const event of events) {
     switch (event.t) {
@@ -706,6 +709,10 @@ export function derive(events: GameEvent[]): Derived {
           bucket.yards += yards;
           if (success) bucket.successes += 1;
           theirSides.set(snap.location, bucket);
+          theirLongestBySide.set(
+            snap.location,
+            Math.max(theirLongestBySide.get(snap.location) ?? yards, yards),
+          );
         }
       } else {
         addTo(stats.theirPass, yards);
@@ -725,10 +732,10 @@ export function derive(events: GameEvent[]): Derived {
         snap.formationLabel,
         (theirFormationCalls.get(snap.formationLabel) ?? 0) + 1,
       );
-      const tally = theirByPlay.get(snap.playId) ?? { label: snap.playLabel, attempts: 0, yards: 0 };
-      tally.attempts += 1;
-      tally.yards += yards;
-      theirByPlay.set(snap.playId, tally);
+      frontYardsAllowed.set(
+        snap.formationLabel,
+        (frontYardsAllowed.get(snap.formationLabel) ?? 0) + yards,
+      );
     }
 
     rows.push({ event: snap, situation: calledIn, possession, yards, success });
@@ -823,91 +830,179 @@ export function derive(events: GameEvent[]): Derived {
 
   const oneDecimal = (value: number) => value.toFixed(1);
   const percent = (value: number) => `${Math.round(value * 100)}%`;
-  const carryWord = (count: number) => (count === 1 ? "carry" : "carries");
-  const playWord = (count: number) => (count === 1 ? "play" : "plays");
+
+  /**
+   * Sample size ranks before rate, exactly as `OffenseAnalytics.best` does it.
+   *
+   * A play called once for twenty yards must not outrank one called six times for seven a
+   * carry, so an established number beats an emerging one and only then does the rate break
+   * the tie. Without this the headline card on a young game is always whatever got lucky.
+   */
+  const TIER_RANK: Record<SampleTier, number> = { Trending: 0, Emerging: 1, Established: 2 };
+
+  type Bucket = { key: string; label: string; attempts: number; yards: number; successes: number };
+
+  function bestOf(buckets: Bucket[]): Bucket | null {
+    let winner: Bucket | null = null;
+    for (const bucket of buckets) {
+      if (bucket.attempts <= 0) continue;
+      if (winner === null) {
+        winner = bucket;
+        continue;
+      }
+      const a = [
+        TIER_RANK[tierFor(bucket.attempts)],
+        bucket.yards / bucket.attempts,
+        bucket.attempts,
+      ];
+      const b = [
+        TIER_RANK[tierFor(winner.attempts)],
+        winner.yards / winner.attempts,
+        winner.attempts,
+      ];
+      if (a[0] > b[0] || (a[0] === b[0] && (a[1] > b[1] || (a[1] === b[1] && a[2] > b[2])))) {
+        winner = bucket;
+      }
+    }
+    return winner;
+  }
+
+  /**
+   * "9 attempts · 56% success". The noun is never pluralised by count, because the app's
+   * own `attemptDetail` does not pluralise it either.
+   */
+  function attemptDetail(bucket: Bucket, noun: string): string {
+    const attempts = `${bucket.attempts} ${noun}`;
+    if (bucket.attempts === 0) return attempts;
+    return `${attempts} · ${percent(bucket.successes / bucket.attempts)} success`;
+  }
 
   const offenseInsights: Insight[] = [];
-  let bestPlay: { id: string; label: string; attempts: number; yards: number; successes: number } | null = null;
-  for (const [id, tally] of byPlay) {
-    // Ties go to the play that has done it more often, so a single long run cannot outrank
-    // something the offense has actually established.
-    const average = tally.yards / tally.attempts;
-    const bestAverage = bestPlay ? bestPlay.yards / bestPlay.attempts : -Infinity;
-    if (average > bestAverage || (average === bestAverage && tally.attempts > (bestPlay?.attempts ?? 0))) {
-      bestPlay = { id, ...tally };
-    }
-  }
+
+  const bestPlay = bestOf(
+    [...byPlay].map(([key, tally]) => ({
+      key,
+      label: tally.label,
+      attempts: tally.attempts,
+      yards: tally.yards,
+      successes: tally.successes,
+    })),
+  );
   if (bestPlay) {
     offenseInsights.push({
       title: "Best play",
       subject: bestPlay.label,
       metric: `${oneDecimal(bestPlay.yards / bestPlay.attempts)} yds/play`,
-      detail: `${bestPlay.attempts} ${bestPlay.attempts === 1 ? "attempt" : "attempts"} · ${percent(
-        bestPlay.successes / bestPlay.attempts,
-      )} success`,
+      detail: attemptDetail(bestPlay, "attempts"),
       tier: tierFor(bestPlay.attempts),
     });
   }
-  let bestFormation: { label: string; plays: number; yards: number; successes: number } | null = null;
-  for (const [label, tally] of byFormation) {
-    const average = tally.yards / tally.plays;
-    const bestAverage = bestFormation ? bestFormation.yards / bestFormation.plays : -Infinity;
-    if (average > bestAverage || (average === bestAverage && tally.plays > (bestFormation?.plays ?? 0))) {
-      bestFormation = { label, ...tally };
-    }
-  }
+
+  const bestFormation = bestOf(
+    [...byFormation].map(([label, tally]) => ({
+      key: label,
+      label,
+      attempts: tally.plays,
+      yards: tally.yards,
+      successes: tally.successes,
+    })),
+  );
   if (bestFormation) {
     offenseInsights.push({
       title: "Best formation",
       subject: bestFormation.label,
-      metric: `${oneDecimal(bestFormation.yards / bestFormation.plays)} yds/play`,
-      detail: `${bestFormation.plays} ${playWord(bestFormation.plays)} · ${percent(
-        bestFormation.successes / bestFormation.plays,
-      )} success`,
-      tier: tierFor(bestFormation.plays),
-    });
-  }
-  const bestSide = ourSideRows
-    .filter((row) => row.carries > 0)
-    .sort((a, b) => b.average! - a.average! || b.carries - a.carries)[0];
-  if (bestSide) {
-    offenseInsights.push({
-      title: "Best attack area",
-      subject: `${bestSide.label} side`,
-      metric: `${oneDecimal(bestSide.average!)} yds/carry`,
-      detail: `${bestSide.carries} ${carryWord(bestSide.carries)} · ${percent(
-        bestSide.successes / bestSide.carries,
-      )} success`,
-      tier: tierFor(bestSide.carries),
+      metric: `${oneDecimal(bestFormation.yards / bestFormation.attempts)} yds/play`,
+      detail: attemptDetail(bestFormation, "plays"),
+      tier: tierFor(bestFormation.attempts),
     });
   }
 
-  const defenseInsights: Insight[] = [];
-  const theirBestSide = theirSideRows
-    .filter((row) => row.carries > 0)
-    .sort((a, b) => b.average! - a.average! || b.carries - a.carries)[0];
-  if (theirBestSide) {
-    defenseInsights.push({
-      title: "They run at",
-      subject: `${theirBestSide.label} side`,
-      metric: `${oneDecimal(theirBestSide.average!)} yds/carry`,
-      detail: `${theirBestSide.carries} ${carryWord(theirBestSide.carries)} that way`,
-      tier: tierFor(theirBestSide.carries),
+  const bestSide = bestOf(
+    ourSideRows.map((row) => ({
+      key: row.side,
+      label: `${row.label} side`,
+      attempts: row.carries,
+      yards: row.yards,
+      successes: row.successes,
+    })),
+  );
+  if (bestSide) {
+    offenseInsights.push({
+      title: "Best attack area",
+      subject: bestSide.label,
+      metric: `${oneDecimal(bestSide.yards / bestSide.attempts)} yds/carry`,
+      detail: attemptDetail(bestSide, "carries"),
+      tier: tierFor(bestSide.attempts),
     });
   }
-  let theirBestPlay: { label: string; attempts: number; yards: number } | null = null;
-  for (const tally of theirByPlay.values()) {
-    const average = tally.yards / tally.attempts;
-    const bestAverage = theirBestPlay ? theirBestPlay.yards / theirBestPlay.attempts : -Infinity;
-    if (average > bestAverage) theirBestPlay = tally;
+
+  // ---------------------------------------------------------------- their side of it
+  const defenseInsights: Insight[] = [];
+  const theirCarries = theirSideRows.reduce((sum, row) => sum + row.carries, 0);
+
+  // Where they go, as a plain count — no effectiveness claim, so no caveat needed.
+  const mostAttacked = theirSideRows
+    .filter((row) => row.carries > 0)
+    .reduce<SideRow | null>(
+      (best, row) => (best === null || row.carries > best.carries ? row : best),
+      null,
+    );
+  if (mostAttacked) {
+    defenseInsights.push({
+      title: "They run at",
+      subject: `${mostAttacked.label} side`,
+      metric: mostAttacked.average === null ? "—" : `${oneDecimal(mostAttacked.average)} yds/carry`,
+      detail: `${mostAttacked.carries} of ${theirCarries} carries`,
+      tier: tierFor(mostAttacked.carries),
+    });
   }
-  if (theirBestPlay) {
+
+  // The zone doing the most damage, sample size first so one long run cannot present itself
+  // as the whole problem. Suppressed when it names the zone the card above already named:
+  // over three zones the two questions land on the same answer often, and the same word
+  // under two headings reads as two findings when it is one.
+  const hurting = theirSideRows
+    .filter((row) => row.carries > 0 && row.side !== mostAttacked?.side)
+    .reduce<SideRow | null>((best, row) => {
+      if (best === null) return row;
+      const a = [TIER_RANK[tierFor(row.carries)], row.average ?? 0];
+      const b = [TIER_RANK[tierFor(best.carries)], best.average ?? 0];
+      return a[0] > b[0] || (a[0] === b[0] && a[1] > b[1]) ? row : best;
+    }, null);
+  if (hurting) {
+    const longest = theirLongestBySide.get(hurting.side);
     defenseInsights.push({
       title: "Hurting us most",
-      subject: theirBestPlay.label,
-      metric: `${oneDecimal(theirBestPlay.yards / theirBestPlay.attempts)} yds/play`,
-      detail: `${theirBestPlay.attempts} ${playWord(theirBestPlay.attempts)} against this front`,
-      tier: tierFor(theirBestPlay.attempts),
+      subject: `${hurting.label} side`,
+      metric: hurting.average === null ? "—" : `${oneDecimal(hurting.average)} yds/carry`,
+      detail: [`${hurting.carries} carries`, longest === undefined ? null : `long of ${longest}`]
+        .filter(Boolean)
+        .join(" · "),
+      tier: tierFor(hurting.carries),
+    });
+  }
+
+  // Which of our fronts has held up, over the calls we actually made from it. Fewest yards
+  // allowed wins, but only among the fronts with the most evidence behind them.
+  let bestFront: { label: string; snaps: number; allowed: number } | null = null;
+  for (const [label, tally] of theirFormationCalls) {
+    const allowed = frontYardsAllowed.get(label) ?? 0;
+    const candidate = { label, snaps: tally, allowed };
+    if (bestFront === null) {
+      bestFront = candidate;
+      continue;
+    }
+    const a = [TIER_RANK[tierFor(candidate.snaps)], -(candidate.allowed / candidate.snaps)];
+    const b = [TIER_RANK[tierFor(bestFront.snaps)], -(bestFront.allowed / bestFront.snaps)];
+    if (a[0] > b[0] || (a[0] === b[0] && a[1] > b[1])) bestFront = candidate;
+  }
+  if (bestFront) {
+    defenseInsights.push({
+      title: "Best front",
+      subject: bestFront.label,
+      metric: `${oneDecimal(bestFront.allowed / bestFront.snaps)} yds/play allowed`,
+      detail: `${bestFront.snaps} snaps`,
+      tier: tierFor(bestFront.snaps),
     });
   }
 

@@ -25,15 +25,15 @@ test("server-renders the GameDay Huddle marketing page", async () => {
   assert.match(html, /Your signal can drop/);
   assert.match(html, /Get the Android app/);
   assert.match(html, /application\/ld\+json/);
-  // The playable game-day screen server-renders its opening state: Quick Stats with
-  // nothing in it, the ball on the 25, and the six destinations to move between.
+  // The playable game-day screen server-renders a scrimmage already under way, so the
+  // analytics have something to say before the visitor has touched anything.
   assert.match(html, /id="demo"/);
   assert.match(html, /Record a drive/);
   assert.match(html, /Quick Stats/);
-  assert.match(html, /1st &amp; 10/);
-  assert.match(html, /Own 25/);
+  assert.match(html, /Blast 24/);
+  assert.match(html, /Riverside vs Northgate/);
   assert.match(html, /Offense Playbook/);
-  assert.match(html, /No plays recorded yet/);
+  assert.match(html, /THE EVERY-SNAP LOG/);
   assert.doesNotMatch(html, /Get the Android beta/i);
   assert.doesNotMatch(html, /stadium/i);
   assert.doesNotMatch(html, /Less tapping\. More coaching\./i);
@@ -239,10 +239,10 @@ test("the Live Demo page renders the playable recorder", async () => {
     "Live Demo",
     "Quick Stats",
     "Offense Playbook",
-    "1st &amp; 10",
-    "Own 25",
+    "THE EVERY-SNAP LOG",
+    "Blast 24",
     "Riverside vs Northgate",
-    "No plays recorded yet",
+    "Scrimmage",
     "What this demo is not",
   ]) assert.match(html, new RegExp(phrase, "i"));
   // The tab is in the primary navigation on every page, not just this one.

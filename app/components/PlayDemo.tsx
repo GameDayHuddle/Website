@@ -33,6 +33,17 @@ import {
   type TeamRef,
   type TurnoverType,
 } from "./demoFootball";
+import { DestinationMark } from "./DestinationMark";
+import {
+  CATALOGUE,
+  DEFENSE,
+  OFFENSE,
+  OPPONENT,
+  OUR_TEAM,
+  SAMPLE_GAME,
+  type Formation,
+  type Play,
+} from "./demoPlaybook";
 
 /**
  * The game-day screen, running in a browser.
@@ -51,69 +62,6 @@ import {
  * tablet, the Play Keeper seat, the jamboree, and the season that adds up behind the game.
  */
 
-const OUR_TEAM = "Riverside";
-const OPPONENT = "Northgate";
-
-type Play = {
-  id: string;
-  label: string;
-  category: Category;
-  /** The hole the play is designed to hit. Our runs only. */
-  gap: Gap | null;
-};
-
-type Formation = { id: string; label: string; note?: string; plays: Play[] };
-
-/** The offense a coach has authored in Play Maker, as the game-day sheet reads it back. */
-const OFFENSE: Formation[] = [
-  {
-    id: "i-form",
-    label: "I Form",
-    plays: [
-      { id: "blast-24", label: "Blast 24", category: "RUN", gap: "RIGHT_B" },
-      { id: "power-26", label: "Power 26", category: "RUN", gap: "RIGHT_C" },
-      { id: "iso-21", label: "Iso 21", category: "RUN", gap: "LEFT_A" },
-      { id: "play-action-deep", label: "Play Action Deep", category: "PASS", gap: null },
-      { id: "boot-right", label: "Boot Right", category: "PASS", gap: null },
-    ],
-  },
-  {
-    id: "trips-right",
-    label: "Trips Right",
-    plays: [
-      { id: "slant-right", label: "Slant Right", category: "PASS", gap: null },
-      { id: "quick-out", label: "Quick Out", category: "PASS", gap: null },
-      { id: "jet-28", label: "Jet 28", category: "RUN", gap: "RIGHT_D" },
-      { id: "draw-23", label: "Draw 23", category: "RUN", gap: "LEFT_B" },
-    ],
-  },
-  {
-    id: "spread",
-    label: "Spread",
-    plays: [
-      { id: "inside-zone-25", label: "Inside Zone 25", category: "RUN", gap: "LEFT_C" },
-      { id: "bubble-screen", label: "Bubble Screen", category: "PASS", gap: null },
-      { id: "four-verts", label: "Four Verts", category: "PASS", gap: null },
-    ],
-  },
-  {
-    id: "goal-line",
-    label: "Goal Line",
-    plays: [
-      { id: "dive-22", label: "Dive 22", category: "RUN", gap: "RIGHT_A" },
-      { id: "wedge-21", label: "Wedge 21", category: "RUN", gap: "LEFT_A" },
-      { id: "toss-27", label: "Toss 27", category: "RUN", gap: "LEFT_D" },
-    ],
-  },
-];
-
-/** The fronts. A defensive call is a front, and a front has no plays under it. */
-const DEFENSE: Formation[] = [
-  { id: "4-3", label: "4-3", note: "Default", plays: [] },
-  { id: "5-2", label: "5-2", plays: [] },
-  { id: "nickel", label: "Nickel", plays: [] },
-];
-
 const DIRECTIONS: { id: Location; label: string }[] = [
   { id: "LEFT", label: "Left" },
   { id: "MIDDLE", label: "Middle" },
@@ -128,13 +76,13 @@ type Destination =
   | "DEFENSE_ANALYTICS"
   | "WHITE_BOARD";
 
-const DESTINATIONS: { id: Destination; label: string; icon: string }[] = [
-  { id: "HOME", label: "Home", icon: "◻" },
-  { id: "OFFENSE_PLAYBOOK", label: "Offense Playbook", icon: "»" },
-  { id: "OFFENSIVE_ANALYTICS", label: "Offensive Analytics", icon: "▮▮" },
-  { id: "DEFENSE_PLAYBOOK", label: "Defense Playbook", icon: "«" },
-  { id: "DEFENSE_ANALYTICS", label: "Defense Analytics", icon: "▮▮" },
-  { id: "WHITE_BOARD", label: "White Board", icon: "▤" },
+const DESTINATIONS: { id: Destination; label: string }[] = [
+  { id: "HOME", label: "Home" },
+  { id: "OFFENSE_PLAYBOOK", label: "Offense Playbook" },
+  { id: "OFFENSIVE_ANALYTICS", label: "Offensive Analytics" },
+  { id: "DEFENSE_PLAYBOOK", label: "Defense Playbook" },
+  { id: "DEFENSE_ANALYTICS", label: "Defense Analytics" },
+  { id: "WHITE_BOARD", label: "White Board" },
 ];
 
 /** A call that has been made and is waiting on its result. */
@@ -165,7 +113,7 @@ function draftFor(call: Call): Draft {
 }
 
 export function PlayDemo() {
-  const [events, setEvents] = useState<GameEvent[]>([]);
+  const [events, setEvents] = useState<GameEvent[]>(SAMPLE_GAME);
   const [destination, setDestination] = useState<Destination>("HOME");
   const [call, setCall] = useState<Call | null>(null);
   const [openFormation, setOpenFormation] = useState<Formation | null>(null);
@@ -267,7 +215,7 @@ export function PlayDemo() {
   }
 
   function reset() {
-    setEvents([]);
+    setEvents(SAMPLE_GAME);
     setCall(null);
     setDraft(null);
     setRecording(false);
@@ -277,14 +225,6 @@ export function PlayDemo() {
   }
 
   const totalsLine = `${quickStats.offensivePlays.plays} off · ${quickStats.defensivePlays.plays} def · ${quickStats.penalties.plays} pen`;
-
-  const catalogue = OFFENSE.flatMap((formation) =>
-    formation.plays.map((play) => ({
-      playId: play.id,
-      playLabel: play.label,
-      formationLabel: formation.label,
-    })),
-  );
 
   const focused = destination !== "HOME";
   const screenName = DESTINATIONS.find((entry) => entry.id === destination)!.label;
@@ -491,8 +431,8 @@ export function PlayDemo() {
                     aria-current={entry.id === destination ? "page" : undefined}
                     onClick={() => setDestination(entry.id)}
                   >
-                    <span className="gd-nav-icon" aria-hidden="true">
-                      {entry.icon}
+                    <span className="gd-nav-icon">
+                      <DestinationMark destination={entry.id} />
                     </span>
                     <span className="gd-nav-label">{entry.label}</span>
                   </button>
@@ -507,10 +447,7 @@ export function PlayDemo() {
                     fills in from what you record.
                   </p>
                 ) : (
-                  <RecentLog
-                    rows={derived.rows}
-                    onRemove={removeEvent}
-                  />
+                  <RecentLog rows={derived.rows} onRemove={removeEvent} />
                 )}
               </div>
             </div>
@@ -581,7 +518,7 @@ export function PlayDemo() {
       {dialog === "SUGGEST" && (
         <SuggestDialog
           derived={derived}
-          catalogue={catalogue}
+          catalogue={CATALOGUE}
           situation={live.situation}
           possession={live.possession}
           onClose={() => setDialog(null)}
