@@ -22,7 +22,7 @@ export default function Home() {
       "Youth football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
     offers: [
       { "@type": "Offer", name: "Coach", price: "99", priceCurrency: "USD", description: "One team, 5 months" },
-      { "@type": "Offer", name: "Organization", price: "399", priceCurrency: "USD", description: "Unlimited teams, 12 months" },
+      { "@type": "Offer", name: "Organization", price: "399", priceCurrency: "USD", description: "Up to 10 teams, 5 months" },
     ],
   };
 
@@ -159,9 +159,9 @@ export default function Home() {
               <small>Covers a full season on one team.</small>
             </article>
             <article className="price-card org-price">
-              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Every team in your youth club or league.</p></div>
-              <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
-              <ul><li>Everything in Coach</li><li>Unlimited teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
+              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Up to ten teams in your youth club or league.</p></div>
+              <div className="price-value"><strong>$399</strong><span>up to 10 teams<br />5 months</span></div>
+              <ul><li>Everything in Coach</li><li>Up to 10 teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
               <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>
               <small>Organization plans are set up directly with us.</small>
             </article>

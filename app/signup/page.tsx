@@ -52,7 +52,7 @@ export default function SignupPage() {
         </div>
         <p className="signup-returning-note">So send the code to us instead: <a href="/contact">tell us your email and the new code</a> and we will put you back on your head coach&apos;s team. Same account, same email, new season.</p>
       </div>
-      <p className="signup-footnote">Running a multi-team program? The Organization plan covers unlimited teams for a year &mdash; <a href="/contact?topic=organization">tell us about your program</a>, or <a href="/download">download the app</a> to see it before you commit.</p>
+      <p className="signup-footnote">Running a multi-team program? The Organization plan covers up to 10 teams for five months &mdash; <a href="/contact?topic=organization">tell us about your program</a>, or <a href="/download">download the app</a> to see it before you commit.</p>
     </section>
   </main><MarketingFooter /></div>;
 }

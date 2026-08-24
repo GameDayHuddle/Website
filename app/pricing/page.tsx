@@ -3,7 +3,7 @@ import { CheckoutButton } from "../components/CheckoutButton";
 import { MarketingFooter } from "../components/MarketingFooter";
 import { MarketingHeader } from "../components/MarketingHeader";
 
-export const metadata: Metadata = { title: "Pricing | GameDay Huddle", description: "GameDay Huddle plans for youth football: $99 for one team for 5 months, $399 for unlimited teams for 12 months." };
+export const metadata: Metadata = { title: "Pricing | GameDay Huddle", description: "GameDay Huddle plans for youth football: $99 for one team for 5 months, $399 for up to 10 teams for 5 months." };
 
 export default function PricingPage() {
   return (
@@ -33,11 +33,11 @@ export default function PricingPage() {
             </article>
 
             <article className="price-card org-price">
-              <div className="price-top"><span>FOR YOUTH CLUBS &amp; LEAGUES</span><b>Organization</b><p>Every team in your program, under one plan.</p></div>
-              <div className="price-value"><strong>$399</strong><span>unlimited teams<br />12 months</span></div>
+              <div className="price-top"><span>FOR YOUTH CLUBS &amp; LEAGUES</span><b>Organization</b><p>Up to ten teams in your program, under one plan.</p></div>
+              <div className="price-value"><strong>$399</strong><span>up to 10 teams<br />5 months</span></div>
               <ul>
                 <li>Everything in Coach</li>
-                <li>Unlimited teams under one plan</li>
+                <li>Up to 10 teams under one plan</li>
                 <li>Central team and billing administration</li>
                 <li>Organization player identity</li>
                 <li>Rollout and coach onboarding</li>
@@ -58,7 +58,7 @@ export default function PricingPage() {
             </details>
             <details>
               <summary>How many teams does the Organization plan include?</summary>
-              <p>Unlimited teams for twelve months at $399. One price covers the whole youth club or league, however many teams you add.</p>
+              <p>Up to ten teams for five months at $399. One price covers your whole youth club or league &mdash; add teams up to the ten the plan includes.</p>
             </details>
             <details>
               <summary>What happens to my playbook when the term ends?</summary>
@@ -69,8 +69,8 @@ export default function PricingPage() {
               <p>The Coach plan is built for one head coach and the coaches they invite. The product does not sell per-player seats.</p>
             </details>
             <details>
-              <summary>Can I update or cancel online?</summary>
-              <p>Yes. The customer portal links securely to Stripe for payment method updates, invoices, and cancellation.</p>
+              <summary>Can I cancel or get a refund?</summary>
+              <p>No. Both plans are paid once, up front, for a fixed five-month term. Nothing renews and nothing is charged again, so there is no subscription to cancel &mdash; and payments are not refundable. Try it first: the app is a free download and the demo runs in your browser.</p>
             </details>
             <details>
               <summary>Is there an iPhone version?</summary>

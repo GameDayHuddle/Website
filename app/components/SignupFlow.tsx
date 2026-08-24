@@ -414,9 +414,9 @@ export function SignupFlow() {
             <span className="signup-badge"><SignupIcon name="people" /></span>
             <span className="section-kicker">Organization</span>
             <h3>A program with staff</h3>
-            <p>The organization owns the subscription and the billing, then invites each head coach to a team under it.</p>
+            <p>The organization owns the plan and the billing, then invites each head coach to a team under it.</p>
             <ul>
-              <li>One subscription covering every team</li>
+              <li>One plan covering up to ten teams</li>
               <li>Invite head coaches by email to join it</li>
               <li>Each coach signs in on their own tablet</li>
             </ul>
