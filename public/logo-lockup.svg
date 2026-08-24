@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 18 72 72" width="512" height="512" role="img" aria-label="GameDay Huddle">
-  <rect x="18" y="18" width="72" height="72" rx="16" fill="#12284b"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 480" width="1560" height="480" role="img" aria-label="GameDay Huddle">
+  <rect width="1560" height="480" rx="56" fill="#12284b"/>
+  <g transform="translate(-82.41 -129.38) scale(6.8966)">
   <path fill="#ffffff" d="M27.9,64 C28.4,48.8 39.8,37.9 54,37.9 C65.4,37.9 73.5,41.5 78.7,48.8 C73.5,44.5 64.5,40.5 54,40.5 C41.2,40.5 32.5,49.3 32.2,64 Z"/>
   <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round">
     <path d="M48.8,38 L48.8,44.7"/>
@@ -15,4 +16,6 @@
     <path d="M74,56.4 h3.8 v12.8 h-3.8 z"/>
     <path d="M79.2,49.3 h3.8 v19.9 h-3.8 z"/>
   </g>
+  </g>
+  <text x="550" y="290" font-family="Arial, Helvetica, sans-serif" font-size="118" font-weight="700" letter-spacing="-2" fill="#ffffff">GameDay <tspan fill="#3aa935">Huddle</tspan></text>
 </svg>
