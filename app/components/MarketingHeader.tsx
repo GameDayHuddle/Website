@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Brand } from "./Brand";
 
 const links = [
-  ["Product", "/#workflow"],
+  ["Home", "/"],
   ["Live Demo", "/demo"],
   ["Pricing", "/pricing"],
   ["About", "/about"],
