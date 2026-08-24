@@ -69,8 +69,8 @@ export default function PricingPage() {
               <p>The Coach plan is built for one head coach and the coaches they invite. The product does not sell per-player seats.</p>
             </details>
             <details>
-              <summary>Can I cancel or get a refund?</summary>
-              <p>No. Both plans are paid once, up front, for a fixed five-month term. Nothing renews and nothing is charged again, so there is no subscription to cancel &mdash; and payments are not refundable. Try it first: the app is a free download and the demo runs in your browser.</p>
+              <summary>Can I get a refund?</summary>
+              <p>Within the first 14 days, yes &mdash; every purchase carries a 14-day money-back guarantee, refunded in full, no questions asked. After 14 days payments are not refundable: both plans are paid once, up front, for a fixed five-month term, nothing renews, and nothing is charged again. Try before you buy, too: the app is a free download and the demo runs in your browser.</p>
             </details>
             <details>
               <summary>Is there an iPhone version?</summary>
