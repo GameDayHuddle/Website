@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CheckoutButton } from "../components/CheckoutButton";
+import { TabletOrderCard } from "../components/TabletOrderCard";
 import { MarketingFooter } from "../components/MarketingFooter";
 import { MarketingHeader } from "../components/MarketingHeader";
 
@@ -47,6 +48,8 @@ export default function PricingPage() {
             </article>
           </div>
         </section>
+
+        <TabletOrderCard />
 
         <section className="faq-section section-shell">
           <p className="section-kicker">Common questions</p>

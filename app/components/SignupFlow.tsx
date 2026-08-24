@@ -153,13 +153,23 @@ export function SignupFlow() {
     setCodeError("");
   }
 
+  // The combined order (three self-serve shapes: licence only, licence plus
+  // tablets, tablets only). The licence box unchecks itself when an access
+  // code is typed — the code already covers the season — and the server minting
+  // the checkout is what keeps the money addressed by us, not the browser.
+  const [buyLicence, setBuyLicence] = useState(true);
+  const [tablets, setTablets] = useState(0);
+  const [codeTyped, setCodeTyped] = useState(false);
+  const licenceOn = buyLicence && !codeTyped;
+  const orderTotal = (licenceOn ? 99 : 0) + tablets * 100;
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (sending) return;
 
     const form = new FormData(event.currentTarget);
     const password = String(form.get("password") ?? "");
-    const payload: Record<string, string> = {
+    const payload: Record<string, unknown> = {
       accountType: "coach",
       displayName: String(form.get("displayName") ?? "").trim(),
       email: String(form.get("email") ?? "").trim(),
@@ -196,6 +206,11 @@ export function SignupFlow() {
       payload.name = String(form.get("name") ?? "").trim();
       const accessCode = String(form.get("accessCode") ?? "").trim();
       if (accessCode) payload.accessCode = accessCode;
+      // The order rides the same request; a server that predates it simply
+      // ignores the field and the account is created without a checkout.
+      if ((licenceOn && !accessCode) || tablets > 0) {
+        payload.order = { coach: licenceOn && !accessCode, tablets };
+      }
     }
 
     setSending(true);
@@ -211,12 +226,21 @@ export function SignupFlow() {
         teamName?: string;
         entitlement?: string;
         paidThrough?: string | null;
+        checkoutUrl?: string | null;
         error?: string;
         code?: string;
       };
       if (response.status === 201 && data.teamId) {
+        // Money next, account done: the server minted a Stripe checkout for
+        // the order, and the card is typed there, never here. The account
+        // survives an abandoned checkout — the app's own Buy button remains.
+        if (typeof data.checkoutUrl === "string" && data.checkoutUrl.startsWith("https://checkout.stripe.com/")) {
+          window.location.assign(data.checkoutUrl);
+          return;
+        }
         setResult({
           door,
+          orderHeld: Boolean(payload.order),
           teamName: data.teamName ?? "",
           entitlement: data.entitlement ?? "none",
           paidThrough: data.paidThrough ?? null,
@@ -246,6 +270,9 @@ export function SignupFlow() {
           <span className="section-kicker">{joined ? "You are on the staff" : "Account created"}</span>
           <h2>{joined ? `You joined ${result.teamName || "the team"} as a coach.` : "Your account is ready."}</h2>
           {joined && <p className="signup-joined">You did not start a team &mdash; you are a coach on that one. The head coach owns the playbook, the roster, and the season.</p>}
+          {!joined && result.orderHeld && (
+            <p className="signup-covered">Checkout isn&apos;t open on the website yet &mdash; your order wasn&apos;t charged. Buy the season (and tablets) from Billing inside the app.</p>
+          )}
           {!joined && result.entitlement === "active" && result.paidThrough && (
             <p className="signup-covered">Your access code covered the first year &mdash; good through {plainDate(result.paidThrough)}.</p>
           )}
@@ -364,9 +391,41 @@ export function SignupFlow() {
                 </label>
                 <label>
                   <span>Access code (optional)</span>
-                  <input name="accessCode" autoComplete="off" placeholder="Leave blank if you weren't given one" />
+                  <input name="accessCode" autoComplete="off" placeholder="Leave blank if you weren't given one" onChange={(e) => setCodeTyped(e.currentTarget.value.trim().length > 0)} />
                   <small>Given to this season&apos;s founding coaches and programs &mdash; it covers your first year.</small>
                 </label>
+
+                <fieldset className="signup-order">
+                  <legend>Your order &mdash; one payment, on Stripe&apos;s secure page</legend>
+                  <div className="signup-order-line">
+                    <input
+                      aria-label="Buy the Coach licence, $99"
+                      type="checkbox"
+                      checked={licenceOn}
+                      disabled={codeTyped}
+                      onChange={(e) => setBuyLicence(e.currentTarget.checked)}
+                    />
+                    <span><b>Coach licence &mdash; $99</b><small>{codeTyped ? "Covered by your access code." : "One team, five months from the day you pay. Nothing renews on its own."}</small></span>
+                  </div>
+                  <div className="signup-order-line">
+                    <span className="signup-order-qty">
+                      <b>GameDay Huddle Tablet &mdash; $100 each</b>
+                      <small>Set up for game day. Optional &mdash; the app runs on any compatible Android tablet. Shipping is added at checkout.</small>
+                    </span>
+                    <select
+                      aria-label="How many tablets"
+                      value={tablets}
+                      onChange={(e) => setTablets(Number(e.currentTarget.value))}
+                    >
+                      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>{n === 0 ? "None" : String(n)}</option>)}
+                    </select>
+                  </div>
+                  <p className="signup-order-total" aria-live="polite">
+                    {orderTotal > 0
+                      ? <>Due at checkout: <b>${orderTotal}</b>{tablets > 0 ? " + shipping" : ""}</>
+                      : <>Nothing due now &mdash; you can buy the season later, inside the app.</>}
+                  </p>
+                </fieldset>
               </>
             )}
 
