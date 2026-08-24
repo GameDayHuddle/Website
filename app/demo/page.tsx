@@ -4,9 +4,9 @@ import { MarketingHeader } from "../components/MarketingHeader";
 import { PlayDemo } from "../components/PlayDemo";
 
 export const metadata: Metadata = {
-  title: "Live Demo | Record a Drive in GameDay Huddle",
+  title: "Live Demo | Run a Game in GameDay Huddle",
   description:
-    "Call a play, record where the ball ended, and watch GameDay Huddle derive the down, the distance and every number on the panel. No install, no account.",
+    "The game-day screen itself, running in your browser. Call plays off the sheet, record every snap, read the live analytics, and correct the chains — no install, no account.",
 };
 
 export default function DemoPage() {
@@ -17,12 +17,12 @@ export default function DemoPage() {
         <section className="subpage-hero section-shell">
           <p className="section-kicker">Live demo</p>
           <h1>
-            Call a play. <em>See what the app does with it.</em>
+            This is the screen. <em>Run a game on it.</em>
           </h1>
           <p>
-            This is the game-day screen, running in your browser. Nothing to install, no account, no
-            card. Call a play off the sample playbook, say where the ball ended, and every number
-            beside it works itself out from the entries you made.
+            Not a picture of the app and not a walkthrough — the game-day screen rebuilt to run in a
+            browser, with the same game bar, the same six tabs, the same two-step call, the same
+            result sheet and the same numbers underneath. Nothing to install, no account, no card.
           </p>
         </section>
 
@@ -32,21 +32,21 @@ export default function DemoPage() {
           <div className="demo-caveats">
             <b>What this demo is not</b>
             <p>
-              It records our own offense against a sample opponent, on a sample playbook. The real app
-              also records the defensive series, special teams, penalties and the try after a
-              touchdown, and it corrects the chains, the score and possession behind confirm-first
-              doors. It runs a game with no signal, on a tablet, with a second tablet recording beside
-              it. And it never records player statistics—team-level only, on purpose.
+              It is the game-day screen only. The app around it is where a coach builds the playbook
+              in Play Maker, sets the depth chart, keeps the roster and the schedule, and reads the
+              season the games add up to. On a tablet this screen also runs with no signal at all, and
+              a second tablet can record beside it over a direct link. And it never records player
+              statistics—team-level only, on purpose.
             </p>
           </div>
         </section>
 
         <section className="statement section-shell">
           <p className="section-kicker">What you are actually looking at</p>
-          <h2>Three things worth noticing.</h2>
+          <h2>Five things worth noticing.</h2>
           <p className="section-intro">
-            The demo is small, but it is not a mock-up. It follows the same rules the app follows, for
-            the same reasons.
+            The demo is a small game, but it is not a mock-up. It follows the same rules the app
+            follows, for the same reasons.
           </p>
           <div className="workflow-grid">
             <article>
@@ -54,9 +54,9 @@ export default function DemoPage() {
               <b>01</b>
               <h3>Delete something</h3>
               <p>
-                Take any entry out of the log and watch the play beneath it re-file itself into a
-                different down and distance. Nothing is counted up as it arrives, so a correction is
-                never a second place the numbers can be wrong.
+                Take any entry out of the log on Home and watch the play beneath it re-file itself
+                into a different down, a different distance and a different spot. Nothing is counted
+                up as it arrives, so a correction is never a second place the numbers can be wrong.
               </p>
             </article>
             <article>
@@ -70,13 +70,33 @@ export default function DemoPage() {
               </p>
             </article>
             <article>
-              <span>EVIDENCE, NOT CONFIDENCE</span>
+              <span>THE HOLE IS OURS ALONE</span>
               <b>03</b>
+              <h3>Ask only what can be seen</h3>
+              <p>
+                Our own carry records the hole it hit, drawn across the front between the men who
+                block it. Their carry records left, middle or right and nothing finer — nobody can
+                call a gap on somebody else&rsquo;s front from a sideline, so the app never asks.
+              </p>
+            </article>
+            <article>
+              <span>EVIDENCE, NOT CONFIDENCE</span>
+              <b>04</b>
               <h3>Small samples say so</h3>
               <p>
-                One carry for twelve yards is labelled Trending, not proof. Every &ldquo;best&rdquo;
-                the app shows carries how much is behind it, because a number that hides its sample
-                size is a number that will get somebody beaten on Friday.
+                One carry for twelve yards is labelled <b>Trending</b>, not proof. Every
+                &ldquo;best&rdquo; on the analytics tab carries how much is behind it, and Suggest a
+                play will tell you plainly when nothing has been called twice yet.
+              </p>
+            </article>
+            <article>
+              <span>OVERRIDE BEATS PRECISION</span>
+              <b>05</b>
+              <h3>Overrule the app</h3>
+              <p>
+                Tap the down and distance in the bar, or either score. The chains, the scoreboard and
+                possession each open a door that overwrites the app&rsquo;s answer with yours — and
+                says out loud that it fixes the number, not the plays already recorded.
               </p>
             </article>
           </div>
@@ -87,7 +107,7 @@ export default function DemoPage() {
             <span className="section-kicker">Ready for a real game</span>
             <h2>The tablet version records the whole game, with or without a signal.</h2>
             <p>
-              Offense and defense, special teams, penalties, two tablets recording together over a
+              The same screen, plus the playbook that feeds it, two tablets recording together over a
               direct link, and a season that adds up behind it. Install it straight from this site.
             </p>
             <a className="button" href="/download">

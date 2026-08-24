@@ -104,10 +104,11 @@ export default function Home() {
             </div>
             <div>
               <p>
-                This is the game-day screen, playable in your browser. Call a play, say where the ball
-                ended, and the app derives the rest—gain, down, distance, and every number on the panel.
-                Nothing is counted up as it arrives. Delete an entry and the whole game re-derives around
-                the hole it leaves.
+                This is the game-day screen itself, playable in your browser—the same bar, the same six
+                tabs, the same call and the same result sheet. Call a play, say where the ball ended, and
+                the app derives the rest: gain, down, distance, and every number on the panel. Nothing is
+                counted up as it arrives. Delete an entry and the whole game re-derives around the hole
+                it leaves.
               </p>
             </div>
           </div>
@@ -117,11 +118,11 @@ export default function Home() {
           <div className="demo-caveats">
             <b>What this demo is not</b>
             <p>
-              It records our own offense against a sample opponent, on a sample playbook. The real app
-              also records the defensive series, special teams, penalties and the try after a touchdown,
-              and it corrects the chains, the score and possession behind confirm-first doors. It runs
-              a game with no signal, on a tablet, with a second tablet recording beside it. And it never
-              records player statistics—team-level only, on purpose.
+              It runs on a sample playbook against a sample opponent, and it is the game-day screen
+              only—the app around it holds Play Maker, the roster, the depth chart, the schedule and the
+              season. On a tablet this screen also runs with no signal at all, with a second tablet
+              recording beside it over a direct link. And it never records player statistics—team-level
+              only, on purpose.
             </p>
           </div>
         </section>
