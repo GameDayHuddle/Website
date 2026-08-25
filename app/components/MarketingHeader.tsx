@@ -34,6 +34,12 @@ export function MarketingHeader() {
               {label}
             </a>
           ))}
+          <a
+            href="https://mango-moss-08901150f.7.azurestaticapps.net"
+            onClick={() => setOpen(false)}
+          >
+            Sign in
+          </a>
           <a className="button button-small" href="/signup" onClick={() => setOpen(false)}>
             Sign up
           </a>
