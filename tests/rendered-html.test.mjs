@@ -88,6 +88,24 @@ test("signup page renders a working account form instead of the opens-soon banne
   assert.doesNotMatch(html, /<button[^>]*\sdisabled/i);
   // The signup form only ever creates a coach account now.
   assert.doesNotMatch(html, /Program name/i);
+  // The found door asks where the team plays. The state is picked, never typed:
+  // the request carries a USPS code, and counting teams by state depends on
+  // every Texas team saying "TX" rather than a spelling.
+  assert.match(html, /<input(?=[^>]*\srequired)[^>]*name="town"/);
+  assert.match(html, /<select(?=[^>]*\srequired)[^>]*name="state"/);
+  const stateStart = html.indexOf('name="state"');
+  const statePicker = html.slice(stateStart, html.indexOf("</select>", stateStart));
+  // The whole USPS set, not a count: a count of 51 survives a pasted duplicate
+  // that displaced a real state, and Kentucky coaches would have nothing to pick.
+  const stateCodes = [...statePicker.matchAll(/<option[^>]*value="([A-Z]{2})"/g)].map((m) => m[1]);
+  assert.deepEqual(
+    stateCodes,
+    ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN",
+     "IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH",
+     "NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT",
+     "VT","VA","WA","WV","WI","WY"],
+    "fifty states and the District of Columbia, in the order the picker shows them",
+  );
 });
 
 test("a returning coach is sent to a door that exists, not to a field the app hasn't got", async () => {

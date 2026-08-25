@@ -18,6 +18,25 @@ const SIGNUP_URL = `${
 }/signup`;
 const CODE_LENGTH = 12;
 
+// The fifty states and DC, filed under their USPS codes. The code is what the
+// request carries: counting teams by state only works if every Texas team says
+// "TX", not however its coach spelt it.
+const STATES: [string, string][] = [
+  ["AL", "Alabama"], ["AK", "Alaska"], ["AZ", "Arizona"], ["AR", "Arkansas"],
+  ["CA", "California"], ["CO", "Colorado"], ["CT", "Connecticut"], ["DE", "Delaware"],
+  ["DC", "District of Columbia"], ["FL", "Florida"], ["GA", "Georgia"], ["HI", "Hawaii"],
+  ["ID", "Idaho"], ["IL", "Illinois"], ["IN", "Indiana"], ["IA", "Iowa"],
+  ["KS", "Kansas"], ["KY", "Kentucky"], ["LA", "Louisiana"], ["ME", "Maine"],
+  ["MD", "Maryland"], ["MA", "Massachusetts"], ["MI", "Michigan"], ["MN", "Minnesota"],
+  ["MS", "Mississippi"], ["MO", "Missouri"], ["MT", "Montana"], ["NE", "Nebraska"],
+  ["NV", "Nevada"], ["NH", "New Hampshire"], ["NJ", "New Jersey"], ["NM", "New Mexico"],
+  ["NY", "New York"], ["NC", "North Carolina"], ["ND", "North Dakota"], ["OH", "Ohio"],
+  ["OK", "Oklahoma"], ["OR", "Oregon"], ["PA", "Pennsylvania"], ["RI", "Rhode Island"],
+  ["SC", "South Carolina"], ["SD", "South Dakota"], ["TN", "Tennessee"], ["TX", "Texas"],
+  ["UT", "Utah"], ["VT", "Vermont"], ["VA", "Virginia"], ["WA", "Washington"],
+  ["WV", "West Virginia"], ["WI", "Wisconsin"], ["WY", "Wyoming"],
+];
+
 // Which door the coach came through. Founding a team and joining one are the
 // same request with one field swapped, so they are one form, not two pages.
 type Door = "found" | "join";
@@ -204,6 +223,10 @@ export function SignupFlow() {
       payload.inviteCode = code;
     } else {
       payload.name = String(form.get("name") ?? "").trim();
+      // Where the team plays, asked only at this door — an invited coach lands
+      // on a team that already has a place. The state rides as its USPS code.
+      payload.town = String(form.get("town") ?? "").trim();
+      payload.state = String(form.get("state") ?? "").trim();
       const accessCode = String(form.get("accessCode") ?? "").trim();
       if (accessCode) payload.accessCode = accessCode;
       // The order rides the same request; a server that predates it simply
@@ -389,6 +412,21 @@ export function SignupFlow() {
                   <span>Team name</span>
                   <input ref={teamNameRef} name="name" required placeholder="Riverside Ravens" />
                 </label>
+                <div className="signup-place">
+                  <label>
+                    <span>Town</span>
+                    <input name="town" required autoComplete="address-level2" placeholder="Riverside" />
+                  </label>
+                  <label>
+                    <span>State</span>
+                    <select name="state" required autoComplete="address-level1" defaultValue="">
+                      <option value="" disabled>Choose&hellip;</option>
+                      {STATES.map(([code, name]) => (
+                        <option key={code} value={code}>{name}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
                 <label>
                   <span>Access code (optional)</span>
                   <input name="accessCode" autoComplete="off" placeholder="Leave blank if you weren't given one" onChange={(e) => setCodeTyped(e.currentTarget.value.trim().length > 0)} />
