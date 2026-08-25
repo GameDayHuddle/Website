@@ -1,10 +1,10 @@
 {
   "huddle": {
-    "version": "1.1.0",
-    "versionCode": 171,
-    "file": "GameDay-Huddle-1.1.0-b171.apk",
+    "version": "1.2.0",
+    "versionCode": 238,
+    "file": "GameDay-Huddle-1.2.0-b238.apk",
     "sizeMb": "3.9",
-    "sha256": "88716bde1852386f5c29609b91f9cc31f696c2b7acf2807dc2470dbf90aae3a2",
-    "notes": "GameDay Huddle 1.1.0 — adds the Jamboree game type. Start a jamboree from the New game sheet: play it as segments with a planned snap count instead of quarters and downs, with every touchdown worth seven flat. Both go in the stats; neither counts toward the season record."
+    "sha256": "04f570886e18b30f52cda91dfad852e19ce1f5a9d540bccaf2f0de16fb07ad7f",
+    "notes": "GameDay Huddle 1.2.0 — brings billing to the tablet. Buy your team's season term right from the Billing screen and it unlocks on the spot; a term bought early stacks onto the end of the current one. Forgot your password? Reset it from the sign-in screen with a code sent to your email. When a season ends, a fresh invite code takes you straight back to your team, and signing out now backs your work up to the cloud first — and says so plainly if it could not."
   }
 }
