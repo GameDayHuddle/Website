@@ -6,7 +6,6 @@ import { Brand } from "./Brand";
 const links = [
   ["Home", "/"],
   ["Live Demo", "/demo"],
-  ["Pricing", "/pricing"],
   ["About", "/about"],
   ["Download", "/download"],
 ];

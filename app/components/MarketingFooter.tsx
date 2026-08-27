@@ -11,7 +11,6 @@ export function MarketingFooter() {
         <div>
           <h3>Product</h3>
           <a href="/#workflow">Features</a>
-          <a href="/pricing">Pricing</a>
           <a href="/download">Android download</a>
           <a href="/signup">Sign up</a>
         </div>

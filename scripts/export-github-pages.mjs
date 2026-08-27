@@ -10,7 +10,6 @@ const pages = [
   ["/", "index.html"],
   ["/about", "about/index.html"],
   ["/demo", "demo/index.html"],
-  ["/pricing", "pricing/index.html"],
   ["/download", "download/index.html"],
   ["/signup", "signup/index.html"],
   ["/contact", "contact/index.html"],

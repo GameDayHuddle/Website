@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { CheckoutButton } from "./components/CheckoutButton";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
 import { PlayDemo } from "./components/PlayDemo";
@@ -20,10 +19,6 @@ export default function Home() {
     operatingSystem: "Android",
     description:
       "Youth football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
-    offers: [
-      { "@type": "Offer", name: "Coach", price: "99", priceCurrency: "USD", description: "One team, 5 months" },
-      { "@type": "Offer", name: "Organization", price: "399", priceCurrency: "USD", description: "Up to 10 teams, 5 months" },
-    ],
   };
 
   return (
@@ -38,7 +33,7 @@ export default function Home() {
               GameDay Huddle is built for youth football and nothing else—so a volunteer staff can call, record, and learn from every snap without losing the game to a spreadsheet.
             </p>
             <div className="hero-actions">
-              <a className="button" href="#pricing">See pricing <span>→</span></a>
+              <a className="button" href="/signup">Create your account <span>→</span></a>
               <a className="button button-ghost" href="#product-tour">See the game flow</a>
             </div>
             <div className="hero-notes" aria-label="Product highlights">
@@ -145,7 +140,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="pricing-section section-shell" id="pricing">
+        <section className="pricing-section section-shell" id="whats-included">
           <div className="pricing-heading">
             <p className="section-kicker">Simple paths for every program</p>
             <h2>One team or<br />the whole organization.</h2>
@@ -153,15 +148,13 @@ export default function Home() {
           <div className="pricing-grid">
             <article className="price-card coach-price">
               <div className="price-top"><span>FOR INDIVIDUAL TEAMS</span><b>Coach</b><p>One head coach and the staff they invite.</p></div>
-              <div className="price-value"><strong>$99</strong><span>one team<br />5 months</span></div>
               <ul><li>Playbook and call sheets</li><li>Game-day calling and recording</li><li>Play Keeper staff connection</li><li>Roster, depth chart, and schedule</li><li>Game and season analytics</li></ul>
-              <CheckoutButton plan="coach">Get Coach</CheckoutButton>
-              <small>Covers a full season on one team.</small>
+              <div className="checkout-action"><a className="button button-wide" href="/signup">Create your account</a></div>
+              <small>Everything a head coach needs for a full season.</small>
             </article>
             <article className="price-card org-price">
               <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Up to ten teams in your youth club or league.</p></div>
-              <div className="price-value"><strong>$399</strong><span>up to 10 teams<br />5 months</span></div>
-              <ul><li>Everything in Coach</li><li>Up to 10 teams under one plan</li><li>Central team and billing administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
+              <ul><li>Everything in Coach</li><li>Up to 10 teams under one plan</li><li>Central team administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
               <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>
               <small>Organization plans are set up directly with us.</small>
             </article>

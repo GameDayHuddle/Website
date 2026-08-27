@@ -8,10 +8,9 @@ import { SignupIcon, type SignupIconName } from "./SignupIcons";
 // against the dev sandbox — a sign-up creates a real account in a real
 // directory, and trying the join-a-team door against production would leave one
 // behind every time somebody checked the wording.
-// Its own setting rather than the shared NEXT_PUBLIC_API_BASE_URL, which also
-// decides whether the pricing page shows live checkout buttons or the static
-// fallbacks GitHub Pages needs. Pointing sign-up at dev should not turn on a
-// checkout that answers 503.
+// Its own setting rather than the shared NEXT_PUBLIC_API_BASE_URL, which the
+// retired checkout used. Sign-up is the last thing on this site that talks to
+// the API at all, and it takes no money: the app is free (27 Aug 2026).
 const SIGNUP_URL = `${
   process.env.NEXT_PUBLIC_SIGNUP_API_BASE?.replace(/\/$/, "") ||
   "https://func-huddle-prod-idqzc6gkjd2cc.azurewebsites.net/api"
@@ -44,8 +43,6 @@ type Door = "found" | "join";
 interface SignupResult {
   door: Door;
   teamName: string;
-  entitlement: string;
-  paidThrough: string | null;
 }
 
 // What the account actually opens onto. Every line here is something the app
@@ -69,12 +66,6 @@ const CODE_REFUSAL = /invite code|coach code/i;
 
 function refusesTheCode(refusal: string, reason?: string) {
   return reason === "season_over" || CODE_REFUSAL.test(refusal);
-}
-
-function plainDate(iso: string) {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return iso;
-  return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
 // A coach code is twelve digits read off a text message. Only digits survive
@@ -172,15 +163,10 @@ export function SignupFlow() {
     setCodeError("");
   }
 
-  // The combined order (three self-serve shapes: licence only, licence plus
-  // tablets, tablets only). The licence box unchecks itself when an access
-  // code is typed — the code already covers the season — and the server minting
-  // the checkout is what keeps the money addressed by us, not the browser.
-  const [buyLicence, setBuyLicence] = useState(true);
-  const [tablets, setTablets] = useState(0);
-  const [codeTyped, setCodeTyped] = useState(false);
-  const licenceOn = buyLicence && !codeTyped;
-  const orderTotal = (licenceOn ? 99 : 0) + tablets * 100;
+  // The order step is gone (27 Aug 2026): the app is free, so sign-up creates an
+  // account and nothing else. The access code below still rides along — it is how
+  // an account records which programme it came in on, and that trail outlives the
+  // prices it used to unlock.
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -229,11 +215,6 @@ export function SignupFlow() {
       payload.state = String(form.get("state") ?? "").trim();
       const accessCode = String(form.get("accessCode") ?? "").trim();
       if (accessCode) payload.accessCode = accessCode;
-      // The order rides the same request; a server that predates it simply
-      // ignores the field and the account is created without a checkout.
-      if ((licenceOn && !accessCode) || tablets > 0) {
-        payload.order = { coach: licenceOn && !accessCode, tablets };
-      }
     }
 
     setSending(true);
@@ -254,20 +235,11 @@ export function SignupFlow() {
         code?: string;
       };
       if (response.status === 201 && data.teamId) {
-        // Money next, account done: the server minted a Stripe checkout for
-        // the order, and the card is typed there, never here. The account
-        // survives an abandoned checkout — the app's own Buy button remains.
-        if (typeof data.checkoutUrl === "string" && data.checkoutUrl.startsWith("https://checkout.stripe.com/")) {
-          window.location.assign(data.checkoutUrl);
-          return;
-        }
-        setResult({
-          door,
-          orderHeld: Boolean(payload.order),
-          teamName: data.teamName ?? "",
-          entitlement: data.entitlement ?? "none",
-          paidThrough: data.paidThrough ?? null,
-        });
+        // No checkout hand-off any more: the app is free, this door sends no
+        // order, and a `checkoutUrl` from an older server is deliberately
+        // ignored rather than followed — nothing here may send a coach to a
+        // payment page for something that costs nothing.
+        setResult({ door, teamName: data.teamName ?? "" });
       } else {
         const refusal = data.error || "Something went wrong on our side. Try again in a moment.";
         if (door === "join" && refusesTheCode(refusal, data.code)) {
@@ -293,12 +265,6 @@ export function SignupFlow() {
           <span className="section-kicker">{joined ? "You are on the staff" : "Account created"}</span>
           <h2>{joined ? `You joined ${result.teamName || "the team"} as a coach.` : "Your account is ready."}</h2>
           {joined && <p className="signup-joined">You did not start a team &mdash; you are a coach on that one. The head coach owns the playbook, the roster, and the season.</p>}
-          {!joined && result.orderHeld && (
-            <p className="signup-covered">Checkout isn&apos;t open on the website yet &mdash; your order wasn&apos;t charged. Buy the season (and tablets) from Billing inside the app.</p>
-          )}
-          {!joined && result.entitlement === "active" && result.paidThrough && (
-            <p className="signup-covered">Your access code covered the first year &mdash; good through {plainDate(result.paidThrough)}.</p>
-          )}
           <ol>
             <li><a href="/download">Download the app</a> on the Android tablet or phone you coach from.</li>
             <li>Sign in with the email and password you just created.</li>
@@ -429,41 +395,9 @@ export function SignupFlow() {
                 </div>
                 <label>
                   <span>Access code (optional)</span>
-                  <input name="accessCode" autoComplete="off" placeholder="Leave blank if you weren't given one" onChange={(e) => setCodeTyped(e.currentTarget.value.trim().length > 0)} />
-                  <small>Given to this season&apos;s founding coaches and programs &mdash; it covers your first year.</small>
+                  <input name="accessCode" autoComplete="off" placeholder="Leave blank if you weren't given one" />
+                  <small>Given to this season&apos;s founding coaches and programs.</small>
                 </label>
-
-                <fieldset className="signup-order">
-                  <legend>Your order &mdash; one payment, on Stripe&apos;s secure page</legend>
-                  <div className="signup-order-line">
-                    <input
-                      aria-label="Buy the Coach licence, $99"
-                      type="checkbox"
-                      checked={licenceOn}
-                      disabled={codeTyped}
-                      onChange={(e) => setBuyLicence(e.currentTarget.checked)}
-                    />
-                    <span><b>Coach licence &mdash; $99</b><small>{codeTyped ? "Covered by your access code." : "One team, five months from the day you pay. Nothing renews on its own."}</small></span>
-                  </div>
-                  <div className="signup-order-line">
-                    <span className="signup-order-qty">
-                      <b>GameDay Huddle Tablet &mdash; $100 each</b>
-                      <small>Set up for game day. Optional &mdash; the app runs on any compatible Android tablet. Shipping is added at checkout.</small>
-                    </span>
-                    <select
-                      aria-label="How many tablets"
-                      value={tablets}
-                      onChange={(e) => setTablets(Number(e.currentTarget.value))}
-                    >
-                      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => <option key={n} value={n}>{n === 0 ? "None" : String(n)}</option>)}
-                    </select>
-                  </div>
-                  <p className="signup-order-total" aria-live="polite">
-                    {orderTotal > 0
-                      ? <>Due at checkout: <b>${orderTotal}</b>{tablets > 0 ? " + shipping" : ""}</>
-                      : <>Nothing due now &mdash; you can buy the season later, inside the app.</>}
-                  </p>
-                </fieldset>
               </>
             )}
 

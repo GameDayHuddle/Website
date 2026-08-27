@@ -77,7 +77,9 @@ test("signup page renders a working account form instead of the opens-soon banne
     "Email",
     "Password",
     "Access code \\(optional\\)",
-    "covers your first year",
+    // The code still rides along as the trail of where an account came from; it
+    // stopped promising a year the moment the app stopped costing anything.
+    "Given to this season&#x27;s founding coaches and programs",
     "<noscript",
     "<form",
     // An invited coach has a door of their own: the code replaces the team name.
@@ -224,7 +226,7 @@ test("contact page carries the sales door and a working direct address", async (
   assert.equal(response.status, 200);
   const html = await response.text();
   for (const phrase of [
-    "Organization plans start",
+    "Organizations start",
     "Running a program",
     "Coaching one team",
     "Number of teams",
@@ -236,17 +238,36 @@ test("contact page carries the sales door and a working direct address", async (
   assert.doesNotMatch(html, /within 24 hours|sales team|account manager/i);
 });
 
-test("the Organization plan routes to sales while Coach stays self-serve", async () => {
-  const [home, pricing, signup] = await Promise.all(
-    ["/", "/pricing", "/signup"].map((path) => render(path).then((response) => response.text())),
+test("an organization routes to sales while a single coach stays self-serve", async () => {
+  const [home, signup] = await Promise.all(
+    ["/", "/signup"].map((path) => render(path).then((response) => response.text())),
   );
 
-  for (const html of [home, pricing]) {
-    assert.match(html, /<a[^>]+href="\/contact\?topic=organization"[^>]*>Contact us<\/a>/);
-    assert.match(html, /Organization plans are set up directly with us\./);
-    assert.doesNotMatch(html, /Get Organization/);
-  }
+  assert.match(home, /<a[^>]+href="\/contact\?topic=organization"[^>]*>Contact us<\/a>/);
+  assert.match(home, /Organization plans are set up directly with us\./);
+  assert.doesNotMatch(home, /Get Organization/);
   assert.match(signup, /<a[^>]+href="\/contact\?topic=organization"/);
+});
+
+// The site sells nothing (Doug, 27 Aug 2026): the app is free, hardware is not
+// offered here, and /pricing is gone rather than left standing with no prices on
+// it. This is the test that catches a price wandering back in — including into a
+// place nobody looks, like the structured data Google reads.
+//
+// Prices are hunted in the markup only. React's flight payload is full of `$6`
+// and `$L5` reference markers, so scanning the raw HTML for a dollar sign finds a
+// price on every page ever written.
+test("nothing on the published site asks for money", async () => {
+  const routes = ["/", "/demo", "/about", "/download", "/signup", "/contact", "/privacy", "/terms"];
+  for (const route of routes) {
+    const html = await render(route).then((response) => response.text());
+    const markup = html.replace(/<script[\s\S]*?<\/script>/gi, "");
+    assert.doesNotMatch(markup, /\$\s?\d/, `${route} shows a price`);
+    assert.doesNotMatch(html, /priceCurrency/, `${route} carries a price in its structured data`);
+    assert.doesNotMatch(html, /checkout\.stripe\.com/i, `${route} links to Stripe checkout`);
+    assert.doesNotMatch(html, /href="\/pricing"/, `${route} still links to the retired pricing page`);
+    assert.doesNotMatch(html, /href="\/tablets"/, `${route} still links to the shelved tablets page`);
+  }
 });
 
 test("the Live Demo page renders the playable recorder", async () => {
@@ -273,7 +294,6 @@ test("all exported navigation targets and page anchors resolve", async () => {
     ["/", "/"],
     ["/demo", "/demo"],
     ["/about", "/about"],
-    ["/pricing", "/pricing"],
     ["/download", "/download"],
     ["/signup", "/signup"],
     ["/contact", "/contact"],
@@ -310,9 +330,10 @@ test("all exported navigation targets and page anchors resolve", async () => {
 test("static hosting renders working fallbacks instead of dead controls", async () => {
   const home = await render("/").then((response) => response.text());
 
-  // Without a checkout API configured, the Coach button falls back to sign-up
-  // rather than rendering a dead control (or implying the plan is free).
-  assert.match(home, /<a[^>]+href="\/signup"[^>]*>Get Coach<\/a>/);
+  // There is no checkout to fall back from any more, so the card's call to
+  // action is the only thing a visitor can actually do: create an account.
+  assert.match(home, /<a[^>]+href="\/signup"[^>]*>Create your account<\/a>/);
+  assert.doesNotMatch(home, /Get Coach/);
   assert.doesNotMatch(home, /<button[^>]*>Call play/);
 });
 
