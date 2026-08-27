@@ -33,10 +33,12 @@ export function MarketingHeader() {
               {label}
             </a>
           ))}
-          <a
-            href="https://mango-moss-08901150f.7.azurestaticapps.net"
-            onClick={() => setOpen(false)}
-          >
+          {/* Signing in happens inside the app, which is what the sign-up page has
+              always told people. This pointed at the staff admin portal until
+              27 Aug 2026 — a door for us, not for coaches, and one that is being
+              retired with the platform rebuild. The site should not have a link
+              that breaks the day it goes. */}
+          <a href="/download" onClick={() => setOpen(false)}>
             Sign in
           </a>
           <a className="button button-small" href="/signup" onClick={() => setOpen(false)}>
