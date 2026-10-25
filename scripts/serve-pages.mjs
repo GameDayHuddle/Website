@@ -13,7 +13,8 @@ const mimeTypes = new Map([
   [".png", "image/png"],
   [".svg", "image/svg+xml"],
   [".xml", "application/xml; charset=utf-8"],
-  [".apk", "application/vnd.android.package-archive"],
+  [".txt", "text/plain; charset=utf-8"],
+  [".woff2", "font/woff2"],
 ]);
 
 async function resolveFile(urlPath) {

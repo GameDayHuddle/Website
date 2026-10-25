@@ -1,14 +1,12 @@
 import Image from "next/image";
 
-export function Brand({ compact = false }: { compact?: boolean }) {
+// The final logo (build 58, 24 Oct 2026) — the same badge the platform's web sidebar carries.
+export function Brand() {
   return (
     <a className="brand" href="/" aria-label="GameDay Huddle home">
-      <span className="brand-crop" aria-hidden="true">
-        <Image src="/logo-mark.svg" alt="" width={48} height={48} priority unoptimized />
-      </span>
+      <Image className="brand-badge" src="/badge.png" alt="" width={45} height={48} priority unoptimized />
       <span className="brand-name">
         GameDay <strong>Huddle</strong>
-        {!compact && <small>Football intelligence</small>}
       </span>
     </a>
   );

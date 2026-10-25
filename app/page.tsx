@@ -1,14 +1,120 @@
 import type { Metadata } from "next";
+import { DocumentsMock, EquipmentMock, FundraisingMock, MessagingMock, RegistrationMock } from "./components/FeatureMocks";
+import { HeroDevices } from "./components/HeroDevices";
+import { Icon, type IconName } from "./components/Icon";
+import { APP_URL, DEMO_HREF, PRICING_HREF } from "./components/links";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
-import { PlayDemo } from "./components/PlayDemo";
-import { ProductScreens } from "./components/ProductScreens";
 
 export const metadata: Metadata = {
-  title: "GameDay Huddle | Youth Football Playbook, Game Day & Team Analytics",
+  title: "GameDay Huddle | Registration, Messaging & Fundraising for Youth Football and Cheer",
   description:
-    "Built for youth football. Create your playbook, call plays faster, coordinate staff, and turn every snap into usable team analytics with GameDay Huddle for Android.",
+    "Run your youth football and cheer organization in one place: online registration, document management, team messaging, fundraising and equipment. Free for families, with no subscription and no fee on fundraising.",
 };
+
+const features: { id: string; icon: IconName; title: string; text: string }[] = [
+  { id: "registration", icon: "registration", title: "Registration", text: "Custom forms, age groups by birth date, one family checkout and a card on file — from the parent’s phone." },
+  { id: "documents", icon: "documents", title: "Documents", text: "Birth certificates, the parent code of conduct, equipment refund authorizations and more — collected and checked." },
+  { id: "messaging", icon: "messaging", title: "Team Messaging", text: "Team chats and club announcements that reach every family, with report, block and moderation built in." },
+  { id: "fundraising", icon: "fundraising", title: "Fundraising", text: "Raffles, donations, sponsors and events, with a page for every child to share. No fee from us." },
+  { id: "equipment", icon: "equipment", title: "Equipment", text: "Track gear, sizes, assignments and returns — no more spreadsheets." },
+];
+
+const sports: { icon: IconName; title: string; text: string }[] = [
+  { icon: "football", title: "Tackle football", text: "Age groups set by your league’s birth-date cutoff, divisions and full team rosters." },
+  { icon: "flag", title: "Flag football", text: "Flag teams for every age, with their own fees, schedule and team chat." },
+  { icon: "cheer", title: "Cheer", text: "Cheer squads with their own age groups, registration, documents and messages." },
+];
+
+const spotlights = [
+  {
+    id: "registration",
+    kicker: "Online registration",
+    title: "Registration that does the paperwork for you",
+    text: "Open your season, set your fees and share one link or QR code. Families register every child in minutes on their phone, and the money lands in your club’s own Stripe account.",
+    points: [
+      "Children placed in the right age group by birth date",
+      "One checkout for brothers and sisters",
+      "Promo codes, agreements and a card on file in the same flow",
+      "Balances and refunds worked out for each registration",
+    ],
+    mock: <RegistrationMock />,
+  },
+  {
+    id: "documents",
+    kicker: "Document management",
+    title: "Every form, in one place",
+    text: "Tell families what each program needs and GameDay Huddle collects it — photographed on the phone, signed in the app, checked off by your registrar. Files stay private and open only through short-lived links.",
+    points: [
+      "Birth certificates, photographed and verified",
+      "Parent code of conduct and other club agreements, signed in the app",
+      "Equipment refund authorizations, medical releases and more",
+      "See at a glance who is still missing what",
+    ],
+    mock: <DocumentsMock />,
+  },
+  {
+    id: "messaging",
+    kicker: "Team messaging",
+    title: "Every family hears it the first time",
+    text: "Team chats, club announcements and push notifications on every family’s phone — no group texts, no missed parents and no personal numbers handed around.",
+    points: [
+      "A chat for every team",
+      "Announcements to the whole club, one program or one team",
+      "Report, block and moderation built in",
+      "Coaches reach families without sharing phone numbers",
+    ],
+    mock: <MessagingMock />,
+  },
+  {
+    id: "fundraising",
+    kicker: "Fundraising",
+    title: "Raise more, with no fee from us",
+    text: "Run raffles, donation drives, sponsorships and ticketed events. Every child gets a page, a QR code and a share link, and GameDay Huddle takes nothing from what your club raises.",
+    points: [
+      "Raffles and donations paid online",
+      "Sponsors shown on your club’s Team page",
+      "Tickets for banquets, car washes and other events",
+      "A page, QR code and share link for every child",
+    ],
+    mock: <FundraisingMock />,
+  },
+  {
+    id: "equipment",
+    kicker: "Equipment management",
+    title: "Know where every helmet is",
+    text: "Keep your inventory by item and size, hand gear out to players, and see what is due back when the season ends.",
+    points: [
+      "Inventory by item, size and quantity",
+      "Every player’s sizes on file",
+      "Gear assigned to a player in a tap",
+      "Returns tracked at the end of the season",
+    ],
+    mock: <EquipmentMock />,
+  },
+];
+
+const coaching: { icon: IconName; title: string; text: string }[] = [
+  { icon: "playbook", title: "Playbook creation", text: "Draw formations and plays, build call sheets, and share the playbook with your staff." },
+  { icon: "analytics", title: "In-game analytics", text: "Call plays from the sideline and watch your team’s tendencies build — run and pass, yards per play, down and distance. Team numbers only, never player statistics." },
+  { icon: "calendar", title: "Jamboree scheduling", text: "Host a jamboree with divisions, fields and time slots, invite outside teams, and alert everyone when the schedule changes." },
+];
+
+// No price figure and no fee mechanics on a public page — Doug's ruling of 4 Oct 2026, because
+// the price could change. The same lines the store listings use.
+const pricing = [
+  "Nothing is ever added to a family’s bill",
+  "No subscription, no setup fee, no contract",
+  "No paid add-ons — every feature is included",
+  "No fee on fundraising",
+  "Coaching tools included free when they arrive",
+];
+
+const steps = [
+  { title: "Set up your club", text: "Add your programs, age groups, fees and documents, and connect your club’s Stripe account." },
+  { title: "Open registration", text: "Share your registration link or QR code. Families sign up and pay on their phones." },
+  { title: "Run the season", text: "Message teams, collect forms, hand out equipment and launch fundraisers — all from one place." },
+];
 
 export default function Home() {
   const jsonLd = {
@@ -16,162 +122,167 @@ export default function Home() {
     "@type": "SoftwareApplication",
     name: "GameDay Huddle",
     applicationCategory: "SportsApplication",
-    operatingSystem: "Android",
+    operatingSystem: "iOS, Android, Web",
     description:
-      "Youth football coaching software for playbooks, game-day play calling, staff collaboration, and team analytics.",
+      "Registration, document management, team messaging, fundraising and equipment management for youth football and cheer organizations.",
   };
 
   return (
     <div className="marketing-page">
       <MarketingHeader />
       <main>
-        <section className="hero section-shell">
-          <div className="hero-copy">
-            <p className="eyebrow"><span /> The sideline operating system for youth football</p>
-            <h1>Build the playbook.<br /><em>Call it on game day.</em></h1>
-            <p className="hero-deck">
-              GameDay Huddle is built for youth football and nothing else—so a volunteer staff can call, record, and learn from every snap without losing the game to a spreadsheet.
-            </p>
-            <div className="hero-actions">
-              <a className="button" href="/signup">Create your account <span>→</span></a>
-              <a className="button button-ghost" href="#product-tour">See the game flow</a>
-            </div>
-            <div className="hero-notes" aria-label="Product highlights">
-              <span>Android 8+</span>
-              <span>Offline-first</span>
-              <span>One flat price</span>
-            </div>
-          </div>
-
-          <ProductScreens />
-        </section>
-
-        <section className="proof-strip" aria-label="Made for youth football">
-          <div className="section-shell proof-inner">
-            <p>Made for the way youth football is actually coached</p>
-            <div><span>YOUTH TEAMS</span><span>YOUTH LEAGUES</span><span>CLUBS</span><span>VOLUNTEER STAFFS</span></div>
-          </div>
-        </section>
-
-        <section className="product-tour section-shell" id="product-tour" aria-labelledby="product-tour-title">
-          <div className="product-tour-copy">
-            <p className="section-kicker">45-second product tour</p>
-            <h2 id="product-tour-title">See the whole week in one huddle.</h2>
-            <p id="product-tour-summary">
-              Watch how coaches move from building a playbook to calling the game, keeping staff connected, and learning from every snap. The tour uses real GameDay Huddle screens and works with the sound off.
-            </p>
-            <div className="product-tour-points" aria-label="Product tour topics">
-              <span>Plan</span><span>Call</span><span>Coordinate</span><span>Learn</span>
-            </div>
-          </div>
-          <div className="product-tour-media">
-            <video
-              controls
-              playsInline
-              preload="metadata"
-              poster="/media/gameday-huddle-product-overview-poster.jpg"
-              aria-describedby="product-tour-summary"
-            >
-              <source src="/media/gameday-huddle-product-overview.mp4" type="video/mp4" />
-              <track kind="captions" src="/media/gameday-huddle-product-overview-en.vtt" srcLang="en" label="English" />
-              Your browser does not support embedded video. <a href="/media/gameday-huddle-product-overview.mp4">Download the GameDay Huddle product tour</a>.
-            </video>
-            <div className="product-tour-meta"><span>45 SEC</span><span>REAL APP SCREENS</span><span>WORKS MUTED</span></div>
-          </div>
-        </section>
-
-        <section className="statement section-shell" id="workflow">
-          <p className="section-kicker">From install to insight</p>
-          <h2>Your week is one connected system.</h2>
-          <p className="section-intro">Build on Tuesday. Call on Friday. Review on Saturday. GameDay Huddle keeps the plan and the proof in the same place.</p>
-          <div className="workflow-grid">
-            <article><span>PLAN</span><b>01</b><h3>Build what you coach</h3><p>Create formations, draw routes, set designed gaps, organize call sheets, and build the roster around your system.</p></article>
-            <article><span>CALL</span><b>02</b><h3>Move at game speed</h3><p>Go from situation to formation to play in taps—not menus. Record the ending spot and let the app do the math.</p></article>
-            <article><span>LEARN</span><b>03</b><h3>Know what travels</h3><p>Every correction recalculates the numbers. See the plays, gaps, situations, and tendencies that deserve the next rep.</p></article>
-          </div>
-        </section>
-
-        <section className="demo-section section-shell" id="demo">
-          <div className="demo-lede">
-            <div>
-              <p className="section-kicker">Try it right here</p>
-              <h2>Record a drive.<br /><em>Watch the numbers move.</em></h2>
-            </div>
-            <div>
-              <p>
-                This is the game-day screen itself, playable in your browser—the same bar, the same six
-                tabs, the same call and the same result sheet. Call a play, say where the ball ended, and
-                the app derives the rest: gain, down, distance, and every number on the panel. Nothing is
-                counted up as it arrives. Delete an entry and the whole game re-derives around the hole
-                it leaves.
+        <section className="hero">
+          <div className="hero-inner section-shell">
+            <h1>
+              Run your football organization. <em>Not ten different apps.</em>
+            </h1>
+            <div className="hero-copy">
+              <p className="hero-deck">
+                Registration, documents, team messaging, fundraising and equipment — all in one place for youth
+                football and cheer.
               </p>
+              <div className="hero-actions">
+                <a className="button" href={DEMO_HREF}>Book a Demo <Icon name="arrow" strokeWidth={2.2} /></a>
+                <a className="button button-outline" href="#platform">Explore the Platform</a>
+              </div>
+              <p className="hero-note"><Icon name="team" /> Built for youth tackle, flag and cheer</p>
+            </div>
+            <HeroDevices />
+          </div>
+        </section>
+
+        <section className="features section-shell" id="platform" aria-labelledby="platform-title">
+          <p className="kicker">All-in-one organization management</p>
+          <h2 id="platform-title">Everything your program needs to run smoothly</h2>
+          <p className="section-intro">
+            GameDay Huddle takes care of the season&rsquo;s paperwork, payments and messages, so your volunteers can
+            spend their time on the kids.
+          </p>
+          <div className="feature-grid">
+            {features.map((feature) => (
+              <a className="feature-card" href={`#${feature.id}`} key={feature.id}>
+                <Icon name={feature.icon} className="feature-icon" strokeWidth={1.6} />
+                <h3>{feature.title}</h3>
+                <p>{feature.text}</p>
+                <Icon name="arrow" className="feature-arrow" strokeWidth={2.2} />
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="sports" id="sports" aria-labelledby="sports-title">
+          <div className="section-shell">
+            <p className="kicker">Football and cheer</p>
+            <h2 id="sports-title">One club. Tackle, flag and cheer.</h2>
+            <p className="section-intro">
+              Run every program your club offers under one roof, and let families register each child for the right
+              team in a single checkout.
+            </p>
+            <div className="sport-grid">
+              {sports.map((sport) => (
+                <article className="sport-card" key={sport.title}>
+                  <span className="icon-circle"><Icon name={sport.icon} strokeWidth={2} /></span>
+                  <h3>{sport.title}</h3>
+                  <p>{sport.text}</p>
+                </article>
+              ))}
             </div>
           </div>
+        </section>
 
-          <PlayDemo />
+        {spotlights.map((spotlight, index) => (
+          <section
+            className={index % 2 ? "spotlight section-shell is-flipped" : "spotlight section-shell"}
+            id={spotlight.id}
+            key={spotlight.id}
+            aria-labelledby={`${spotlight.id}-title`}
+          >
+            <div className="spotlight-copy">
+              <p className="kicker">{spotlight.kicker}</p>
+              <h2 id={`${spotlight.id}-title`}>{spotlight.title}</h2>
+              <p>{spotlight.text}</p>
+              <ul className="check-list">
+                {spotlight.points.map((point) => (
+                  <li key={point}><Icon name="check" strokeWidth={2.4} />{point}</li>
+                ))}
+              </ul>
+            </div>
+            {spotlight.mock}
+          </section>
+        ))}
 
-          <div className="demo-caveats">
-            <b>What this demo is not</b>
+        <section className="coaching" id="coaching" aria-labelledby="coaching-title">
+          <div className="section-shell">
+            <p className="kicker kicker-light">Coaching tools</p>
+            <h2 id="coaching-title">And for the coaches — <em>free, and coming soon</em></h2>
+            <p className="section-intro">
+              The football layer is on its way inside the same app at no extra cost: build the playbook, call the game
+              and plan the jamboree.
+            </p>
+            <div className="coaching-grid">
+              {coaching.map((item) => (
+                <article className="coaching-card" key={item.title}>
+                  <span className="soon">Coming soon · free</span>
+                  <span className="icon-circle"><Icon name={item.icon} strokeWidth={2} /></span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="pricing section-shell" id="pricing" aria-labelledby="pricing-title">
+          <div className="pricing-copy">
+            <p className="kicker">Pricing</p>
+            <h2 id="pricing-title">One simple price. Everything included.</h2>
             <p>
-              It runs on a sample playbook against a sample opponent, and it is the game-day screen
-              only—the app around it holds Play Maker, the roster, the depth chart, the schedule and the
-              season. On a tablet this screen also runs with no signal at all, with a second tablet
-              recording beside it over a direct link. And it never records player statistics—team-level
-              only, on purpose.
+              No tiers, no add-ons and no surprises. Tell us about your club and we&rsquo;ll give you your price.
+            </p>
+          </div>
+          <div className="price-card">
+            <p className="price"><b>Free</b><span>for families</span></p>
+            <ul className="check-list">
+              {pricing.map((line) => (
+                <li key={line}><Icon name="check" strokeWidth={2.4} />{line}</li>
+              ))}
+            </ul>
+            <p className="price-note">
+              Payments run through your club&rsquo;s own Stripe account; Stripe&rsquo;s standard card processing fees
+              apply.
+            </p>
+            <a className="button button-wide" href={PRICING_HREF}>Get your club&rsquo;s price <Icon name="arrow" strokeWidth={2.2} /></a>
+          </div>
+        </section>
+
+        <section className="steps-section" id="how-it-works" aria-labelledby="steps-title">
+          <div className="section-shell">
+            <p className="kicker">For organizations</p>
+            <h2 id="steps-title">Set up once. Run the whole season.</h2>
+            <ol className="steps">
+              {steps.map((step, index) => (
+                <li key={step.title}>
+                  <span className="step-number">{index + 1}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="steps-note">
+              <Icon name="shield" /> Everyone sees only what their role needs — from the club president to the coaches,
+              on the web and on their phone.
             </p>
           </div>
         </section>
 
-        <section className="offline-section section-shell">
-          <div className="offline-copy">
-            <p className="section-kicker">Built for the worst signal of the week</p>
-            <h2>Your signal can drop.<br />Your game cannot.</h2>
-            <p>GameDay Huddle keeps the playbook and game log on the tablet. Calls and results continue locally, and connected staff devices recover without making your sideline wait.</p>
-            <ul>
-              <li><span>✓</span> Complete playbook stays available offline</li>
-              <li><span>✓</span> Game results save on the device immediately</li>
-              <li><span>✓</span> Clear connection state—never silent stale data</li>
-            </ul>
+        <section className="cta section-shell" aria-labelledby="cta-title">
+          <div>
+            <h2 id="cta-title">Bring your whole club into one huddle.</h2>
+            <p>Tell us about your club and we&rsquo;ll walk you through it.</p>
           </div>
-          <div className="offline-visual" aria-hidden="true">
-            <div className="tablet tablet-back"><span>PLAY KEEPER</span><b>Result saved</b><i>OFFLINE QUEUE · 1</i></div>
-            <div className="tablet tablet-front"><span>HEAD COACH</span><b>Ready for the next call</b><div className="sync-line"><i /><i /><i /></div></div>
-            <div className="offline-badge">LOCAL FIRST <small>Your football stays yours.</small></div>
-          </div>
-        </section>
-
-        <section className="pricing-section section-shell" id="whats-included">
-          <div className="pricing-heading">
-            <p className="section-kicker">Simple paths for every program</p>
-            <h2>One team or<br />the whole organization.</h2>
-          </div>
-          <div className="pricing-grid">
-            <article className="price-card coach-price">
-              <div className="price-top"><span>FOR INDIVIDUAL TEAMS</span><b>Coach</b><p>One head coach and the staff they invite.</p></div>
-              <ul><li>Playbook and call sheets</li><li>Game-day calling and recording</li><li>Play Keeper staff connection</li><li>Roster, depth chart, and schedule</li><li>Game and season analytics</li></ul>
-              <div className="checkout-action"><a className="button button-wide" href="/signup">Create your account</a></div>
-              <small>Everything a head coach needs for a full season.</small>
-            </article>
-            <article className="price-card org-price">
-              <div className="price-top"><span>FOR MULTI-TEAM PROGRAMS</span><b>Organization</b><p>Up to ten teams in your youth club or league.</p></div>
-              <ul><li>Everything in Coach</li><li>Up to 10 teams under one plan</li><li>Central team administration</li><li>Organization player identity</li><li>Rollout and coach onboarding</li></ul>
-              <a className="button button-wide button-light" href="/contact?topic=organization">Contact us</a>
-              <small>Organization plans are set up directly with us.</small>
-            </article>
-          </div>
-        </section>
-
-        <section className="about-callout section-shell">
-          <div className="about-mark"><span>SS</span><i /></div>
-          <div><p className="section-kicker">Why GameDay Huddle exists</p><h2>Built around the decision, not the database.</h2></div>
-          <div><p>The app started with a simple belief: analytics only help a coach when collecting them doesn’t get in the way of coaching. Every workflow—from spotting the ball to handing results to a Play Keeper—follows that rule.</p><a href="/about">Read our approach <span>→</span></a></div>
-        </section>
-
-        <section className="final-cta" id="contact">
-          <div className="section-shell final-cta-inner">
-            <p className="section-kicker">Your next game plan starts here</p>
-            <h2>Bring more signal<br />to the sideline.</h2>
-            <div><a className="button" href="/download">Get the Android app <span>→</span></a><a className="text-link" href="/signup">Create your account</a></div>
+          <div className="cta-actions">
+            <a className="button" href={DEMO_HREF}>Book a Demo <Icon name="arrow" strokeWidth={2.2} /></a>
+            <a className="button button-outline" href={APP_URL}>Sign In</a>
           </div>
         </section>
       </main>

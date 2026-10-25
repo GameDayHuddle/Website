@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gamedayhuddle.com";
-  return ["", "/demo", "/about", "/download", "/signup", "/contact", "/privacy", "/terms"].map((path, index) => ({ url: `${base}${path}`, lastModified: new Date(), changeFrequency: index === 0 ? "weekly" : "monthly", priority: index === 0 ? 1 : path === "/download" || path === "/demo" ? 0.9 : 0.6 }));
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gamedayhuddle.com";
+  return [{ url: `${base}/`, lastModified: new Date(), changeFrequency: "weekly", priority: 1 }];
 }

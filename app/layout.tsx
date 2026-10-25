@@ -1,13 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import "@fontsource-variable/archivo/wdth.css";
+import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#0a0b0d",
-  colorScheme: "dark",
+  themeColor: "#06193d",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
+
+const description =
+  "Registration, document management, team messaging, fundraising and equipment for youth football and cheer organizations — in one app.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -17,21 +22,21 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: base,
     title: { default: "GameDay Huddle", template: "%s | GameDay Huddle" },
-    description: "Youth football playbook, game-day play calling, staff collaboration, and team analytics for Android.",
+    description,
     applicationName: "GameDay Huddle",
-    keywords: ["youth football coaching app", "youth football playbook app", "youth football analytics", "game day play calling", "youth football team management"],
+    keywords: ["youth football registration", "youth football app", "cheer registration", "team messaging", "youth sports fundraising", "equipment management"],
     icons: {
-      icon: [{ url: "/logo-mark.svg", type: "image/svg+xml" }, { url: "/app-icon.png", type: "image/png", sizes: "512x512" }],
-      apple: "/app-icon.png",
+      icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
+      apple: "/apple-icon.png",
     },
     openGraph: {
       type: "website",
       siteName: "GameDay Huddle",
-      title: "GameDay Huddle — Build the playbook. Call it on game day.",
-      description: "The sideline operating system for youth football coaches.",
-      images: [{ url: new URL("/og.png", base).toString(), width: 1200, height: 630, alt: "GameDay Huddle — Build the playbook. Call it on game day." }],
+      title: "GameDay Huddle — Run your football organization. Not ten different apps.",
+      description,
+      images: [{ url: new URL("/og.png", base).toString(), width: 1200, height: 630, alt: "GameDay Huddle — Run your football organization. Not ten different apps." }],
     },
-    twitter: { card: "summary_large_image", title: "GameDay Huddle", description: "Build the playbook. Call it on game day.", images: [new URL("/og.png", base).toString()] },
+    twitter: { card: "summary_large_image", title: "GameDay Huddle", description, images: [new URL("/og.png", base).toString()] },
   };
 }
 

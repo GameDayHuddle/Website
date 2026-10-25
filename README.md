@@ -1,16 +1,34 @@
 # GameDay Huddle website
 
-The customer website and account portal for GameDay Huddle, an Android football coaching app for playbooks, game-day calling, staff collaboration, and analytics.
+The marketing site at **www.gamedayhuddle.com** for GameDay Huddle — registration, document
+management, team messaging, fundraising and equipment for youth football (tackle and flag) and
+cheer organizations. One page, published to GitHub Pages.
 
-## Included
+**No price figure goes on this site** — not on the page, and not in this public repository's
+code, docs or commit messages. That is Doug's ruling of 4 October 2026: the price could change.
+The pricing section says what the store listings say — free for families, no subscription or
+paid add-on, no fee on fundraising — and asks clubs to get in touch for their price.
+`tests/rendered-html.test.mjs` guards it.
 
-- Product-led marketing site with SEO metadata, sitemap, robots rules, social card, pricing, about, and Android download pages.
-- Downloadable Android beta APKs for both apps: GameDay Huddle (coaches) and GameDay Huddle Play Keeper (the Play Analyst). The Android repository's CI replaces the files in `public/downloads/` and rewrites `app/download/manifest.json` on every push to its main branch, so the download page always serves the latest signed builds without hand steps.
-- Release-updates inquiry form backed by Cloudflare D1 for CRM lead capture.
-- Customer account portal with plan, payment summary, team access, invoices, and Stripe customer-portal handoff for payment updates and cancellation.
-- Admin workspace for subscription monitoring, prospect tracking, password-reset support, account notes, and cancellation review.
-- Stripe Checkout, customer portal, signed webhook handling, and subscription record synchronization.
-- Responsive layouts, keyboard states, reduced-motion support, and automated rendered-page checks.
+The platform itself lives at **app.gamedayhuddle.com** (the `GameDayHuddle/Platform` repository).
+This site only links to it: Sign In, Support, the privacy policy, the terms and account deletion
+are all the platform's own pages. Keeping the two apart keeps this site's scripts off the origin
+where parents pay and enter children's details.
+
+## What changed on 25 October 2026
+
+The site used to sell the retired Android tablet coaching app — APK downloads, sign-up, an
+account portal and Stripe subscriptions. All of that is gone (it is in git history). The old
+addresses (`/download`, `/signup`, `/demo`, `/about`, `/contact`, `/login`, `/account`, `/admin`,
+`/privacy`, `/terms`) now forward somewhere true; see `scripts/export-github-pages.mjs`.
+
+The colours are the platform's own (`docs/design/visual-style.md` in the Platform repository):
+navy `#06193d`, the bright orange `#f45d0a` as a fill with bold white labels of at least 18.66px,
+`#c05000` for orange words on white. Headings are Archivo, body text Inter, both self-hosted
+from `@fontsource-variable`.
+
+The coaching tools (playbook creation, in-game analytics, jamboree scheduling) are shown as
+**coming soon, free** — they are built or planned but not yet released inside the app.
 
 ## Local development
 
@@ -21,32 +39,24 @@ npm install
 npm run dev
 ```
 
-The local site opens at `http://localhost:3000`.
+The local site opens at `http://localhost:3000`. To see exactly what GitHub Pages will serve:
 
-## Configuration
-
-Copy `.env.example` to `.env.local` and provide the values for the services being tested. Never commit live secret keys.
-
-The D1 schema is in `db/schema.ts`; generated migrations are kept in `drizzle/`.
+```bash
+npm run export:pages
+npm run preview:pages
+```
 
 ## Validation
 
 ```bash
-npm run build
 npm test
 npm run lint
 ```
 
-## Hosting model
+## Hosting
 
-This source belongs in the `GameDayhuddle/Website` GitHub repository. The complete product is a full-stack app: GitHub Pages can publish static HTML, CSS, and JavaScript, but it cannot run the authentication, CRM, Stripe session, or webhook endpoints. Deploy the repository to a server-backed host such as Cloudflare Workers/Sites; keep GitHub as the source of truth and CI origin.
+Every push to `main` builds the static export (`npm run export:pages`) and deploys it to GitHub
+Pages (`.github/workflows/pages.yml`), on the custom domain `www.gamedayhuddle.com`.
 
-Before public launch:
-
-1. Set the production site URL and Stripe keys/prices.
-2. Configure the Stripe customer portal and register `/api/stripe/webhook`.
-3. Apply the D1 migrations.
-4. Set the administrator email allowlist.
-5. Replace preview portal data with production queries.
-6. Review the draft privacy policy and terms with counsel.
-7. Replace the testing APK with a signed release or Google Play listing.
+The Cloudflare worker, D1 schema and `drizzle/` migrations are the toolchain the site was first
+generated with; the build still runs through them, but nothing on the page uses a database.
