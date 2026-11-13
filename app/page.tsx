@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DocumentsMock, EquipmentMock, FundraisingMock, MessagingMock, RegistrationMock } from "./components/FeatureMocks";
+import { ClubMock, FundraisingMock, LeagueMock, MessagingMock, RegistrationMock } from "./components/FeatureMocks";
 import { HeroDevices } from "./components/HeroDevices";
 import { Icon, type IconName } from "./components/Icon";
 import { APP_URL, DEMO_HREF, PRICING_HREF } from "./components/links";
@@ -7,61 +7,65 @@ import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
 
 export const metadata: Metadata = {
-  title: "GameDay Huddle | Registration, Messaging & Fundraising for Youth Football and Cheer",
+  // The layout's template adds " | GameDay Huddle".
+  title: "Registration, Messaging & Fundraising for Youth Sports Clubs",
   description:
-    "Run your youth football and cheer organization in one place: online registration, document management, team messaging, fundraising and equipment. Free for families, with no subscription and no fee on fundraising.",
+    "Run your youth sports club from your phone: online registration, team messaging, fundraising and in-house leagues, for any sport. Free for families, with no subscription and no fee on fundraising.",
 };
 
 const features: { id: string; icon: IconName; title: string; text: string }[] = [
-  { id: "registration", icon: "registration", title: "Registration", text: "Custom forms, age groups by birth date, one family checkout and a card on file — from the parent’s phone." },
-  { id: "documents", icon: "documents", title: "Documents", text: "Birth certificates, the parent code of conduct, equipment refund authorizations and more — collected and checked." },
-  { id: "messaging", icon: "messaging", title: "Team Messaging", text: "Team chats and club announcements that reach every family, with report, block and moderation built in." },
-  { id: "fundraising", icon: "fundraising", title: "Fundraising", text: "Raffles, donations, sponsors and events, with a page for every child to share. No fee from us." },
-  { id: "equipment", icon: "equipment", title: "Equipment", text: "Track gear, sizes, assignments and returns — no more spreadsheets." },
+  { id: "registration", icon: "registration", title: "Registration", text: "Build it on your phone and share a link, QR code or flyer. Families register and pay on theirs." },
+  { id: "messaging", icon: "messaging", title: "Team Messaging", text: "A group chat for every team, and messages to the whole club or to one child’s parents." },
+  { id: "fundraising", icon: "fundraising", title: "Fundraising", text: "Donation drives and item sales, with a page and QR code for every player. No fee from us." },
+  { id: "leagues", icon: "trophy", title: "In-house Leagues", text: "Teams by hand, by auto-balance or by a live draft. Then games, scores and standings." },
+  { id: "club", icon: "club", title: "Running the Club", text: "Staff roles, a setup checklist, season admin and reports, all on the phone." },
+];
+
+// The platform's catalogue, in the order the app's sport picker shows it, then Other.
+const sportNames = [
+  "Baseball",
+  "Basketball",
+  "Cheer",
+  "Flag football",
+  "Hockey",
+  "Lacrosse",
+  "Soccer",
+  "Softball",
+  "Tackle football",
+  "Volleyball",
+  "Wrestling",
 ];
 
 const sports: { icon: IconName; title: string; text: string }[] = [
-  { icon: "football", title: "Tackle football", text: "Age groups set by your league’s birth-date cutoff, divisions and full team rosters." },
-  { icon: "flag", title: "Flag football", text: "Flag teams for every age, with their own fees, schedule and team chat." },
-  { icon: "cheer", title: "Cheer", text: "Cheer squads with their own age groups, registration, documents and messages." },
+  { icon: "ball", title: "Any sport", text: "Pick yours from the list. If it is not there, choose Other and name it." },
+  { icon: "registration", title: "The family picks the age group", text: "Age shows only as a warning. Nothing places a child automatically." },
+  { icon: "team", title: "Teams your way", text: "Each program forms its teams by hand, by auto-balance or by a live draft." },
 ];
 
 const spotlights = [
   {
     id: "registration",
     kicker: "Online registration",
-    title: "Registration that does the paperwork for you",
-    text: "Open your season, set your fees and share one link or QR code. Families register every child in minutes on their phone, and the money lands in your club’s own Stripe account.",
+    title: "Registration you build on your phone",
+    text: "Set up your programs, age groups, questions, add-ons and promo codes on your phone. Share them with a link, a QR code or a printable flyer. Families register on their phone, and the money goes to your club’s own Stripe account.",
     points: [
-      "Children placed in the right age group by birth date",
-      "One checkout for brothers and sisters",
-      "Promo codes, agreements and a card on file in the same flow",
+      "Pay by card, Apple Pay or Google Pay",
+      "No card is stored for next time",
+      "Invite a second guardian",
       "Balances and refunds worked out for each registration",
     ],
     mock: <RegistrationMock />,
   },
   {
-    id: "documents",
-    kicker: "Document management",
-    title: "Every form, in one place",
-    text: "Tell families what each program needs and GameDay Huddle collects it — photographed on the phone, signed in the app, checked off by your registrar. Files stay private and open only through short-lived links.",
-    points: [
-      "Birth certificates, photographed and verified",
-      "Parent code of conduct and other club agreements, signed in the app",
-      "Equipment refund authorizations, medical releases and more",
-      "See at a glance who is still missing what",
-    ],
-    mock: <DocumentsMock />,
-  },
-  {
     id: "messaging",
     kicker: "Team messaging",
     title: "Every family hears it the first time",
-    text: "Team chats, club announcements and push notifications on every family’s phone — no group texts, no missed parents and no personal numbers handed around.",
+    text: "Every team has a group chat. Club staff can post to every team’s chat at once, or pick a child and message one or both parents. Chat is only for your club’s registered families and staff, and notifications come through the app.",
     points: [
-      "A chat for every team",
-      "Announcements to the whole club, one program or one team",
-      "Report, block and moderation built in",
+      "A group chat for every team",
+      "Entire Org Message: every team’s chat at once",
+      "Parent Message: pick a child, then one or both parents",
+      "The schedule, with RSVPs and a calendar you can subscribe to",
       "Coaches reach families without sharing phone numbers",
     ],
     mock: <MessagingMock />,
@@ -70,34 +74,42 @@ const spotlights = [
     id: "fundraising",
     kicker: "Fundraising",
     title: "Raise more, with no fee from us",
-    text: "Run raffles, donation drives, sponsorships and ticketed events. Every child gets a page, a QR code and a share link, and GameDay Huddle takes nothing from what your club raises.",
+    text: "Run a donation drive or sell items. Every player gets a page and a QR code. Supporters pay on a web page, and the family sees each payment land in the app.",
     points: [
-      "Raffles and donations paid online",
-      "Sponsors shown on your club’s Team page",
-      "Tickets for banquets, car washes and other events",
-      "A page, QR code and share link for every child",
+      "Donation drives and item sales",
+      "A page and a QR code for every player",
+      "Supporters pay on the web, with no app to install",
+      "Families see each payment land in the app",
     ],
     mock: <FundraisingMock />,
   },
   {
-    id: "equipment",
-    kicker: "Equipment management",
-    title: "Know where every helmet is",
-    text: "Keep your inventory by item and size, hand gear out to players, and see what is due back when the season ends.",
+    id: "leagues",
+    kicker: "In-house leagues",
+    title: "Teams, games and standings in one place",
+    text: "Form your teams by hand, by auto-balance or by a live draft on your coaches’ phones. Play games between your own teams, enter the scores, and families see the standings.",
     points: [
-      "Inventory by item, size and quantity",
-      "Every player’s sizes on file",
-      "Gear assigned to a player in a tap",
-      "Returns tracked at the end of the season",
+      "Auto-balance spreads ages, keeps siblings together and puts a coach’s child on that coach’s team",
+      "The draft shows a child’s name, age, age group, last season’s team and siblings. No ratings or evaluations, ever",
+      "Games between your club’s own teams, on every family’s schedule",
+      "Scores and standings are team results, never statistics about a child",
     ],
-    mock: <EquipmentMock />,
+    mock: <LeagueMock />,
   },
-];
-
-const coaching: { icon: IconName; title: string; text: string }[] = [
-  { icon: "playbook", title: "Playbook creation", text: "Draw formations and plays, build call sheets, and share the playbook with your staff." },
-  { icon: "analytics", title: "In-game analytics", text: "Call plays from the sideline and watch your team’s tendencies build — run and pass, yards per play, down and distance. Team numbers only, never player statistics." },
-  { icon: "calendar", title: "Jamboree scheduling", text: "Host a jamboree with divisions, fields and time slots, invite outside teams, and alert everyone when the schedule changes." },
+  {
+    id: "club",
+    kicker: "Running the club",
+    title: "The whole club, run from the phone",
+    text: "Every volunteer gets a role. A setup checklist walks a new club through its first season, and the board runs the rest from their phones.",
+    points: [
+      "Roles for the President, Treasurer, Commissioner, coaches and more",
+      "A setup checklist for a new club",
+      "Season admin on the phone",
+      "Reports start on the phone and arrive by email as a sign-in link",
+      "No ads, no analytics, and your data is never sold. Your club owns its records",
+    ],
+    mock: <ClubMock />,
+  },
 ];
 
 // No price figure and no fee mechanics on a public page — Doug's ruling of 4 Oct 2026, because
@@ -107,13 +119,12 @@ const pricing = [
   "No subscription, no setup fee, no contract",
   "No paid add-ons — every feature is included",
   "No fee on fundraising",
-  "Coaching tools included free when they arrive",
 ];
 
 const steps = [
-  { title: "Set up your club", text: "Add your programs, age groups, fees and documents, and connect your club’s Stripe account." },
-  { title: "Open registration", text: "Share your registration link or QR code. Families sign up and pay on their phones." },
-  { title: "Run the season", text: "Message teams, collect forms, hand out equipment and launch fundraisers — all from one place." },
+  { title: "Set up your club", text: "Pick your sports, add your programs and age groups, invite your staff and connect your club’s Stripe account." },
+  { title: "Open registration", text: "Share your link, QR code or flyer. Families register and pay on their phones." },
+  { title: "Run the season", text: "Form teams, message families, play your games and run fundraisers, all from your phone." },
 ];
 
 export default function Home() {
@@ -124,7 +135,7 @@ export default function Home() {
     applicationCategory: "SportsApplication",
     operatingSystem: "iOS, Android, Web",
     description:
-      "Registration, document management, team messaging, fundraising and equipment management for youth football and cheer organizations.",
+      "Registration, team messaging, fundraising and in-house leagues for youth sports clubs of any sport, run from the phone.",
   };
 
   return (
@@ -134,29 +145,29 @@ export default function Home() {
         <section className="hero">
           <div className="hero-inner section-shell">
             <h1>
-              Run your football organization. <em>Not ten different apps.</em>
+              Run your youth sports club. <em>From your phone.</em>
             </h1>
             <div className="hero-copy">
               <p className="hero-deck">
-                Registration, documents, team messaging, fundraising and equipment — all in one place for youth
-                football and cheer.
+                Registration, team messaging, fundraising and in-house leagues for any youth sport. One app for
+                families, coaches and club staff.
               </p>
               <div className="hero-actions">
                 <a className="button" href={DEMO_HREF}>Book a Demo <Icon name="arrow" strokeWidth={2.2} /></a>
                 <a className="button button-outline" href="#platform">Explore the Platform</a>
               </div>
-              <p className="hero-note"><Icon name="team" /> Built for youth tackle, flag and cheer</p>
+              <p className="hero-note"><Icon name="team" /> Built for every youth sport</p>
             </div>
             <HeroDevices />
           </div>
         </section>
 
         <section className="features section-shell" id="platform" aria-labelledby="platform-title">
-          <p className="kicker">All-in-one organization management</p>
-          <h2 id="platform-title">Everything your program needs to run smoothly</h2>
+          <p className="kicker">One app for the whole club</p>
+          <h2 id="platform-title">Everything your club needs to run the season</h2>
           <p className="section-intro">
-            GameDay Huddle takes care of the season&rsquo;s paperwork, payments and messages, so your volunteers can
-            spend their time on the kids.
+            Staff run the club from their phones. Families register, pay and keep up from theirs. A web console is
+            there when you want a bigger screen.
           </p>
           <div className="feature-grid">
             {features.map((feature) => (
@@ -172,12 +183,14 @@ export default function Home() {
 
         <section className="sports" id="sports" aria-labelledby="sports-title">
           <div className="section-shell">
-            <p className="kicker">Football and cheer</p>
-            <h2 id="sports-title">One club. Tackle, flag and cheer.</h2>
-            <p className="section-intro">
-              Run every program your club offers under one roof, and let families register each child for the right
-              team in a single checkout.
-            </p>
+            <p className="kicker">Every youth sport</p>
+            <h2 id="sports-title">One club. Every sport it runs.</h2>
+            <ul className="sport-list" aria-label="Sports">
+              {sportNames.map((sport) => (
+                <li key={sport}>{sport}</li>
+              ))}
+              <li className="is-other">Other — you name it</li>
+            </ul>
             <div className="sport-grid">
               {sports.map((sport) => (
                 <article className="sport-card" key={sport.title}>
@@ -211,27 +224,6 @@ export default function Home() {
           </section>
         ))}
 
-        <section className="coaching" id="coaching" aria-labelledby="coaching-title">
-          <div className="section-shell">
-            <p className="kicker kicker-light">Coaching tools</p>
-            <h2 id="coaching-title">And for the coaches — <em>free, and coming soon</em></h2>
-            <p className="section-intro">
-              The football layer is on its way inside the same app at no extra cost: build the playbook, call the game
-              and plan the jamboree.
-            </p>
-            <div className="coaching-grid">
-              {coaching.map((item) => (
-                <article className="coaching-card" key={item.title}>
-                  <span className="soon">Coming soon · free</span>
-                  <span className="icon-circle"><Icon name={item.icon} strokeWidth={2} /></span>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section className="pricing section-shell" id="pricing" aria-labelledby="pricing-title">
           <div className="pricing-copy">
             <p className="kicker">Pricing</p>
@@ -257,7 +249,7 @@ export default function Home() {
 
         <section className="steps-section" id="how-it-works" aria-labelledby="steps-title">
           <div className="section-shell">
-            <p className="kicker">For organizations</p>
+            <p className="kicker">For clubs</p>
             <h2 id="steps-title">Set up once. Run the whole season.</h2>
             <ol className="steps">
               {steps.map((step, index) => (
@@ -270,7 +262,7 @@ export default function Home() {
             </ol>
             <p className="steps-note">
               <Icon name="shield" /> Everyone sees only what their role needs — from the club president to the coaches,
-              on the web and on their phone.
+              on the phone and on the web.
             </p>
           </div>
         </section>

@@ -9,7 +9,7 @@ type Menu = { label: string; items: readonly (readonly [string, string])[] };
 
 const menus: Menu[] = [
   { label: "Platform", items: platformLinks },
-  { label: "For Organizations", items: organizationLinks.filter(([label]) => label !== "Pricing") },
+  { label: "For Clubs", items: organizationLinks.filter(([label]) => label !== "Pricing") },
 ];
 const resources: Menu = { label: "Resources", items: legalLinks };
 

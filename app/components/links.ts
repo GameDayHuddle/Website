@@ -15,15 +15,14 @@ export const legalLinks = [
 
 export const platformLinks = [
   ["Online registration", "/#registration"],
-  ["Document management", "/#documents"],
   ["Team messaging", "/#messaging"],
   ["Fundraising", "/#fundraising"],
-  ["Equipment management", "/#equipment"],
-  ["Coaching tools", "/#coaching"],
+  ["In-house leagues", "/#leagues"],
+  ["Running the club", "/#club"],
 ] as const;
 
 export const organizationLinks = [
-  ["Tackle, flag and cheer", "/#sports"],
+  ["Every youth sport", "/#sports"],
   ["How it works", "/#how-it-works"],
   ["Pricing", "/#pricing"],
 ] as const;

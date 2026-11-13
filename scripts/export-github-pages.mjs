@@ -14,7 +14,7 @@ const pages = [["/", "index.html"]];
 // platform's own legal pages live at app.gamedayhuddle.com (docs/store/listing.md §3).
 const retired = [
   ["/about", "/"],
-  ["/demo", "/#coaching"],
+  ["/demo", "/"],
   ["/download", "/"],
   ["/signup", "/"],
   ["/contact", "/"],
@@ -65,7 +65,7 @@ async function renderMetadata(requestPath, destination) {
 const shell = (title, body, head = "") => `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>${title}</title>${head}
 <link rel="icon" href="/icon.png"><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#06193d;color:#c9d3e3;font:18px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:24px}h1{color:#fff;font-size:32px;margin:16px 0 8px}a{color:#fff;font-weight:700}a.b{display:inline-block;margin-top:24px;padding:16px 26px;border-radius:8px;background:#f45d0a;font-size:19px;text-decoration:none}</style></head>
-<body><main><img src="/badge.png" alt="" width="90" height="96">${body}</main></body></html>
+<body><main><img src="/badge.png" alt="" width="118" height="96">${body}</main></body></html>
 `;
 
 async function writeRedirect(from, to) {

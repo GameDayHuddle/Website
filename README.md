@@ -1,8 +1,8 @@
 # GameDay Huddle website
 
-The marketing site at **www.gamedayhuddle.com** for GameDay Huddle — registration, document
-management, team messaging, fundraising and equipment for youth football (tackle and flag) and
-cheer organizations. One page, published to GitHub Pages.
+The marketing site at **www.gamedayhuddle.com** for GameDay Huddle — registration, team
+messaging, fundraising and in-house leagues for youth sports clubs of any sport, run from the
+phone. One page, published to GitHub Pages.
 
 **No price figure goes on this site** — not on the page, and not in this public repository's
 code, docs or commit messages. That is Doug's ruling of 4 October 2026: the price could change.
@@ -15,6 +15,23 @@ This site only links to it: Sign In, Support, the privacy policy, the terms and 
 are all the platform's own pages. Keeping the two apart keeps this site's scripts off the origin
 where parents pay and enter children's details.
 
+## What changed on 12 November 2026
+
+The site follows the platform's all-youth-sports release (Doug's pivot of 30 October 2026). It
+now sells registration, team messaging, fundraising and in-house leagues for any youth sport,
+run from the phone, and shows the all-sports logo (the cheering child on the shield).
+
+- Gone from the page: the football and cheer framing, document management, equipment, and the
+  coaching tools. The coaching layer is cancelled, so nothing is shown as coming soon. Cheer's
+  own workflows and jamboree are later releases and are left off the page.
+- New on the page: the sports list (the app's catalogue, plus Other), in-house leagues (teams by
+  hand, auto-balance or live draft; games, scores and standings) and running the club (roles,
+  the setup checklist, season admin, reports).
+- The pictures no longer show amounts of money, so no currency appears anywhere on the page; the
+  tests check it.
+- `scripts/build-brand.mjs` now copies the badge and icons from the Platform repository and
+  draws the share card (`public/og.png`) from the logo's master.
+
 ## What changed on 25 October 2026
 
 The site used to sell the retired Android tablet coaching app — APK downloads, sign-up, an
@@ -26,9 +43,6 @@ The colours are the platform's own (`docs/design/visual-style.md` in the Platfor
 navy `#06193d`, the bright orange `#f45d0a` as a fill with bold white labels of at least 18.66px,
 `#c05000` for orange words on white. Headings are Archivo, body text Inter, both self-hosted
 from `@fontsource-variable`.
-
-The coaching tools (playbook creation, in-game analytics, jamboree scheduling) are shown as
-**coming soon, free** — they are built or planned but not yet released inside the app.
 
 ## Local development
 

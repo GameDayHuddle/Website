@@ -8,13 +8,6 @@ const paths = {
       <path d="M19.5 13.5l2 2-5.5 5.5H14v-2z" />
     </>
   ),
-  documents: (
-    <>
-      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-      <path d="M14 3v5h5" />
-      <path d="M9 14.5l2 2 4-4" />
-    </>
-  ),
   messaging: <path d="M5 4.5h14A1.5 1.5 0 0 1 20.5 6v9.5A1.5 1.5 0 0 1 19 17h-9l-5 3.5V6A1.5 1.5 0 0 1 5 4.5z" />,
   fundraising: (
     <>
@@ -22,35 +15,35 @@ const paths = {
       <path d="M15 9.2c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2.2s1.3 1.8 3 2.1 3 .9 3 2.2-1.3 2.2-3 2.2c-1.4 0-2.5-.6-3.1-1.6M12 6v1.7M12 16.4V18" />
     </>
   ),
-  equipment: (
+  // In-house leagues and standings.
+  trophy: (
     <>
-      <path d="M3.5 13.5A8.5 8.5 0 0 1 20 10.5V14h-6l-1.5 3H6a2.5 2.5 0 0 1-2.5-2.5z" />
-      <path d="M14 14v3.5h6.5M17.25 14v3.5" />
-      <circle cx="9" cy="11.5" r="1.1" />
+      <path d="M7.5 4h9v5.5a4.5 4.5 0 0 1-9 0z" />
+      <path d="M7.5 6H5a2.5 2.5 0 0 0 3 3.9M16.5 6H19a2.5 2.5 0 0 1-3 3.9" />
+      <path d="M12 14v3.5M10 17.5h4l.5 3h-5z" />
     </>
   ),
-  football: (
+  // A ball that is no one sport's ball.
+  ball: (
     <>
-      <ellipse cx="12" cy="12" rx="9.5" ry="5.6" transform="rotate(-45 12 12)" />
-      <path d="M9.5 14.5l5-5M10.3 11.7l2 2M11.7 10.3l2 2" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M6 5.3c2.8 3.9 2.8 9.5 0 13.4M18 5.3c-2.8 3.9-2.8 9.5 0 13.4" />
     </>
   ),
-  flag: <path d="M5.5 21V3.5M5.5 4h12l-2.5 4.5L17.5 13h-12" />,
-  cheer: (
+  // The club itself: roles, setup and season admin.
+  club: (
     <>
-      <path d="M3.5 10v4a1 1 0 0 0 1 1H7l7.5 4V5L7 9H4.5a1 1 0 0 0-1 1z" />
-      <path d="M17.5 8.5a5 5 0 0 1 0 7M20 6a8.5 8.5 0 0 1 0 12" />
+      <path d="M3.5 10L12 4l8.5 6" />
+      <path d="M5.5 9v11.5h13V9" />
+      <path d="M10 20.5V15h4v5.5" />
     </>
   ),
-  playbook: (
+  info: (
     <>
-      <circle cx="6.5" cy="6.5" r="2.5" />
-      <path d="M15.5 4l4 4M19.5 4l-4 4" />
-      <path d="M6.5 11.5c0 4.5 4 7.5 10 7.5" />
-      <path d="M14.5 16.5l2.5 2.5-2.5 2.5" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5.5M12 7.6v.1" />
     </>
   ),
-  analytics: <path d="M3 20.5h18M6.5 17v-5M11.5 17V6.5M16.5 17v-8M20 6l-3.5 1.5" />,
   calendar: (
     <>
       <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
