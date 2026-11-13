@@ -73,6 +73,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     // In-house leagues.
     "auto-balance",
     "live draft",
+    "season schedule in one go: round robin, byes, home and away kept even, your fields and times. Preview it, then publish",
     "standings",
     // Running the club.
     "Roles for the President, Treasurer, Commissioner, coaches",

@@ -92,6 +92,7 @@ const spotlights = [
       "Auto-balance spreads ages, keeps siblings together and puts a coach’s child on that coach’s team",
       "The draft shows a child’s name, age, age group, last season’s team and siblings. No ratings or evaluations, ever",
       "Games between your club’s own teams, on every family’s schedule",
+      "Make an age group’s season schedule in one go: round robin, byes, home and away kept even, your fields and times. Preview it, then publish",
       "Scores and standings are team results, never statistics about a child",
     ],
     mock: <LeagueMock />,

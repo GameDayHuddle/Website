@@ -25,7 +25,8 @@ run from the phone, and shows the all-sports logo (the cheering child on the shi
   coaching tools. The coaching layer is cancelled, so nothing is shown as coming soon. Cheer's
   own workflows and jamboree are later releases and are left off the page.
 - New on the page: the sports list (the app's catalogue, plus Other), in-house leagues (teams by
-  hand, auto-balance or live draft; games, scores and standings) and running the club (roles,
+  hand, auto-balance or live draft; games, a season schedule made in one go, scores and
+  standings) and running the club (roles,
   the setup checklist, season admin, reports).
 - The pictures no longer show amounts of money, so no currency appears anywhere on the page; the
   tests check it.
