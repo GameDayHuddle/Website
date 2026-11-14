@@ -195,8 +195,9 @@ test("the one public price is $5 per registration, said to the team", async () =
   }
 });
 
-// Doug, 14 Nov 2026: Book a Demo is a form (name, organization name, sports to pick from, state,
-// best contact number, a message, Submit) that reaches his email through the platform's server.
+// Doug, 14 Nov 2026: Book a Demo is a form (name, email, organization name, sports to pick from,
+// state, best contact number, a message, Submit) that reaches his email through the platform's
+// server — the dev server until the platform's release ("the email didn't go out").
 test("Book a Demo opens the team's contact form, and every demo button leads there", async () => {
   const { html: home } = await page;
   assert.ok((home.match(/href="\/book-a-demo"/g) ?? []).length >= 3);
@@ -206,7 +207,7 @@ test("Book a Demo opens the team's contact form, and every demo button leads the
   assert.equal(response.status, 200);
   const html = await response.text();
   const text = readable(html);
-  for (const label of ["Name", "Organization name", "Sports", "State", "Best contact number", "Message", "Submit"]) {
+  for (const label of ["Name", "Email", "Organization name", "Sports", "State", "Best contact number", "Message", "Submit"]) {
     assert.ok(text.includes(label), label);
   }
   for (const sport of ["Baseball", "Basketball", "Cheer", "Hockey", "Lacrosse", "Soccer", "Softball", "Volleyball", "Wrestling", "Other"]) {
@@ -215,12 +216,14 @@ test("Book a Demo opens the team's contact form, and every demo button leads the
   assert.match(html, /<select[^>]*name="state"/);
   assert.match(html, /<option value="Texas">Texas<\/option>/);
   assert.match(html, /name="phone"[^>]*type="tel"|type="tel"[^>]*name="phone"/);
+  assert.match(html, /name="email"[^>]*type="email"[^>]*required|type="email"[^>]*name="email"/);
   assert.match(html, /<textarea[^>]*name="message"/);
   assert.match(html, /<button[^>]*type="submit"/);
   assert.doesNotMatch(text, /\bemail address\b/i);
 
   const links = await readFile(new URL("../app/components/links.ts", import.meta.url), "utf8");
-  assert.match(links, /DEMO_REQUEST_URL = "https:\/\/api\.gamedayhuddle\.com\/public\/demo-requests"/);
+  // Until the platform's release: the dev server, which has the route (docs/demo-request.md DR-12).
+  assert.match(links, /DEMO_REQUEST_URL = "https:\/\/ca-gdh-api-dev\.[a-z0-9.-]+\.azurecontainerapps\.io\/public\/demo-requests"/);
 });
 
 // Doug, 14 Nov 2026: "we don't call them clubs we call them teams". A sample organization's own

@@ -5,8 +5,9 @@ import { Icon } from "./Icon";
 import { DEMO_EMAIL, DEMO_REQUEST_URL } from "./links";
 import { sportNames } from "./sports";
 
-// Doug, 14 Nov 2026: "Book a Demo" is a form — name, organization name, sports (pick any),
-// state, best contact number and a message — that goes to his email. It posts to the
+// Doug, 14 Nov 2026: "Book a Demo" is a form — name, email, organization name, sports (pick
+// any), state, best contact number and a message — that goes to his email. The visitor's
+// email is the mail's Reply-To ("we need to add the email in the contact us"). It posts to the
 // platform's own server, which emails him; no outside form service sees a club's details.
 // If the send fails, the visitor can email the same words instead.
 
@@ -24,6 +25,7 @@ const states = [
 
 type DemoRequest = {
   name: string;
+  email: string;
   organizationName: string;
   sports: string[];
   state: string;
@@ -37,6 +39,7 @@ type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind
 function mailtoFor(request: DemoRequest) {
   const body = [
     `Name: ${request.name}`,
+    `Email: ${request.email}`,
     `Organization: ${request.organizationName}`,
     `Sports: ${request.sports.join(", ")}`,
     `State: ${request.state}`,
@@ -68,6 +71,7 @@ export function DemoForm() {
     const field = (name: string) => String(form.get(name) ?? "").trim();
     const request: DemoRequest = {
       name: field("name"),
+      email: field("email"),
       organizationName: field("organizationName"),
       sports: sportOptions.filter((sport) => picked.includes(sport)),
       state: field("state"),
@@ -110,6 +114,16 @@ export function DemoForm() {
           <input name="organizationName" type="text" autoComplete="organization" required maxLength={150} />
         </label>
       </div>
+      <div className="demo-row">
+        <label className="demo-field">
+          <span>Email</span>
+          <input name="email" type="email" autoComplete="email" required maxLength={254} />
+        </label>
+        <label className="demo-field">
+          <span>Best contact number</span>
+          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" required minLength={7} maxLength={30} pattern="[0-9()+. -]{7,30}" />
+        </label>
+      </div>
       <fieldset className="demo-sports" aria-describedby={sportsMissing ? "demo-sports-missing" : undefined}>
         <legend>Sports</legend>
         <div className="demo-chips">
@@ -135,10 +149,6 @@ export function DemoForm() {
               <option key={state} value={state}>{state}</option>
             ))}
           </select>
-        </label>
-        <label className="demo-field">
-          <span>Best contact number</span>
-          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" required minLength={7} maxLength={30} pattern="[0-9()+. -]{7,30}" />
         </label>
       </div>
       <label className="demo-field">
