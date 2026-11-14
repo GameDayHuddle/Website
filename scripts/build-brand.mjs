@@ -91,7 +91,7 @@ const logo = await sharp(path.join(platform, "docs/brand/logo-all-sports-transpa
   .toBuffer({ resolveWithObject: true });
 
 const headline = await text(
-  `<span foreground="#ffffff">Run your youth\nsports club.</span>\n<span foreground="${ORANGE}">From your phone.</span>`,
+  `<span foreground="#ffffff">Run your youth\nsports team.</span>\n<span foreground="${ORANGE}">From your phone.</span>`,
   bold,
   "Inter Bold 66",
   -6,

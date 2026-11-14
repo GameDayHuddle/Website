@@ -44,13 +44,13 @@ test("the home page sells the platform: registration, messaging, fundraising and
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const text = readable(html);
   assert.match(html, /application\/ld\+json/);
-  assert.match(text, /Run your youth sports club\. From your phone\./);
+  assert.match(text, /Run your youth sports team\. From your phone\./);
   for (const feature of [
     "Online registration",
     "Team messaging",
     "Fundraising",
     "In-house leagues",
-    "Running the club",
+    "Running the team",
     "Every youth sport",
     // Registration, built and shared on the phone, paid without a stored card.
     "printable flyer",
@@ -60,7 +60,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     "Google Pay",
     "No card is stored for next time",
     "second guardian",
-    "club’s own Stripe account",
+    "team’s own Stripe account",
     // Messaging.
     "group chat for every team",
     "Entire Org Message",
@@ -84,13 +84,13 @@ test("the home page sells the platform: registration, messaging, fundraising and
   ]) assert.ok(text.includes(feature), feature);
 });
 
-test("every youth sport is on the page, the club places every child, and teams form three ways", async () => {
+test("every youth sport is on the page, staff place every child, and teams form three ways", async () => {
   const text = readable((await page).html);
   // The app's catalogue (packages/contracts/src/sports.ts in the Platform repository), and Other.
   for (const sport of ["Baseball", "Basketball", "Cheer", "Flag football", "Hockey", "Lacrosse", "Soccer", "Softball", "Tackle football", "Volleyball", "Wrestling", "Other"]) {
     assert.ok(text.includes(sport), sport);
   }
-  assert.match(text, /Families sign up for the program, never an age group or a team\. Each child is placed by age, or by the club\./);
+  assert.match(text, /Families sign up for the program, never an age group or a team\. Each child is placed by age, or by your staff\./);
   // Doug, 12 Nov 2026: the family never picks an age group or a team; 14 Nov 2026: an age group is only its age ("10U"), never a sport.
   assert.doesNotMatch(text, /You can still pick it|picks the age group/);
   assert.doesNotMatch(text, /\b\d{1,2}U (Tackle|Flag|Football|Cheer)\b/i);
@@ -157,7 +157,7 @@ test("nothing retired, cancelled or unreleased is advertised", async () => {
 // per registration. Don't mention anything about the families this is just for the orgs." It
 // replaces his ruling of 4 Oct 2026 that kept every price figure off the public site: the page
 // names one price, and no other money figure appears on the page or in this public repository.
-test("the one public price is $5 per registration, said to the club", async () => {
+test("the one public price is $5 per registration, said to the team", async () => {
   const { html } = await page;
   const text = readable(html);
   assert.match(text, /\$5 per registration/);
@@ -197,7 +197,7 @@ test("the one public price is $5 per registration, said to the club", async () =
 
 // Doug, 14 Nov 2026: Book a Demo is a form (name, organization name, sports to pick from, state,
 // best contact number, a message, Submit) that reaches his email through the platform's server.
-test("Book a Demo opens the club's contact form, and every demo button leads there", async () => {
+test("Book a Demo opens the team's contact form, and every demo button leads there", async () => {
   const { html: home } = await page;
   assert.ok((home.match(/href="\/book-a-demo"/g) ?? []).length >= 3);
   assert.doesNotMatch(home, /href="mailto:[^"]*subject=GameDay%20Huddle%20(?:demo|pricing)"/);
@@ -221,6 +221,16 @@ test("Book a Demo opens the club's contact form, and every demo button leads the
 
   const links = await readFile(new URL("../app/components/links.ts", import.meta.url), "utf8");
   assert.match(links, /DEMO_REQUEST_URL = "https:\/\/api\.gamedayhuddle\.com\/public\/demo-requests"/);
+});
+
+// Doug, 14 Nov 2026: "we don't call them clubs we call them teams". A sample organization's own
+// name may still say "Club" (Riverside Sports Club); no sentence, label or tag calls a customer one.
+test("a customer is a team, never a club, on every page", async () => {
+  for (const path of ["/", "/book-a-demo"]) {
+    const response = await render(path);
+    const text = readable(await response.text()).replace(/Riverside Sports Club/g, "");
+    assert.doesNotMatch(text, /\bclubs?\b|\bclub(?:’|')s\b|\bclub-/i, path);
+  }
 });
 
 test("every way out goes to the live platform, never to the tablet app's doors", async () => {

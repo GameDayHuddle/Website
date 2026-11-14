@@ -20,7 +20,7 @@ export const platformLinks = [
   ["Team messaging", "/#messaging"],
   ["Fundraising", "/#fundraising"],
   ["In-house leagues", "/#leagues"],
-  ["Running the club", "/#club"],
+  ["Running the team", "/#club"],
   ["Every youth sport", "/#sports"],
 ] as const;
 

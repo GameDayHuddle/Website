@@ -47,7 +47,7 @@ const tiles: [IconName, string, string][] = [
 
 export function HeroDevices() {
   return (
-    <div className="hero-visual" role="img" aria-label="The GameDay Huddle club console on a laptop, and a team's page on a phone">
+    <div className="hero-visual" role="img" aria-label="The GameDay Huddle web console on a laptop, and a team's page on a phone">
       <div className="devices" aria-hidden="true">
         <div className="laptop">
           <div className="laptop-screen">
@@ -69,7 +69,7 @@ export function HeroDevices() {
               <div className="console-top">
                 <div>
                   <b>Welcome back!</b>
-                  <small>Here&rsquo;s what&rsquo;s happening at your club.</small>
+                  <small>Here&rsquo;s what&rsquo;s happening with your team.</small>
                 </div>
                 <div className="console-tools">
                   <span className="console-select">Spring 2027 <Icon name="chevron" /></span>

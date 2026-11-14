@@ -45,7 +45,7 @@ export function RegistrationMock() {
 
 export function MessagingMock() {
   return (
-    <Mock label="A team's group chat with a message to the whole club" title="10U Comets · Team chat">
+    <Mock label="A team's group chat with an Entire Org Message" title="10U Comets · Team chat">
       <div className="mock-announce"><Icon name="messaging" /> <span><b>Entire Org Message</b> Picture day is Saturday at 9 AM.</span></div>
       <div className="bubble">
         <small>Coach Miller</small>
@@ -123,7 +123,7 @@ const setup = [
 
 export function ClubMock() {
   return (
-    <Mock label="A new club's setup checklist on the phone" title="Club setup">
+    <Mock label="A new team's setup checklist on the phone" title="Team setup">
       <p className="mock-label">4 of 6 done</p>
       {setup.map(([task, state, tone]) => (
         <div className="mock-task" key={task}>

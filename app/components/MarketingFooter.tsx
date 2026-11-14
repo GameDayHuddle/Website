@@ -7,7 +7,7 @@ export function MarketingFooter() {
       <div className="footer-grid section-shell">
         <div className="footer-intro">
           <Brand />
-          <p>Registration, messaging, fundraising and in-house leagues for youth sports clubs.</p>
+          <p>Registration, messaging, fundraising and in-house leagues for youth sports teams.</p>
         </div>
         <div>
           <h3>Platform</h3>
@@ -18,7 +18,7 @@ export function MarketingFooter() {
           </ul>
         </div>
         <div>
-          <h3>Clubs</h3>
+          <h3>Teams</h3>
           <ul>
             {organizationLinks.map(([label, href]) => (
               <li key={label}><a href={href}>{label}</a></li>
@@ -38,7 +38,7 @@ export function MarketingFooter() {
       </div>
       <div className="footer-bottom section-shell">
         <span>© {new Date().getFullYear()} GameDay Huddle LLC</span>
-        <span>Made for youth sports clubs, run from the phone.</span>
+        <span>Made for youth sports teams, run from the phone.</span>
       </div>
     </footer>
   );
