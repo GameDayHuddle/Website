@@ -73,7 +73,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     // In-house leagues.
     "auto-balance",
     "live draft",
-    "season schedule in one go: round robin, byes, home and away kept even, your fields and times. Preview it, then publish",
+    "season schedule in one go: the first day, how many games each team plays, the days each field is used, its time slots and the days to skip. Home and away kept even. Preview it, then publish",
     "standings",
     // Running the club.
     "Roles for the President, Treasurer, Commissioner, coaches",
@@ -84,13 +84,16 @@ test("the home page sells the platform: registration, messaging, fundraising and
   ]) assert.ok(text.includes(feature), feature);
 });
 
-test("every youth sport is on the page, the family picks the age group, and teams form three ways", async () => {
+test("every youth sport is on the page, the club places every child, and teams form three ways", async () => {
   const text = readable((await page).html);
   // The app's catalogue (packages/contracts/src/sports.ts in the Platform repository), and Other.
   for (const sport of ["Baseball", "Basketball", "Cheer", "Flag football", "Hockey", "Lacrosse", "Soccer", "Softball", "Tackle football", "Volleyball", "Wrestling", "Other"]) {
     assert.ok(text.includes(sport), sport);
   }
-  assert.match(text, /Age shows only as a warning\. Nothing places a child automatically\./);
+  assert.match(text, /Families sign up for the program, never an age group or a team\. Each child is placed by age, or by the club\./);
+  // Doug, 12 Nov 2026: the family never picks an age group or a team; 14 Nov 2026: an age group is only its age ("10U"), never a sport.
+  assert.doesNotMatch(text, /You can still pick it|picks the age group/);
+  assert.doesNotMatch(text, /\b\d{1,2}U (Tackle|Flag|Football|Cheer)\b/i);
   assert.match(text, /by hand, by auto-balance or by a live draft/);
 });
 
@@ -150,20 +153,34 @@ test("nothing retired, cancelled or unreleased is advertised", async () => {
   ]) assert.doesNotMatch(text, gone);
 });
 
-// Doug's ruling of 4 Oct 2026: the platform's price could change, so no public page names it,
-// and neither does this public repository. The pictures show no money at all, so the page
-// carries no currency of any kind.
-test("no price figure is public, and no fee mechanics either", async () => {
-  const text = readable((await page).html);
-  assert.doesNotMatch(text, /\$/);
+// Doug, 14 Nov 2026: "list all the features they get and end with and more. It should say $5
+// per registration. Don't mention anything about the families this is just for the orgs." It
+// replaces his ruling of 4 Oct 2026 that kept every price figure off the public site: the page
+// names one price, and no other money figure appears on the page or in this public repository.
+test("the one public price is $5 per registration, said to the club", async () => {
+  const { html } = await page;
+  const text = readable(html);
+  assert.match(text, /\$5 per registration/);
+  assert.deepEqual(text.match(/\$\s?\d[\d.,]*/g), ["$5"]);
   assert.doesNotMatch(text, /\bdollars?\b|\bcents?\b|\bUSD\b/i);
-  assert.doesNotMatch(text, /\bper (?:athlete|player|child|registration|season|team|month)\b/i);
   assert.doesNotMatch(text, /platform fee|application fee|capped at|processing fee is/i);
-  assert.match(text, /Free for families/i);
-  assert.match(text, /No subscription/);
-  assert.match(text, /No paid add-ons/);
-  assert.match(text, /No fee on fundraising/);
-  assert.match((await page).html, /href="mailto:doug@gamedayhuddle\.com\?subject=GameDay%20Huddle%20pricing"/);
+
+  const pricing = readable(html.match(/<section[^>]*id="pricing"[\s\S]*?<\/section>/)[0]);
+  assert.doesNotMatch(pricing, /famil|parent/i);
+  for (const line of [
+    "No subscription",
+    "no paid add-ons",
+    "Online registration",
+    "Apple Pay",
+    "Team chats",
+    "Fundraising, with no fee from us",
+    "In-house leagues",
+    "Reports by email",
+    "And more",
+    "Charged only on paid registrations",
+    "Book a Demo",
+  ]) assert.ok(pricing.includes(line), line);
+  assert.match(html, /id="pricing"[\s\S]*?href="\/book-a-demo"/);
 
   const files = ["README.md", ".env.example"];
   for (const dir of ["app", "scripts", "tests", ".github"]) {
@@ -173,9 +190,37 @@ test("no price figure is public, and no fee mechanics either", async () => {
   }
   for (const file of files) {
     const source = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
-    assert.doesNotMatch(source, /\$\s?\d/, file);
+    for (const figure of source.match(/\$\s?\d[\d.,]*/g) ?? []) assert.equal(figure, "$5", file);
     assert.doesNotMatch(source, /\bdollars\b/i, file);
   }
+});
+
+// Doug, 14 Nov 2026: Book a Demo is a form (name, organization name, sports to pick from, state,
+// best contact number, a message, Submit) that reaches his email through the platform's server.
+test("Book a Demo opens the club's contact form, and every demo button leads there", async () => {
+  const { html: home } = await page;
+  assert.ok((home.match(/href="\/book-a-demo"/g) ?? []).length >= 3);
+  assert.doesNotMatch(home, /href="mailto:[^"]*subject=GameDay%20Huddle%20(?:demo|pricing)"/);
+
+  const response = await render("/book-a-demo");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  const text = readable(html);
+  for (const label of ["Name", "Organization name", "Sports", "State", "Best contact number", "Message", "Submit"]) {
+    assert.ok(text.includes(label), label);
+  }
+  for (const sport of ["Baseball", "Basketball", "Cheer", "Hockey", "Lacrosse", "Soccer", "Softball", "Volleyball", "Wrestling", "Other"]) {
+    assert.match(html, new RegExp(`type="checkbox"[^>]*value="${sport}"|value="${sport}"[^>]*type="checkbox"`), sport);
+  }
+  assert.match(html, /<select[^>]*name="state"/);
+  assert.match(html, /<option value="Texas">Texas<\/option>/);
+  assert.match(html, /name="phone"[^>]*type="tel"|type="tel"[^>]*name="phone"/);
+  assert.match(html, /<textarea[^>]*name="message"/);
+  assert.match(html, /<button[^>]*type="submit"/);
+  assert.doesNotMatch(text, /\bemail address\b/i);
+
+  const links = await readFile(new URL("../app/components/links.ts", import.meta.url), "utf8");
+  assert.match(links, /DEMO_REQUEST_URL = "https:\/\/api\.gamedayhuddle\.com\/public\/demo-requests"/);
 });
 
 test("every way out goes to the live platform, never to the tablet app's doors", async () => {
@@ -184,7 +229,7 @@ test("every way out goes to the live platform, never to the tablet app's doors",
   for (const path of ["privacy", "terms", "support", "delete-account"]) {
     assert.match(html, new RegExp(`href="https://app\\.gamedayhuddle\\.com/${path}"`), path);
   }
-  assert.match(html, /href="mailto:doug@gamedayhuddle\.com\?subject=GameDay%20Huddle%20demo"/);
+  assert.match(html, /href="\/book-a-demo"/);
   for (const gone of [
     /href="\/(?:download|signup|login|account|demo|about|contact)"/,
     /href="\/?#(?:documents|equipment|coaching)"/,

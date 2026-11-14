@@ -3,13 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Brand } from "./Brand";
 import { Icon } from "./Icon";
-import { APP_URL, DEMO_HREF, legalLinks, organizationLinks, platformLinks } from "./links";
+import { APP_URL, DEMO_HREF, legalLinks, platformLinks } from "./links";
 
 type Menu = { label: string; items: readonly (readonly [string, string])[] };
 
 const menus: Menu[] = [
   { label: "Platform", items: platformLinks },
-  { label: "For Clubs", items: organizationLinks.filter(([label]) => label !== "Pricing") },
 ];
 const resources: Menu = { label: "Resources", items: legalLinks };
 

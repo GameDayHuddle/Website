@@ -7,17 +7,20 @@ const output = path.join(root, "pages-out");
 const origin = "https://www.gamedayhuddle.com";
 const app = "https://app.gamedayhuddle.com";
 
-const pages = [["/", "index.html"]];
+const pages = [
+  ["/", "index.html"],
+  ["/book-a-demo", "book-a-demo/index.html"],
+];
 
 // The tablet coaching app's pages, retired with it on 25 Oct 2026. Their addresses are in
 // search results and old messages, so each forwards somewhere true instead of a 404. The
 // platform's own legal pages live at app.gamedayhuddle.com (docs/store/listing.md §3).
 const retired = [
   ["/about", "/"],
-  ["/demo", "/"],
+  ["/demo", "/book-a-demo"],
   ["/download", "/"],
   ["/signup", "/"],
-  ["/contact", "/"],
+  ["/contact", "/book-a-demo"],
   ["/pricing", "/#pricing"],
   ["/login", app],
   ["/account", app],

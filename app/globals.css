@@ -340,6 +340,39 @@ main h2 em { color: var(--orange); font-style: normal; }
   .footer-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* Book a Demo — the club's contact form (Doug, 14 Nov 2026). */
+.demo { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 64px; align-items: start; padding: 88px 0 96px; }
+.demo h1 { margin-top: 16px; font-family: var(--display); font-size: clamp(36px, 4vw, 56px); font-stretch: 94%; font-weight: 850; line-height: 1.05; letter-spacing: -.02em; color: var(--ink); }
+.demo-form { display: grid; gap: 22px; padding: 36px; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 24px 48px rgba(15,28,46,.08); }
+.demo-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.demo-field { display: grid; gap: 8px; }
+.demo-field > span, .demo-sports legend { color: var(--ink); font-size: 16px; font-weight: 700; }
+.demo-field input, .demo-field select, .demo-field textarea { width: 100%; min-height: 52px; padding: 12px 14px; border: 1px solid #c3cddb; border-radius: 8px; background: #fff; color: var(--ink); font: inherit; font-size: 17px; }
+.demo-field textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+.demo-field input:focus, .demo-field select:focus, .demo-field textarea:focus { outline: 2px solid var(--orange); outline-offset: 1px; border-color: var(--orange); }
+.demo-sports { display: grid; gap: 12px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.demo-sports legend { padding: 0; margin-bottom: 12px; }
+.demo-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.demo-chip { position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 1px solid #c3cddb; border-radius: 99px; background: #fff; color: var(--ink); font-size: 16px; font-weight: 700; cursor: pointer; user-select: none; }
+.demo-chip input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.demo-chip .icon { width: 16px; height: 16px; }
+.demo-chip:hover { border-color: var(--navy-975); }
+.demo-chip.is-on { background: var(--navy-975); border-color: var(--navy-975); color: #fff; }
+.demo-chip:focus-within { outline: 2px solid var(--orange); outline-offset: 2px; }
+.demo-error { color: #b42318; font-size: 16px; font-weight: 600; }
+.demo-error a { color: inherit; text-decoration: underline; }
+.demo-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.demo-form .button:disabled { opacity: .7; cursor: progress; transform: none; }
+.demo-sent { justify-items: start; gap: 18px; padding: 48px 36px; }
+.demo-sent h2 { margin-top: 0; font-size: 30px; }
+@media (max-width: 960px) {
+  .demo { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 56px 0 72px; }
+}
+@media (max-width: 640px) {
+  .demo-row { grid-template-columns: minmax(0, 1fr); }
+  .demo-form { padding: 24px 20px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }

@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { ClubMock, FundraisingMock, LeagueMock, MessagingMock, RegistrationMock } from "./components/FeatureMocks";
 import { HeroDevices } from "./components/HeroDevices";
 import { Icon, type IconName } from "./components/Icon";
-import { APP_URL, DEMO_HREF, PRICING_HREF } from "./components/links";
+import { APP_URL, DEMO_HREF } from "./components/links";
 import { MarketingFooter } from "./components/MarketingFooter";
 import { MarketingHeader } from "./components/MarketingHeader";
+import { sportNames } from "./components/sports";
 
 export const metadata: Metadata = {
   // The layout's template adds " | GameDay Huddle".
   title: "Registration, Messaging & Fundraising for Youth Sports Clubs",
   description:
-    "Run your youth sports club from your phone: online registration, team messaging, fundraising and in-house leagues, for any sport. Free for families, with no subscription and no fee on fundraising.",
+    "Run your youth sports club from your phone: online registration, team messaging, fundraising and in-house leagues, for any sport. No subscription, no setup fee and no fee on fundraising.",
 };
 
 const features: { id: string; icon: IconName; title: string; text: string }[] = [
@@ -21,24 +22,9 @@ const features: { id: string; icon: IconName; title: string; text: string }[] = 
   { id: "club", icon: "club", title: "Running the Club", text: "Staff roles, a setup checklist, season admin and reports, all on the phone." },
 ];
 
-// The platform's catalogue, in the order the app's sport picker shows it, then Other.
-const sportNames = [
-  "Baseball",
-  "Basketball",
-  "Cheer",
-  "Flag football",
-  "Hockey",
-  "Lacrosse",
-  "Soccer",
-  "Softball",
-  "Tackle football",
-  "Volleyball",
-  "Wrestling",
-];
-
 const sports: { icon: IconName; title: string; text: string }[] = [
   { icon: "ball", title: "Any sport", text: "Pick yours from the list. If it is not there, choose Other and name it." },
-  { icon: "registration", title: "The family picks the age group", text: "Age shows only as a warning. Nothing places a child automatically." },
+  { icon: "registration", title: "The club places every child", text: "Families sign up for the program, never an age group or a team. Each child is placed by age, or by the club." },
   { icon: "team", title: "Teams your way", text: "Each program forms its teams by hand, by auto-balance or by a live draft." },
 ];
 
@@ -92,7 +78,7 @@ const spotlights = [
       "Auto-balance spreads ages, keeps siblings together and puts a coach’s child on that coach’s team",
       "The draft shows a child’s name, age, age group, last season’s team and siblings. No ratings or evaluations, ever",
       "Games between your club’s own teams, on every family’s schedule",
-      "Make an age group’s season schedule in one go: round robin, byes, home and away kept even, your fields and times. Preview it, then publish",
+      "Make an age group’s season schedule in one go: the first day, how many games each team plays, the days each field is used, its time slots and the days to skip. Home and away kept even. Preview it, then publish",
       "Scores and standings are team results, never statistics about a child",
     ],
     mock: <LeagueMock />,
@@ -113,19 +99,21 @@ const spotlights = [
   },
 ];
 
-// No price figure and no fee mechanics on a public page — Doug's ruling of 4 Oct 2026, because
-// the price could change. The same lines the store listings use.
-const pricing = [
-  "Nothing is ever added to a family’s bill",
-  "No subscription, no setup fee, no contract",
-  "No paid add-ons — every feature is included",
-  "No fee on fundraising",
-];
-
-const steps = [
-  { title: "Set up your club", text: "Pick your sports, add your programs and age groups, invite your staff and connect your club’s Stripe account." },
-  { title: "Open registration", text: "Share your link, QR code or flyer. Families register and pay on their phones." },
-  { title: "Run the season", text: "Form teams, message families, play your games and run fundraisers, all from your phone." },
+// Doug, 14 Nov 2026: "list all the features they get and end with and more. It should say $5
+// per registration. Don't mention anything about the families this is just for the orgs." It
+// replaces his ruling of 4 Oct 2026 that kept every price figure off the public site.
+const included = [
+  "Online registration, built on your phone",
+  "Card, Apple Pay and Google Pay",
+  "Age groups, add-ons and promo codes",
+  "Team chats and club-wide messages",
+  "Schedules, RSVPs and calendars",
+  "Fundraising, with no fee from us",
+  "In-house leagues, drafts and standings",
+  "Season schedules made in one go",
+  "Staff roles and a setup checklist",
+  "Reports by email",
+  "And more",
 ];
 
 export default function Home() {
@@ -229,42 +217,20 @@ export default function Home() {
           <div className="pricing-copy">
             <p className="kicker">Pricing</p>
             <h2 id="pricing-title">One simple price. Everything included.</h2>
-            <p>
-              No tiers, no add-ons and no surprises. Tell us about your club and we&rsquo;ll give you your price.
-            </p>
+            <p>No subscription, no setup fee, no contract and no paid add-ons.</p>
           </div>
           <div className="price-card">
-            <p className="price"><b>Free</b><span>for families</span></p>
+            <p className="price"><b>$5</b><span>per registration</span></p>
             <ul className="check-list">
-              {pricing.map((line) => (
+              {included.map((line) => (
                 <li key={line}><Icon name="check" strokeWidth={2.4} />{line}</li>
               ))}
             </ul>
             <p className="price-note">
-              Payments run through your club&rsquo;s own Stripe account; Stripe&rsquo;s standard card processing fees
-              apply.
+              Charged only on paid registrations. Payments go to your club&rsquo;s own Stripe account; Stripe&rsquo;s
+              standard card processing fees apply.
             </p>
-            <a className="button button-wide" href={PRICING_HREF}>Get your club&rsquo;s price <Icon name="arrow" strokeWidth={2.2} /></a>
-          </div>
-        </section>
-
-        <section className="steps-section" id="how-it-works" aria-labelledby="steps-title">
-          <div className="section-shell">
-            <p className="kicker">For clubs</p>
-            <h2 id="steps-title">Set up once. Run the whole season.</h2>
-            <ol className="steps">
-              {steps.map((step, index) => (
-                <li key={step.title}>
-                  <span className="step-number">{index + 1}</span>
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="steps-note">
-              <Icon name="shield" /> Everyone sees only what their role needs — from the club president to the coaches,
-              on the phone and on the web.
-            </p>
+            <a className="button button-wide" href={DEMO_HREF}>Book a Demo <Icon name="arrow" strokeWidth={2.2} /></a>
           </div>
         </section>
 

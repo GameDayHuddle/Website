@@ -19,17 +19,17 @@ export function RegistrationMock() {
     <Mock label="A family registering two children on a phone, paying by card, Apple Pay or Google Pay" title="Spring 2027 registration">
       <div className="mock-child">
         <span className="avatar tone-blue">AM</span>
-        <span><b>Ava M.</b><small>Soccer · U10 Girls</small></span>
-        <span className="state state-good">Picked</span>
-      </div>
-      <div className="mock-announce">
-        <Icon name="info" />
-        <span>Ava is older than this age group. You can still pick it.</span>
+        <span><b>Ava M.</b><small>Spring Soccer</small></span>
+        <span className="state state-good">Added</span>
       </div>
       <div className="mock-child">
         <span className="avatar tone-orange">JM</span>
-        <span><b>Jake M.</b><small>Baseball · 8U</small></span>
-        <span className="state state-good">Picked</span>
+        <span><b>Jake M.</b><small>Spring Baseball</small></span>
+        <span className="state state-good">Added</span>
+      </div>
+      <div className="mock-announce">
+        <Icon name="info" />
+        <span>Each child is placed in an age group by age.</span>
       </div>
       <p className="mock-label">Pay with</p>
       <div className="mock-pay">
@@ -45,7 +45,7 @@ export function RegistrationMock() {
 
 export function MessagingMock() {
   return (
-    <Mock label="A team's group chat with a message to the whole club" title="U10 Comets · Team chat">
+    <Mock label="A team's group chat with a message to the whole club" title="10U Comets · Team chat">
       <div className="mock-announce"><Icon name="messaging" /> <span><b>Entire Org Message</b> Picture day is Saturday at 9 AM.</span></div>
       <div className="bubble">
         <small>Coach Miller</small>
@@ -89,7 +89,7 @@ const standings = [
 
 export function LeagueMock() {
   return (
-    <Mock label="An in-house league's standings and its next game" title="U10 Girls · Standings">
+    <Mock label="An in-house league's standings and its next game" title="10U · Standings">
       <div className="mock-standing mock-standing-head">
         <span />
         <b>Team</b>

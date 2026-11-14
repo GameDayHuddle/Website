@@ -3,8 +3,10 @@
 export const APP_URL = "https://app.gamedayhuddle.com";
 export const SUPPORT_EMAIL = "support@gamedayhuddle.com";
 export const DEMO_EMAIL = "doug@gamedayhuddle.com";
-export const DEMO_HREF = `mailto:${DEMO_EMAIL}?subject=${encodeURIComponent("GameDay Huddle demo")}`;
-export const PRICING_HREF = `mailto:${DEMO_EMAIL}?subject=${encodeURIComponent("GameDay Huddle pricing")}`;
+// Doug, 14 Nov 2026: Book a Demo is the contact form, which the platform's own server emails
+// to him (DEMO_EMAIL is the address a failed send offers instead).
+export const DEMO_HREF = "/book-a-demo";
+export const DEMO_REQUEST_URL = "https://api.gamedayhuddle.com/public/demo-requests";
 
 export const legalLinks = [
   ["Support", `${APP_URL}/support`],
@@ -19,10 +21,9 @@ export const platformLinks = [
   ["Fundraising", "/#fundraising"],
   ["In-house leagues", "/#leagues"],
   ["Running the club", "/#club"],
+  ["Every youth sport", "/#sports"],
 ] as const;
 
 export const organizationLinks = [
-  ["Every youth sport", "/#sports"],
-  ["How it works", "/#how-it-works"],
   ["Pricing", "/#pricing"],
 ] as const;

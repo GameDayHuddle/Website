@@ -24,9 +24,9 @@ const stats = [
 
 // In-house league games: the club's own teams, playing each other.
 const games = [
-  { month: "APR", day: "12", team: "Comets v Rockets", group: "U10 Girls", time: "9:00 AM · Field 2", sport: "Soccer" },
+  { month: "APR", day: "12", team: "Comets v Rockets", group: "10U", time: "9:00 AM · Field 2", sport: "Soccer" },
   { month: "APR", day: "12", team: "Hawks v Owls", group: "12U", time: "11:00 AM · Diamond 1", sport: "Baseball" },
-  { month: "APR", day: "13", team: "Sparks v Flames", group: "U8", time: "10:00 AM · Main Gym", sport: "Basketball" },
+  { month: "APR", day: "13", team: "Sparks v Flames", group: "8U", time: "10:00 AM · Main Gym", sport: "Basketball" },
 ];
 
 const messages = [
@@ -120,7 +120,7 @@ export function HeroDevices() {
           <div className="phone-body">
             <div className="phone-team">
               <span className="phone-team-mark"><Icon name="ball" /></span>
-              <span><b>U10 Comets</b><small>Soccer · 14 players · 2 coaches</small></span>
+              <span><b>10U Comets</b><small>Soccer · 14 players · 2 coaches</small></span>
             </div>
             <div className="phone-tiles">
               {tiles.map(([icon, label, tone]) => (
