@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 };
 
 const description =
-  "Registration, team messaging, fundraising and in-house leagues for youth sports teams — any sport, run from your phone.";
+  "Registration, team messaging, fundraising and in-town leagues for youth sports teams — any sport, run from your phone.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: "GameDay Huddle", template: "%s | GameDay Huddle" },
     description,
     applicationName: "GameDay Huddle",
-    keywords: ["youth sports registration", "youth sports app", "team registration", "team messaging", "youth sports fundraising", "in-house league", "league standings"],
+    keywords: ["youth sports registration", "youth sports app", "team registration", "team messaging", "youth sports fundraising", "in-town league", "league standings"],
     icons: {
       icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
       apple: "/apple-icon.png",

@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   // The layout's template adds " | GameDay Huddle".
   title: "Registration, Messaging & Fundraising for Youth Sports Teams",
   description:
-    "Run your youth sports team from your phone: online registration, team messaging, fundraising and in-house leagues, for any sport. No subscription, no setup fee and no fee on fundraising.",
+    "Run your youth sports team from your phone: online registration, team messaging, fundraising and in-town leagues, for any sport. No subscription, no setup fee and no fee on fundraising.",
 };
 
 const features: { id: string; icon: IconName; title: string; text: string }[] = [
   { id: "registration", icon: "registration", title: "Registration", text: "Build it on your phone and share a link, QR code or flyer. Families register and pay on theirs." },
   { id: "messaging", icon: "messaging", title: "Team Messaging", text: "A group chat for every team, Entire Org Messages, and messages to one child’s parents." },
   { id: "fundraising", icon: "fundraising", title: "Fundraising", text: "Donation drives and item sales, with a page and QR code for every player. No fee from us." },
-  { id: "leagues", icon: "trophy", title: "In-house Leagues", text: "Teams by hand, by auto-balance or by a live draft. Then games, scores and standings." },
+  { id: "leagues", icon: "trophy", title: "In-town Leagues", text: "Teams by hand, by auto-balance or by a live draft. Then games, scores and standings." },
   { id: "club", icon: "club", title: "Running the Team", text: "Staff roles, a setup checklist, season admin and reports, all on the phone." },
 ];
 
@@ -71,7 +71,7 @@ const spotlights = [
   },
   {
     id: "leagues",
-    kicker: "In-house leagues",
+    kicker: "In-town leagues",
     title: "Teams, games and standings in one place",
     text: "Form your teams by hand, by auto-balance or by a live draft on your coaches’ phones. Play games between your own teams, enter the scores, and families see the standings.",
     points: [
@@ -109,7 +109,7 @@ const included = [
   "Team chats and Entire Org Messages",
   "Schedules, RSVPs and calendars",
   "Fundraising, with no fee from us",
-  "In-house leagues, drafts and standings",
+  "In-town leagues, drafts and standings",
   "Season schedules made in one go",
   "Staff roles and a setup checklist",
   "Reports by email",
@@ -124,7 +124,7 @@ export default function Home() {
     applicationCategory: "SportsApplication",
     operatingSystem: "iOS, Android, Web",
     description:
-      "Registration, team messaging, fundraising and in-house leagues for youth sports teams of any sport, run from the phone.",
+      "Registration, team messaging, fundraising and in-town leagues for youth sports teams of any sport, run from the phone.",
   };
 
   return (
@@ -138,7 +138,7 @@ export default function Home() {
             </h1>
             <div className="hero-copy">
               <p className="hero-deck">
-                Registration, team messaging, fundraising and in-house leagues for any youth sport. One app for
+                Registration, team messaging, fundraising and in-town leagues for any youth sport. One app for
                 families, coaches and staff.
               </p>
               <div className="hero-actions">

@@ -38,7 +38,7 @@ const page = (async () => {
   return { response, html: await response.text() };
 })();
 
-test("the home page sells the platform: registration, messaging, fundraising and in-house leagues for any youth sport", async () => {
+test("the home page sells the platform: registration, messaging, fundraising and in-town leagues for any youth sport", async () => {
   const { response, html } = await page;
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -49,7 +49,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     "Online registration",
     "Team messaging",
     "Fundraising",
-    "In-house leagues",
+    "In-town leagues",
     "Running the team",
     "Every youth sport",
     // Registration, built and shared on the phone, paid without a stored card.
@@ -70,7 +70,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     // Fundraising.
     "Donation drives and item sales",
     "page and a QR code for every player",
-    // In-house leagues.
+    // In-town leagues.
     "auto-balance",
     "live draft",
     "season schedule in one go: the first day, how many games each team plays, the days each field is used, its time slots and the days to skip. Home and away kept even. Preview it, then publish",
@@ -97,7 +97,7 @@ test("every youth sport is on the page, staff place every child, and teams form 
   assert.match(text, /by hand, by auto-balance or by a live draft/);
 });
 
-// The closed decisions, now that they govern in-house leagues: no rating, score, evaluation or
+// The closed decisions, now that they govern in-town leagues: no rating, score, evaluation or
 // statistic about a registered child, and standings are team results only.
 test("a draft shows only the basics, and standings are team results", async () => {
   const text = readable((await page).html);
@@ -174,7 +174,7 @@ test("the one public price is $5 per registration, said to the team", async () =
     "Apple Pay",
     "Team chats",
     "Fundraising, with no fee from us",
-    "In-house leagues",
+    "In-town leagues",
     "Reports by email",
     "And more",
     "Charged only on paid registrations",
@@ -228,6 +228,16 @@ test("Book a Demo opens the team's contact form, and every demo button leads the
 
 // Doug, 14 Nov 2026: "we don't call them clubs we call them teams". A sample organization's own
 // name may still say "Club" (Riverside Sports Club); no sentence, label or tag calls a customer one.
+// Doug, 14 Nov 2026: "In-town league should match everywhere" — the app's own word for a team's
+// league among its own teams.
+test("a league among a team's own teams is in-town, never in-house, on every page", async () => {
+  for (const path of ["/", "/book-a-demo"]) {
+    const response = await render(path);
+    const html = await response.text();
+    assert.doesNotMatch(html, /in-house/i, path);
+  }
+});
+
 test("a customer is a team, never a club, on every page", async () => {
   for (const path of ["/", "/book-a-demo"]) {
     const response = await render(path);

@@ -22,7 +22,7 @@ const stats = [
   { label: "Fundraising", value: "70%", note: "Spring drive goal", tone: "orange", icon: "fundraising" },
 ] as const;
 
-// In-house league games: the club's own teams, playing each other.
+// In-town league games: the team's own teams, playing each other.
 const games = [
   { month: "APR", day: "12", team: "Comets v Rockets", group: "10U", time: "9:00 AM · Field 2", sport: "Soccer" },
   { month: "APR", day: "12", team: "Hawks v Owls", group: "12U", time: "11:00 AM · Diamond 1", sport: "Baseball" },

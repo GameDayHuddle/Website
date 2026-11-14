@@ -15,7 +15,7 @@ const paths = {
       <path d="M15 9.2c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2.2s1.3 1.8 3 2.1 3 .9 3 2.2-1.3 2.2-3 2.2c-1.4 0-2.5-.6-3.1-1.6M12 6v1.7M12 16.4V18" />
     </>
   ),
-  // In-house leagues and standings.
+  // In-town leagues and standings.
   trophy: (
     <>
       <path d="M7.5 4h9v5.5a4.5 4.5 0 0 1-9 0z" />

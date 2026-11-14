@@ -89,7 +89,7 @@ const standings = [
 
 export function LeagueMock() {
   return (
-    <Mock label="An in-house league's standings and its next game" title="10U · Standings">
+    <Mock label="An in-town league's standings and its next game" title="10U · Standings">
       <div className="mock-standing mock-standing-head">
         <span />
         <b>Team</b>

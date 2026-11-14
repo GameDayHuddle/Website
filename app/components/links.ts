@@ -23,7 +23,7 @@ export const platformLinks = [
   ["Online registration", "/#registration"],
   ["Team messaging", "/#messaging"],
   ["Fundraising", "/#fundraising"],
-  ["In-house leagues", "/#leagues"],
+  ["In-town leagues", "/#leagues"],
   ["Running the team", "/#club"],
   ["Every youth sport", "/#sports"],
 ] as const;

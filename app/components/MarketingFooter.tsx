@@ -7,7 +7,7 @@ export function MarketingFooter() {
       <div className="footer-grid section-shell">
         <div className="footer-intro">
           <Brand />
-          <p>Registration, messaging, fundraising and in-house leagues for youth sports teams.</p>
+          <p>Registration, messaging, fundraising and in-town leagues for youth sports teams.</p>
         </div>
         <div>
           <h3>Platform</h3>

@@ -97,7 +97,7 @@ const headline = await text(
   -6,
 );
 const deck = await text(
-  `<span foreground="${ON_NAVY}">Registration, messaging, fundraising and\nin-house leagues for every youth sport.</span>`,
+  `<span foreground="${ON_NAVY}">Registration, messaging, fundraising and\nin-town leagues for every youth sport.</span>`,
   regular,
   "Inter 27",
   6,
