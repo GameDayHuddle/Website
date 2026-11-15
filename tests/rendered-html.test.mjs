@@ -222,8 +222,9 @@ test("Book a Demo opens the team's contact form, and every demo button leads the
   assert.doesNotMatch(text, /\bemail address\b/i);
 
   const links = await readFile(new URL("../app/components/links.ts", import.meta.url), "utf8");
-  // Until the platform's release: the dev server, which has the route (docs/demo-request.md DR-12).
-  assert.match(links, /DEMO_REQUEST_URL = "https:\/\/ca-gdh-api-dev\.[a-z0-9.-]+\.azurecontainerapps\.io\/public\/demo-requests"/);
+  // Production since the platform's release of 15 Nov 2026 (docs/demo-request.md DR-12); never dev.
+  assert.match(links, /DEMO_REQUEST_URL = "https:\/\/api\.gamedayhuddle\.com\/public\/demo-requests"/);
+  assert.doesNotMatch(links, /azurecontainerapps/);
 });
 
 // Doug, 14 Nov 2026: "we don't call them clubs we call them teams". A sample organization's own

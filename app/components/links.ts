@@ -6,11 +6,11 @@ export const DEMO_EMAIL = "doug@gamedayhuddle.com";
 // Doug, 14 Nov 2026: Book a Demo is the contact form, which the platform's own server emails
 // to him (DEMO_EMAIL is the address a failed send offers instead).
 export const DEMO_HREF = "/book-a-demo";
-// Doug, 14 Nov 2026 ("the email didn't go out"): production answers this route only from the
-// platform's release, so until then the form posts to the platform's dev server, which has it
-// and emails Doug the same way (platform docs/demo-request.md DR-12). The release sets this back
-// to https://api.gamedayhuddle.com/public/demo-requests.
-export const DEMO_REQUEST_URL = "https://ca-gdh-api-dev.gentledune-90c24251.eastus2.azurecontainerapps.io/public/demo-requests";
+// Doug, 14 Nov 2026 ("the email didn't go out"): production answered this route only from the
+// platform's release, so until then the form posted to the platform's dev server (platform
+// docs/demo-request.md DR-12). 15 Nov 2026: the release is on production, which answers the route
+// and allows this site's origin, so the form posts to production again.
+export const DEMO_REQUEST_URL = "https://api.gamedayhuddle.com/public/demo-requests";
 
 export const legalLinks = [
   ["Support", `${APP_URL}/support`],
