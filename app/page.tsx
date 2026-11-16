@@ -93,7 +93,7 @@ const spotlights = [
       "A setup checklist for a new team",
       "Season admin on the phone",
       "Reports start on the phone and arrive by email as a sign-in link",
-      "No ads, no analytics, and your data is never sold. Your team owns its records",
+      "No ads, and your data is never sold. Your team owns its records",
     ],
     mock: <ClubMock />,
   },
