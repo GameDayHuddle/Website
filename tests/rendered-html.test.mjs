@@ -80,7 +80,7 @@ test("the home page sells the platform: registration, messaging, fundraising and
     "setup checklist",
     "Season admin",
     "arrive by email as a sign-in link",
-    "No ads, no analytics",
+    "No ads, and your data is never sold",
   ]) assert.ok(text.includes(feature), feature);
 });
 
